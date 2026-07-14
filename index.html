@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colombia · Carlos & Adriana</title>
+<meta name="description" content="Guía de viaje Colombia 21 jul – 4 ago 2026">
+<meta name="theme-color" content="#10393B">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Colombia">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17302E; --ink-soft:#4A615E; --paper:#FBFAF4; --card:#FFFFFF;
+  --line:#E4E0D2; --deep:#10393B;
+  --ctg:#E2574C; --sal:#3E8E5A; --med:#C94F7C; --adz:#1699A3; --bog:#C99527;
+  --radius:16px; --nav-h:64px;
+  --stripe:linear-gradient(90deg,#0E7C86 0%,#12A5A0 18%,#35C4B5 36%,#7FD8C9 52%,#B8E8DB 66%,#E2574C 82%,#C99527 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Karla',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+  font-size:16px;line-height:1.55;
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
+}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
+.stripe{height:5px;background:var(--stripe);border-radius:3px}
+
+/* ---------- Header ---------- */
+header.app{
+  background:var(--deep);color:#F2EFE4;padding:calc(14px + env(safe-area-inset-top)) 18px 16px;
+  position:sticky;top:0;z-index:40;
+}
+header.app .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.75;font-weight:700}
+header.app h1{font-size:26px;font-weight:900;margin:2px 0 8px}
+header.app h1 em{font-style:italic;color:#7FD8C9}
+header.app .stripe{opacity:.95}
+
+/* ---------- Layout ---------- */
+main{max-width:640px;margin:0 auto;padding:16px 16px 32px}
+.view{display:none;animation:fade .25s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Bottom nav ---------- */
+nav.tabs{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;height:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(251,250,244,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);display:flex;
+}
+nav.tabs button{
+  flex:1;background:none;border:none;font-family:'Karla',sans-serif;font-size:11px;font-weight:700;
+  color:var(--ink-soft);display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:9px;cursor:pointer;
+}
+nav.tabs button .ico{font-size:20px;line-height:1}
+nav.tabs button.on{color:var(--deep)}
+nav.tabs button.on .ico{transform:scale(1.12)}
+
+/* ---------- Cards & chips ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;color:#fff}
+.muted{color:var(--ink-soft);font-size:14px}
+.small{font-size:13px}
+
+/* ---------- Timeline (itinerario) ---------- */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;border-radius:2px;background:var(--stripe)}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-item::before{
+  content:"";position:absolute;left:-24px;top:8px;width:13px;height:13px;border-radius:50%;
+  background:var(--dot,#888);border:3px solid var(--paper);box-shadow:0 0 0 2px var(--dot,#888);
+}
+.tl-item .dates{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dot,#666)}
+.tl-item h3{font-size:20px;margin:1px 0 3px}
+.flight{
+  background:#F1F6F2;border:1px dashed #BFD3C5;border-radius:12px;padding:10px 12px;margin:10px 0;
+  font-size:13.5px;
+}
+.flight b{font-family:'Fraunces',serif;font-size:15px}
+.flight .code{font-weight:700;letter-spacing:.04em}
+
+/* ---------- City cards grid ---------- */
+.city-card{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c,#999);
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;font-family:inherit;color:inherit;
+}
+.city-card .em{font-size:28px}
+.city-card h3{font-size:19px}
+.city-card .muted{margin-top:1px}
+.city-card .arrow{margin-left:auto;color:var(--c,#999);font-size:20px;font-weight:700}
+
+/* ---------- City page ---------- */
+.city-head{border-radius:var(--radius);padding:20px 18px;color:#fff;margin-bottom:14px;background:var(--c,#333)}
+.city-head .back{background:rgba(255,255,255,.22);border:none;color:#fff;font-weight:700;font-size:13px;
+  padding:6px 12px;border-radius:999px;cursor:pointer;margin-bottom:10px;font-family:inherit}
+.city-head h2{font-size:30px;font-weight:900}
+.city-head .dates{font-size:13px;font-weight:700;opacity:.92;margin-top:2px}
+.secnav{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.secnav::-webkit-scrollbar{display:none}
+.secnav button{
+  flex:0 0 auto;border:1.5px solid var(--c,#999);color:var(--c,#333);background:transparent;
+  font-family:inherit;font-weight:700;font-size:13px;padding:6px 13px;border-radius:999px;cursor:pointer;
+}
+.secnav button.on{background:var(--c,#333);color:#fff}
+.sec{display:none}
+.sec.on{display:block;animation:fade .2s ease}
+.sec h3{font-size:17px;margin:16px 0 6px;display:flex;align-items:center;gap:8px}
+.sec h3::before{content:"";width:14px;height:5px;border-radius:3px;background:var(--c,#333);display:inline-block}
+.sec p{margin-bottom:10px}
+.sec ul{padding-left:0;list-style:none}
+.sec li{padding:8px 0 8px 0;border-bottom:1px solid var(--line)}
+.sec li:last-child{border-bottom:none}
+.sec li b{display:block}
+.sec li .muted{display:block;margin-top:1px}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.tag.eco{background:#E4F2E7;color:#2C6E44}
+.tag.mid{background:#FBEEDB;color:#9A6415}
+.tag.top{background:#F6E3EC;color:#A03568}
+.note{
+  border-radius:12px;padding:12px 14px;margin:12px 0;font-size:14px;
+  background:#FFF6E3;border:1px solid #ECD9A6;
+}
+.note.alert{background:#FDEBE8;border-color:#EFC0B8}
+.note b{font-family:'Fraunces',serif}
+.dayplan{border-left:3px solid var(--c,#999);padding:2px 0 2px 12px;margin:12px 0}
+.dayplan .d{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--c,#666)}
+
+/* ---------- Práctico ---------- */
+.pract h2{font-size:22px;margin:6px 0 12px}
+details{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);margin-bottom:10px;overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;font-family:'Fraunces',serif;font-size:16.5px;display:flex;align-items:center;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary .em{font-size:19px}
+summary::after{content:"+";margin-left:auto;font-size:20px;color:var(--ink-soft);font-family:'Karla',sans-serif}
+details[open] summary::after{content:"–"}
+details .bd{padding:0 16px 14px;font-size:14.5px}
+details .bd ul{padding-left:18px;margin:6px 0}
+details .bd li{margin-bottom:5px}
+
+/* ---------- Tareas ---------- */
+.day-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
+.day-card.today{border:2px solid var(--adz);box-shadow:0 2px 14px rgba(22,153,163,.18)}
+.day-card .dh{padding:12px 16px 8px;display:flex;align-items:baseline;gap:8px}
+.day-card .dh h3{font-size:16.5px}
+.day-card .dh .where{margin-left:auto;font-size:12px;font-weight:700;color:#fff;border-radius:999px;padding:2px 10px}
+.day-card .dh .today-tag{font-size:11px;font-weight:700;color:var(--adz)}
+.todo{display:flex;align-items:flex-start;gap:11px;padding:10px 16px;border-top:1px solid var(--line);cursor:pointer;user-select:none}
+.todo input{margin-top:3px;width:19px;height:19px;accent-color:var(--adz);flex:none;cursor:pointer}
+.todo .tx{font-size:14.5px}
+.todo.done .tx{text-decoration:line-through;color:var(--ink-soft);opacity:.75}
+.todo .ck{font-size:12px;color:var(--ink-soft);display:block}
+.todo.checkin{background:#F0F8F8}
+.addrow{display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--line)}
+.addrow input{flex:1;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;font-size:14px;background:var(--paper)}
+.addrow button{border:none;background:var(--deep);color:#fff;font-weight:700;border-radius:10px;padding:0 14px;font-size:18px;cursor:pointer}
+.todo .del{margin-left:auto;border:none;background:none;color:#C0574C;font-size:16px;cursor:pointer;padding:0 2px;flex:none}
+.progressbar{height:6px;background:#EAE7DA;border-radius:3px;overflow:hidden;margin:8px 0 14px}
+.progressbar i{display:block;height:100%;background:var(--stripe);border-radius:3px;transition:width .3s}
+
+/* ---------- Maps links & conversor ---------- */
+a.gm{text-decoration:none;font-size:13px;margin-left:6px;vertical-align:1px}
+.hotel-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.22);border:none;color:#fff;
+  font-weight:700;font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer;font-family:inherit;text-decoration:none;margin-top:10px}
+.conv .row{display:flex;gap:10px;align-items:center;margin:8px 0}
+.conv input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:17px;font-weight:700;background:var(--paper)}
+.conv .eq{font-size:18px;color:var(--ink-soft)}
+.conv .cur{font-weight:700;font-size:14px;color:var(--ink-soft);width:38px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chips button{border:1.5px solid var(--deep);color:var(--deep);background:transparent;font-family:inherit;font-weight:700;
+  font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer}
+.rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--ink-soft)}
+.rate-row input{width:76px;border:1px solid var(--line);border-radius:8px;padding:4px 8px;font:inherit;font-size:14px;text-align:center;background:var(--paper)}
+
+/* ---------- Modo historia (stories) ---------- */
+.story-btn{display:flex;align-items:center;gap:10px;width:100%;border:none;cursor:pointer;font-family:inherit;
+  background:linear-gradient(100deg,var(--c,#333),color-mix(in srgb,var(--c,#333) 55%,#10393B));
+  color:#fff;border-radius:14px;padding:14px 16px;margin:4px 0 14px;text-align:left}
+.story-btn .big{font-family:'Fraunces',serif;font-weight:700;font-size:16px}
+.story-btn .sub{font-size:12px;opacity:.85}
+.story-btn .play{margin-left:auto;font-size:22px}
+#story{position:fixed;inset:0;z-index:100;display:none;color:#fff;overflow:hidden;
+  -webkit-user-select:none;user-select:none}
+#story.on{display:block}
+#story .bg{position:absolute;inset:0;background:var(--sc,#333)}
+#story .bg::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 108%, rgba(255,255,255,.28), transparent 60%),
+             linear-gradient(180deg, rgba(0,0,0,.35), transparent 30%, transparent 65%, rgba(0,0,0,.45))}
+#story .bars{position:absolute;top:calc(10px + env(safe-area-inset-top));left:12px;right:12px;display:flex;gap:5px;z-index:3}
+#story .bars i{flex:1;height:3.5px;border-radius:2px;background:rgba(255,255,255,.32)}
+#story .bars i.done{background:#fff}
+#story .close{position:absolute;top:calc(24px + env(safe-area-inset-top));right:14px;z-index:4;border:none;
+  background:rgba(0,0,0,.3);color:#fff;font-size:17px;width:38px;height:38px;border-radius:50%;cursor:pointer}
+#story .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:0 30px calc(40px + env(safe-area-inset-bottom));z-index:2;animation:storyIn .32s ease}
+@keyframes storyIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:none}}
+#story .em{font-size:72px;line-height:1;margin-bottom:14px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.3))}
+#story .yr{font-family:'Fraunces',serif;font-weight:900;font-size:52px;line-height:1;letter-spacing:-.01em;
+  text-shadow:0 3px 18px rgba(0,0,0,.35)}
+#story .tt{font-family:'Fraunces',serif;font-weight:700;font-size:22px;margin:8px 0 10px}
+#story .tx{font-size:16.5px;line-height:1.55;max-width:480px;text-shadow:0 1px 8px rgba(0,0,0,.3)}
+#story .hint{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;
+  font-size:12px;opacity:.75;z-index:2}
+#story .tap{position:absolute;top:0;bottom:0;width:38%;z-index:3;background:none;border:none;cursor:pointer}
+#story .tap.l{left:0}  #story .tap.r{right:0;width:62%}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+button:focus-visible,summary:focus-visible{outline:3px solid #35C4B5;outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="eyebrow">21 jul – 4 ago 2026 · Carlos & Adriana</div>
+  <h1>Colombia, <em>el país de la belleza</em></h1>
+  <div class="stripe"></div>
+</header>
+
+<main>
+  <section id="view-itinerario" class="view on"></section>
+  <section id="view-ciudades" class="view"></section>
+  <section id="view-ciudad" class="view"></section>
+  <section id="view-tareas" class="view"></section>
+  <section id="view-practico" class="view pract"></section>
+</main>
+
+<div id="story" role="dialog" aria-label="Historia visual">
+  <div class="bg"></div>
+  <div class="bars"></div>
+  <button class="close" onclick="closeStory()" aria-label="Cerrar">✕</button>
+  <div class="slide"></div>
+  <div class="hint">Toca para avanzar · lado izquierdo para volver</div>
+  <button class="tap l" onclick="storyMove(-1)" aria-label="Anterior"></button>
+  <button class="tap r" onclick="storyMove(1)" aria-label="Siguiente"></button>
+</div>
+
+<nav class="tabs">
+  <button id="tab-itinerario" class="on" onclick="go('itinerario')"><span class="ico">🧭</span>Itinerario</button>
+  <button id="tab-ciudades" onclick="go('ciudades')"><span class="ico">🏝️</span>Ciudades</button>
+  <button id="tab-tareas" onclick="go('tareas')"><span class="ico">✅</span>Tareas</button>
+  <button id="tab-practico" onclick="go('practico')"><span class="ico">💡</span>Práctico</button>
+</nav>
+
+<script>
+/* ================= DATOS DEL VIAJE ================= */
+const VUELOS = [
+ {d:"21 jul · 16:25→19:30", r:"MAD → BOG", a:"Iberia IB153", n:"Barajas T4S → El Dorado T1 · Sin maleta facturada incluida"},
+ {d:"25 jul · 20:28→21:54", r:"CTG → PEI", a:"JetSmart JA5541 · XDJDHN", n:"Cartagena → Pereira (Matecaña)"},
+ {d:"28 jul · 16:40→17:25", r:"PEI → EOH", a:"Clic Air VE9059 · TDFUTW", n:"Pereira → Medellín ¡Olaya Herrera, el aeropuerto DEL CENTRO!"},
+ {d:"30 jul · 08:00→09:51", r:"MDE → ADZ", a:"JetSmart JA5450 · ODG8XN", n:"¡Sale de Rionegro (José M. Córdova), a 45-60 min de El Poblado!"},
+ {d:"3 ago · 11:15→13:30", r:"ADZ → BOG", a:"JetSmart JA5361 · JE7KYK", n:"San Andrés → Bogotá"},
+ {d:"4 ago · 17:20→10:00+1", r:"BOG → MAD", a:"Iberia IB152", n:"Llegada a Madrid el 5 ago · Sin maleta facturada incluida"},
+];
+
+const ETAPAS = [
+ {id:"ctg", c:"var(--ctg)", f:"21 – 25 jul", t:"Cartagena de Indias", h:"Faranda Collection Cartagena ★★★★★ (congreso)",
+  x:"Congreso de Adriana (mié-vie mañana) + curso de buceo de Carlos. Hotel en Cielo Mar: playa propia, a 10 min del aeropuerto y 15-20 del centro.",
+  vuelo:0, vueloSalida:1},
+ {id:"sal", c:"var(--sal)", f:"25 – 28 jul", t:"Salento · Eje Cafetero", h:"La Posada de la Plaza (139 €)",
+  x:"Valle de Cocora, fincas de café y pueblos de colores. Llegáis a Pereira a las 21:54 → ~1 h en taxi a Salento.",
+  vueloSalida:2},
+ {id:"med", c:"var(--med)", f:"28 – 30 jul", t:"Medellín", h:"Poblado Guest House (94 €)",
+  x:"La ciudad de la eterna primavera: Comuna 13, Plaza Botero y metrocable.",
+  vueloSalida:3},
+ {id:"adz", c:"var(--adz)", f:"30 jul – 3 ago", t:"San Andrés", h:"Dreamer Beach Club (587 €)",
+  x:"El mar de los siete colores: Johnny Cay, snorkel, vuelta a la isla y cultura raizal.",
+  vueloSalida:4},
+ {id:"bog", c:"var(--bog)", f:"3 – 4 ago", t:"Bogotá", h:"NH Bogotá Urban 93 Royal (59 €)",
+  x:"Última parada: La Candelaria, Monserrate y Museo del Oro antes de volar a Madrid.",
+  vueloSalida:5},
+];
+
+function gmaps(q){ return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`; }
+function gmLink(q){ return `<a class="gm" href="${gmaps(q)}" target="_blank" rel="noopener" aria-label="Abrir en Google Maps">📍</a>`; }
+
+const HOTELES = {
+  ctg:"Faranda Collection Cartagena",
+  sal:"La Posada de la Plaza, Salento, Quindío",
+  med:"Poblado Guest House, Medellín",
+  adz:"Dreamer Beach Club, San Andrés isla",
+  bog:"NH Bogotá Urban 93 Royal, Bogotá",
+};
+
+function flightHTML(i){
+  const v = VUELOS[i];
+  return `<div class="flight">✈️ <b>${v.r}</b> · ${v.d}<br><span class="code">${v.a}</span><br><span class="muted small">${v.n}</span></div>`;
+}
+
+document.getElementById('view-itinerario').innerHTML = `
+  <div class="card" style="border-left:6px solid var(--deep)">
+    <h2 style="font-size:21px">Vuestro viaje en 15 días</h2>
+    <p class="muted" style="margin-top:4px">6 vuelos · 5 destinos · 2 viajeros. Toca cada ciudad en la pestaña <b>Ciudades</b> para ver qué hacer, dónde comer y el plan día a día.</p>
+  </div>
+  <div class="tl">
+    <div class="tl-item" style="--dot:#6b7f7d">
+      <div class="dates">21 jul</div><h3>Madrid → Bogotá → Cartagena</h3>
+      ${flightHTML(0)}
+      <p class="muted small">Llegáis a Bogotá a las 19:30 y conectáis a Cartagena (vuelo doméstico esa noche). El Dorado T1: migración + recogida y re-facturación si lleváis maleta.</p>
+    </div>
+    ${ETAPAS.map((e,idx)=>`
+    <div class="tl-item" style="--dot:${e.c}">
+      <div class="dates">${e.f}</div><h3>${e.t}</h3>
+      <p class="small"><b>🛏 ${e.h}</b>${HOTELES[e.id]?gmLink(HOTELES[e.id]):""}</p>
+      <p class="muted small">${e.x}</p>
+      ${e.vueloSalida!==undefined?flightHTML(e.vueloSalida):""}
+    </div>`).join("")}
+    <div class="tl-item" style="--dot:#6b7f7d">
+      <div class="dates">5 ago · 10:00</div><h3>Llegada a Madrid</h3>
+      <p class="muted small">Fin del viaje. ¡A revelar las fotos! 📸</p>
+    </div>
+  </div>
+  <div class="note"><b>⚠️ Tres avisos clave:</b><br>
+  1️⃣ En Medellín llegáis a <b>Olaya Herrera</b> (centro) pero salís desde <b>Rionegro</b>: el 30 jul el vuelo es a las 08:00 → salir del hotel a las <b>05:00</b>.<br>
+  2️⃣ Antes de embarcar a San Andrés hay que comprar la <b>Tarjeta de Turismo (COP 153.000/persona, 2026)</b> en el counter de JetSmart en Rionegro.<br>
+  3️⃣ Iberia: <b>sin maleta facturada incluida</b> en MAD↔BOG. Comprobad si la habéis añadido.</div>
+`;
+
+/* ================= CIUDADES ================= */
+const CIUDADES = [
+/* ---------- CARTAGENA ---------- */
+{ id:"ctg", em:"🏰", nombre:"Cartagena de Indias", color:"var(--ctg)", fechas:"21 – 25 jul",
+  intro:"Caribe, murallas y calles de colores",
+  secs:{
+  "Historia & curiosidades":`
+    <p>Fundada en <b>1533</b>, fue el gran puerto del imperio español en América: por aquí salía el oro y la plata hacia Sevilla, y por eso la atacaron piratas como Francis Drake, que la saqueó en 1586. La respuesta fueron <b>11 km de murallas</b> y el castillo de San Felipe, la mayor fortaleza española del continente.</p>
+    <p>En 1741 resistió el asedio inglés del almirante Vernon gracias a <b>Blas de Lezo</b>, un almirante vasco cojo, tuerto y manco ("Mediohombre") que con 6 barcos venció a una flota de casi 200. Su estatua está frente al castillo.</p>
+    <p>Fue también el mayor puerto de esclavos de la América española. De ahí nació <b>San Basilio de Palenque</b> (a 50 km), el primer pueblo libre de América, cuyas palenqueras con frutas en la cabeza son hoy símbolo de la ciudad. Cartagena declaró su independencia el 11 de noviembre de 1811, antes que Colombia entera.</p>
+    <p>💡 <b>Curiosidad:</b> Gabriel García Márquez empezó aquí como periodista y ambientó en la ciudad <i>El amor en los tiempos del cólera</i>. Sus cenizas descansan en el claustro de La Merced.</p>`,
+  "Qué ver":`
+    <ul>
+      <li><b>Ciudad Amurallada</b><span class="muted">Perderse sin mapa: Plaza Santo Domingo, calle de las Damas, Bóvedas. Atardecer sobre la muralla en Café del Mar o gratis unos metros más allá.</span></li>
+      <li><b>Getsemaní</b><span class="muted">El barrio con más vida: arte urbano en la calle de la Sierpe, Plaza de la Trinidad al anochecer con comida callejera y música.</span></li>
+      <li><b>Castillo de San Felipe</b><span class="muted">La fortaleza y sus túneles. Ir temprano (8:00) por el calor. ~COP 40.000.</span></li>
+      <li><b>Cerro de la Popa</b><span class="muted">La mejor vista de la ciudad. Subir en taxi acordado (no andando).</span></li>
+      <li><b>Islas del Rosario / Playa Blanca (Barú)</b><span class="muted">Excursión de día en lancha si sobra tiempo: agua turquesa de verdad. Reservar la víspera en agencias del centro.</span></li>
+      <li><b>Mercado de Bazurto</b><span class="muted">Solo si os va el caos auténtico; mejor con tour local.</span></li>
+    </ul>`,
+  "Comida & restaurantes":`
+    <h3>Platos que probar</h3>
+    <p><b>Arepa de huevo</b> (frita con huevo dentro, desayuno costeño), <b>posta negra cartagenera</b> (carne en salsa dulce oscura), <b>ceviche</b> y cóctel de camarón, <b>mote de queso</b> (sopa de ñame), pescado frito con <b>arroz de coco y patacón</b>, y de postre <b>cocadas</b> de las palenqueras y <b>limonada de coco</b> con todo.</p>
+    <h3>Dónde</h3>
+    <ul>
+      <li><b>La Cevichería <span class="tag mid">media</span></b><span class="muted">El ceviche famoso desde que fue Anthony Bourdain. Centro. Cola habitual.</span></li>
+      <li><b>La Mulata <span class="tag eco">económico</span></b><span class="muted">Menú del día costeño excelente. Ideal para el almuerzo.</span></li>
+      <li><b>Espíritu Santo <span class="tag eco">económico</span></b><span class="muted">Clásico de almuerzos locales contundentes en el centro.</span></li>
+      <li><b>Caffé Lunático <span class="tag mid">media</span></b><span class="muted">En Getsemaní, cocina fresca con toque español. Muy buena relación calidad-precio.</span></li>
+      <li><b>Celele <span class="tag top">capricho</span></b><span class="muted">Cocina caribeña de autor, en listas 50 Best de Latinoamérica. Si os dais UN homenaje en Cartagena, es aquí. Reservad ya.</span></li>
+      <li><b>Callejeras de la Trinidad <span class="tag eco">económico</span></b><span class="muted">Arepas, carimañolas y cerveza fría por la noche en la plaza.</span></li>
+    </ul>`,
+  "Vuestro plan":`
+    <div class="note">🏨 <b>Vuestro hotel: Faranda Collection (Cielo Mar)</b> — frente al mar junto a La Boquilla, con playa y rooftop. A <b>10 min del aeropuerto</b> (llegar de noche el 21 será un paseo) pero a <b>15-20 min en taxi del centro histórico</b> (~COP 15-25k por trayecto con inDrive/taxi; acordad precio antes). Pensad en clave "ida y vuelta al centro".</div>
+    <p>Congreso de Adriana: <b>miércoles 22, jueves 23 y viernes 24 por la mañana</b>. Plan de Carlos en paralelo 🤿:</p>
+    <div class="dayplan"><span class="d">Mar 21 · Llegada nocturna</span>
+    <p class="small">BOG 19:30 + conexión → llegaréis al hotel de madrugada. Lo bueno: el aeropuerto está al lado. A dormir, que el miércoles madruga todo el mundo.</p></div>
+    <div class="dayplan"><span class="d">Mié 22 – Jue 23 · Congreso + buceo</span>
+    <p class="small">Carlos: <b>días 1 y 2 del Open Water</b> (teoría + piscina + primeras inmersiones). Escuelas serias: <b>Diving Planet</b>, <b>Buzos de Barú</b> o <b>Caribe Dive</b>; reservad ya por WhatsApp (~1,4-1,8 M COP con certificación) y avisad de que el día 3 debe ser el viernes por la mañana. Recogen en el centro; preguntad si pasan por Cielo Mar. Por la noche, juntos: atardecer y cena en el centro (mié: muralla + La Cevichería; jue: Getsemaní + Caffé Lunático).</p></div>
+    <div class="dayplan"><span class="d">Vie 24 · Mañana cada uno, tarde JUNTOS</span>
+    <p class="small">Carlos: <b>último buceo por la mañana</b> (acaba ~13:00 → 31 h antes del vuelo del sábado ✓). Adriana termina el congreso a mediodía. Tarde de <b>ciudad amurallada</b>: paseo sin rumbo, Plaza Santo Domingo, atardecer en la muralla y noche de salsa en <b>Café Havana</b> 💃.</p></div>
+    <div class="dayplan"><span class="d">Sáb 25 · Día entero juntos</span>
+    <p class="small">Madrugad para el <b>Castillo de San Felipe</b> (8:00, antes del calor), <b>Getsemaní</b> con calma, último ceviche y quizá playa/piscina del hotel. Salida al aeropuerto a las <b>18:30</b> — está a 10 min ✓ (vuelo 20:28).</p></div>
+    <div class="dayplan"><span class="d">Ideas extra de Carlos en solitario</span>
+    <p class="small">Si algún día el buceo acaba pronto: free tour del centro (16:00), <b>Cerro de la Popa</b> en taxi acordado, café mirando el mar en La Boquilla, o simplemente la playa del hotel. Dejad las Islas del Rosario para otra vez: en lancha se disfrutan en pareja.</p></div>
+    <div class="note">☀️ Julio es caluroso y húmedo (32 °C, sensación 38). Agua, protector y ropa ligera; las visitas, mejor antes de las 11:00.</div>`
+  }
+},
+/* ---------- SALENTO ---------- */
+{ id:"sal", em:"🌴", nombre:"Salento & Valle de Cocora", color:"var(--sal)", fechas:"25 – 28 jul",
+  intro:"El corazón del Eje Cafetero",
+  secs:{
+  "Historia & curiosidades":`
+    <p>Salento es el pueblo más antiguo del Quindío (1842), nacido en la <b>colonización antioqueña</b>: familias paisas que bajaron a pie abriendo montaña y sembrando café. Sus casas de <b>bahareque</b> con balcones pintados de todos los colores son el símbolo del <b>Paisaje Cultural Cafetero</b>, Patrimonio de la Humanidad UNESCO desde 2011.</p>
+    <p>Los <b>jeeps Willys</b> que veréis en la plaza llegaron como excedente militar de la II Guerra Mundial y se convirtieron en el transporte cafetero por excelencia — aún hoy salen de la plaza cargados de gente, café y plátanos ("un Willys lleno" es una unidad de medida local: el <i>yipao</i>).</p>
+    <p>💡 <b>Curiosidad:</b> la <b>palma de cera del Quindío</b>, el árbol nacional de Colombia, crece solo aquí y alcanza <b>60 metros</b> — la palmera más alta del mundo. Estuvo a punto de extinguirse porque sus hojas se usaban en Domingo de Ramos.</p>`,
+  "Qué ver":`
+    <ul>
+      <li><b>Valle de Cocora</b><span class="muted">EL imprescindible. Caminata circular (~5 h, 12 km, con puentes colgantes y bosque de niebla) o versión corta al mirador de palmas (~1,5 h). Willys desde la plaza a las 6:30–9:30, ~COP 5.000/trayecto.</span></li>
+      <li><b>Finca cafetera</b><span class="muted">Tour del café de la semilla a la taza: <b>Finca El Ocaso</b> (la más completa, en inglés/español) o <b>Don Elías</b> (pequeña, orgánica, entrañable). 1,5–2 h andando o Willys.</span></li>
+      <li><b>Calle Real y mirador Alto de la Cruz</b><span class="muted">La calle de colores hasta las escaleras del mirador: atardecer sobre el valle.</span></li>
+      <li><b>Filandia</b><span class="muted">A 40 min: el pueblo hermano, igual de bonito y menos turístico, con el mirador-torre de Colina Iluminada.</span></li>
+      <li><b>Jugar al tejo</b><span class="muted">El deporte nacional: lanzar discos de metal a mechas de pólvora 💥 con cerveza en mano. En <b>Los Amigos</b> (Salento) — gratis consumiendo.</span></li>
+    </ul>`,
+  "Comida & restaurantes":`
+    <h3>Platos que probar</h3>
+    <p><b>Trucha</b> en mil versiones (al ajillo, con salsa de champiñones) con <b>patacón gigante</b>, <b>bandeja paisa</b>, arepas de chócolo, y por supuesto <b>café de especialidad</b> en origen. De postre: brevas con arequipe.</p>
+    <h3>Dónde</h3>
+    <ul>
+      <li><b>Restaurante Rincón del Lucy <span class="tag eco">económico</span></b><span class="muted">Trucha y comida típica generosa a precio local.</span></li>
+      <li><b>La Eliana <span class="tag mid">media</span></b><span class="muted">Patio bonito, opciones para todos, buen brunch.</span></li>
+      <li><b>Bernabé <span class="tag mid">media</span></b><span class="muted">El gastro del pueblo: producto local con mimo.</span></li>
+      <li><b>Café Jesús Martín <span class="tag eco">económico</span></b><span class="muted">La referencia cafetera de Salento para métodos y catas.</span></li>
+      <li><b>Helena Adentro (Filandia) <span class="tag mid">media</span></b><span class="muted">Si vais a Filandia, comed aquí: fusión colombiana con vistas. Muy popular.</span></li>
+    </ul>`,
+  "Vuestro plan":`
+    <div class="dayplan"><span class="d">25 jul · Llegada</span>
+    <p class="small">Aterrizáis en Pereira 21:54. Salento está a <b>~1 h</b> — dejad el taxi cerrado con el hotel (La Posada de la Plaza) o apps (inDrive funciona bien; ~COP 110–140k). Llegada ~23:15, a dormir.</p></div>
+    <div class="dayplan"><span class="d">26 jul · Valle de Cocora</span>
+    <p class="small">Willys de las 7:30 desde la plaza. Ruta completa en sentido antihorario (mirador primero si amenaza lluvia). Volver ~14:00, almuerzo de trucha, tarde tranquila por la Calle Real y atardecer en el mirador. Noche: tejo en Los Amigos.</p></div>
+    <div class="dayplan"><span class="d">27 jul · Café + pueblos</span>
+    <p class="small">Mañana: tour en Finca El Ocaso o Don Elías. Tarde: bus/Willys a <b>Filandia</b> (merienda en Helena Adentro, torre mirador) y vuelta.</p></div>
+    <div class="dayplan"><span class="d">28 jul · Hacia Medellín</span>
+    <p class="small">Mañana libre en el pueblo, comida temprana y salida ~14:00 hacia el aeropuerto de Pereira (1 h) para el vuelo de las 16:40. ⚠️ Es un ATR pequeño de Clic Air: equipaje de mano reducido.</p></div>
+    <div class="note">🌦️ Clima de montaña (1.900 m): sol por la mañana, chubasco por la tarde, fresco de noche (12–15 °C). Chubasquero y capas. Efectivo: hay pocos cajeros y algunos comercios no aceptan tarjeta.</div>`
+  }
+},
+/* ---------- MEDELLÍN ---------- */
+{ id:"med", em:"🌸", nombre:"Medellín", color:"var(--med)", fechas:"28 – 30 jul",
+  intro:"La ciudad de la eterna primavera",
+  secs:{
+  "Historia & curiosidades":`
+    <p>Capital de Antioquia y cuna de la cultura <b>paisa</b>, creció con el café y la industria textil. En los 80-90 fue la ciudad más violenta del mundo por el cartel de Pablo Escobar; hoy es el ejemplo mundial de <b>transformación urbana</b>: el metro (el único de Colombia, y del que los paisas presumen con orgullo religioso), los metrocables que subieron a los barrios de ladera y las bibliotecas-parque le valieron el premio a la ciudad más innovadora del mundo (2013).</p>
+    <p>La <b>Comuna 13</b>, antes zona de guerra, es hoy un museo de arte urbano al aire libre con escaleras eléctricas públicas — la mejor síntesis de esa historia.</p>
+    <p>💡 <b>Curiosidades:</b> aquí nacieron <b>Fernando Botero</b> (sus gordas esculturas llenan la Plaza Botero) y <b>Juanes</b>, y se celebra cada agosto la Feria de las Flores con los <i>silleteros</i>. Estáis a 1.500 m: clima perfecto de 24 °C todo el año, de ahí lo de "eterna primavera". Nota de vocabulario: aquí todo es "¡Qué chimba!" (genial) y a todos os dirán "pues" cada tres palabras, pues.</p>`,
+  "Qué ver":`
+    <ul>
+      <li><b>Tour de la Comuna 13</b><span class="muted">Con guía local (free tour con propina o de pago, ~2,5 h): grafitis, escaleras eléctricas, historia real contada por quienes la vivieron. Id por la mañana.</span></li>
+      <li><b>Plaza Botero + Centro</b><span class="muted">23 esculturas de Botero, Palacio Rafael Uribe, iglesia de la Veracruz. Mejor entre semana de día; atentos a las pertenencias.</span></li>
+      <li><b>Metrocable a Parque Arví</b><span class="muted">Metro + 2 cables sobre los tejados hasta el bosque altoandino. El trayecto ES la atracción.</span></li>
+      <li><b>El Poblado / Provenza</b><span class="muted">Vuestro barrio: cafés de especialidad, terrazas y la Zona Rosa de noche.</span></li>
+      <li><b>Pueblito Paisa</b><span class="muted">Réplica de pueblo antioqueño en el cerro Nutibara, vistas 360º. Rápido y bonito al atardecer.</span></li>
+    </ul>`,
+  "Comida & restaurantes":`
+    <h3>Platos que probar</h3>
+    <p>La <b>bandeja paisa</b> (frijoles, chicharrón, carne molida, chorizo, arepa, huevo, aguacate y plátano — pedid UNA para dos si apreciáis vuestra vida), <b>mondongo</b>, arepas con quesito, <b>buñuelos</b> con chocolate y <b>mazamorra</b>. De beber: café o una Pilsen fría.</p>
+    <h3>Dónde</h3>
+    <ul>
+      <li><b>Hacienda (Junín, Centro) <span class="tag mid">media</span></b><span class="muted">Bandeja paisa canónica en ambiente tradicional.</span></li>
+      <li><b>Mondongo's (El Poblado) <span class="tag mid">media</span></b><span class="muted">Institución paisa del mondongo y la bandeja.</span></li>
+      <li><b>Betty's Bowls <span class="tag eco">económico</span></b><span class="muted">Bowls y desayunos frescos en Provenza.</span></li>
+      <li><b>Alambique <span class="tag mid">media</span></b><span class="muted">Cocina colombiana moderna y cócteles en casa bonita de El Poblado.</span></li>
+      <li><b>Mercado del Río <span class="tag eco">económico</span></b><span class="muted">Mercado gastronómico: cada uno pide de un puesto distinto.</span></li>
+      <li><b>Pergamino Café <span class="tag eco">económico</span></b><span class="muted">El café de especialidad de referencia.</span></li>
+    </ul>`,
+  "Vuestro plan":`
+    <div class="dayplan"><span class="d">28 jul · Llegada</span>
+    <p class="small">Aterrizáis a las 17:25 en <b>Olaya Herrera</b> — ¡suerte! está EN la ciudad, a 15-20 min en taxi del Poblado Guest House. Check-in, paseo por <b>Provenza</b> y cena tranquila (Alambique o Mercado del Río).</p></div>
+    <div class="dayplan"><span class="d">29 jul · Día completo</span>
+    <p class="small">Mañana: <b>tour Comuna 13</b> (reservad el de las 10:00). Comida: bandeja paisa en el Centro + <b>Plaza Botero</b>. Tarde: <b>metrocable</b> línea K o P para ver la ciudad desde arriba (a Arví solo si vais sobrados de tiempo). Atardecer en Pueblito Paisa o cerveza en Provenza. Acostarse pronto…</p></div>
+    <div class="dayplan"><span class="d">30 jul · Madrugón</span>
+    <p class="small">⏰ El vuelo a San Andrés sale a las <b>08:00 desde Rionegro (JMC)</b>, a 45–60 min. Taxi/Uber a las <b>05:00</b> (pedidlo la víspera en el hotel, ~COP 90–110k). En el counter de JetSmart: comprar la <b>Tarjeta de Turismo de San Andrés</b> antes de embarcar (ver pestaña San Andrés).</p></div>
+    <div class="note">🚕 Moveos en Uber/inDrive/Cabify o taxi pedido por el hotel. El metro es seguro, limpio y una experiencia en sí mismo (tarjeta Cívica no necesaria: comprad billete sencillo).</div>`
+  }
+},
+/* ---------- SAN ANDRÉS ---------- */
+{ id:"adz", em:"🌊", nombre:"San Andrés", color:"var(--adz)", fechas:"30 jul – 3 ago",
+  intro:"El mar de los siete colores",
+  secs:{
+  "Historia & curiosidades":`
+    <p>Este archipiélago está a <b>720 km de Colombia y solo 190 de Nicaragua</b>: fue colonizado por puritanos ingleses y jamaicanos en el s. XVII, refugio del pirata <b>Henry Morgan</b> (dicen que su tesoro sigue enterrado en la cueva que lleva su nombre), y pasó a España y luego a Colombia en 1822. Por eso su cultura es <b>raizal</b>: protestante, angloparlante y caribeña.</p>
+    <p>Escuchad el <b>creole sanandresano</b> (inglés criollo) y el reggae, calipso y soca que suenan en cada esquina. Todo el archipiélago es la <b>Reserva de Biosfera Seaflower</b> (UNESCO), con la tercera barrera de coral más grande del mundo.</p>
+    <p>💡 <b>Curiosidad:</b> el "mar de los siete colores" no es marketing — la combinación de arena blanca, corales, praderas de pasto marino y distintas profundidades crea franjas reales de turquesa, aguamarina, esmeralda, azul cobalto… Contadlos desde el avión al aterrizar (sentaos en ventanilla, lado izquierdo).</p>`,
+  "Qué ver":`
+    <ul>
+      <li><b>Johnny Cay</b><span class="muted">El islote icónico frente a la playa principal: arena blanca, iguanas y coco loco. Lancha desde Spratt Bight (~15 min). Combinable con Acuario en tour de día.</span></li>
+      <li><b>El Acuario + Haynes Cay</b><span class="muted">Banco de arena en medio del mar donde se hace pie: snorkel con mantarrayas y peces de colores.</span></li>
+      <li><b>Vuelta a la isla en mula/carrito de golf</b><span class="muted">EL plan sanandresano: alquilar un carrito (~COP 150–250k/día) y dar la vuelta (30 km) parando donde queráis.</span></li>
+      <li><b>Hoyo Soplador</b><span class="muted">Géiser natural en el extremo sur: el mar sopla por un agujero en el coral.</span></li>
+      <li><b>West View + Piscinita</b><span class="muted">La mejor agua para snorkel de la isla, con trampolín y toboganes al mar.</span></li>
+      <li><b>Playa de Rocky Cay</b><span class="muted">Tranquila, se camina por el agua hasta el islote y un barco encallado.</span></li>
+      <li><b>Buceo 🤿</b><span class="muted">¡Carlos ya certificado! Banda, Blue Diving o Sharky: paredes de coral, pecios y visibilidad 20-30 m. Fun dives ~COP 200–300k por inmersión (2 tanques ~500k).</span></li>
+    </ul>`,
+  "Comida & restaurantes":`
+    <h3>Platos que probar</h3>
+    <p>El <b>rondón</b> (guiso raizal de pescado, caracol, cerdo, yuca y plátano cocido lentamente en leche de coco — pedidlo con antelación, es ceremonia), <b>pescado frito con arroz de coco</b>, <b>cangrejo negro</b> (especie endémica, en temporada), <b>albóndigas de caracol</b>, patties (empanadas jamaicanas) y agua de coco a machetazos.</p>
+    <h3>Dónde</h3>
+    <ul>
+      <li><b>La Regatta <span class="tag top">capricho</span></b><span class="muted">Marisco elegante sobre el mar. La cena especial del viaje isleño.</span></li>
+      <li><b>Donde Francesca <span class="tag mid">media</span></b><span class="muted">Pies en la arena en Rocky Cay, pescado y langosta muy bien hechos.</span></li>
+      <li><b>Fisherman's Place <span class="tag eco">económico</span></b><span class="muted">Cooperativa de pescadores en Spratt Bight: pescado del día sin florituras.</span></li>
+      <li><b>Restaurante Lidia (San Luis) <span class="tag eco">económico</span></b><span class="muted">Rondón casero raizal de los de verdad (encargad por la mañana).</span></li>
+      <li><b>Miss Celia <span class="tag mid">media</span></b><span class="muted">Cocina isleña tradicional en casa típica, junto al centro.</span></li>
+    </ul>`,
+  "Vuestro plan":`
+    <div class="note alert"><b>🎫 Tarjeta de Turismo — OBLIGATORIA (2026: COP 153.000/persona ≈ 36 €)</b><br>
+    Se compra <b>antes de embarcar</b> en el counter de JetSmart en Rionegro (efectivo o tarjeta). Rellenadla en <b>MAYÚSCULAS y sin tachones</b> (si no, toca pagar otra): pasaporte, y nombre y dirección del hotel — <i>Dreamer Beach Club, San Andrés</i>. Guardadla TODO el viaje: la piden al aterrizar y a veces al salir. Menores de 7 años exentos (no aplica 😄). Ya no hay trámite online oficial: desconfiad de webs que lo vendan.</div>
+    <div class="dayplan"><span class="d">30 jul · Llegada</span>
+    <p class="small">Aterrizáis 09:51 — ¡día casi entero! El aeropuerto está a 10 min de todo. Check-in (o dejar maletas), playa <b>Spratt Bight</b>, tarde de ajuste isleño: paseo por el centro, compras duty-free (toda la isla es puerto libre) y atardecer.</p></div>
+    <div class="dayplan"><span class="d">31 jul · Los cayos</span>
+    <p class="small">Tour de día en lancha: <b>Johnny Cay + Acuario/Haynes Cay</b> (~COP 70–100k + entradas). Llevad snorkel propio o alquilad. Noche: cena en Fisherman's Place.</p></div>
+    <div class="dayplan"><span class="d">1 ago · Vuelta a la isla</span>
+    <p class="small">Carrito de golf todo el día: <b>West View → Piscinita → Hoyo Soplador → playa de San Luis → Rocky Cay</b> (comida donde Francesca). Cueva de Morgan opcional (es turística; la Casa Museo Isleña es más auténtica).</p></div>
+    <div class="dayplan"><span class="d">2 ago · Buceo & playa</span>
+    <p class="small">Mañana: 2 inmersiones para estrenar la titulación 🤿 (Adriana puede hacer <i>discover</i> o snorkel desde el barco). ⚠️ Última inmersión ANTES de las ~13:00: el vuelo del día 3 es a las 11:15 y hay que respetar el intervalo de ~18–24 h sin volar. Tarde: playa y rondón de despedida.</p></div>
+    <div class="dayplan"><span class="d">3 ago · Adiós isla</span>
+    <p class="small">Al aeropuerto a las 09:15. Vuelo 11:15 → Bogotá 13:30.</p></div>
+    <div class="note">💵 Llevad <b>efectivo</b>: muchos tours, lanchas y restaurantes de playa no aceptan tarjeta y los cajeros a veces se quedan sin billetes. Protector solar <b>reef-safe</b> (es reserva de biosfera) y escarpines para las zonas de coral.</div>`
+  }
+},
+/* ---------- BOGOTÁ ---------- */
+{ id:"bog", em:"⛰️", nombre:"Bogotá", color:"var(--bog)", fechas:"3 – 4 ago",
+  intro:"2.600 metros más cerca de las estrellas",
+  secs:{
+  "Historia & curiosidades":`
+    <p>Fundada en 1538 por Gonzalo Jiménez de Quesada sobre territorio <b>muisca</b>, fue capital del Virreinato de Nueva Granada. La leyenda de <b>El Dorado</b> nació aquí: el cacique muisca se cubría de oro y se sumergía en la laguna de Guatavita como ofrenda — la balsa de oro que lo representa es la joya del Museo del Oro.</p>
+    <p>El 20 de julio de 1810 el "florero de Llorente" (una disputa por un jarrón prestado) encendió el grito de independencia. Hoy es una metrópolis de 8 millones de habitantes a <b>2.640 m de altitud</b> — la tercera capital más alta del mundo.</p>
+    <p>💡 <b>Curiosidades:</b> su lema no oficial es que tiene "clima de todos los pisos térmicos en un día" — llevad capas. Los domingos, 120 km de calles se cierran al coche para la <b>Ciclovía</b>. Y el <b>ajiaco</b> lleva guascas, una hierba que casi solo crece aquí.</p>`,
+  "Qué ver":`
+    <ul>
+      <li><b>La Candelaria</b><span class="muted">El casco histórico: Plaza de Bolívar, Chorro de Quevedo, casas coloniales y grafiti bogotano.</span></li>
+      <li><b>Museo del Oro</b><span class="muted">El mejor museo de orfebrería prehispánica del mundo (34.000 piezas, la Balsa Muisca). COP 5.000. ⚠️ Cierra los LUNES — os toca el martes por la mañana.</span></li>
+      <li><b>Monserrate</b><span class="muted">Teleférico o funicular a 3.152 m: toda la sabana a vuestros pies. Ideal al atardecer.</span></li>
+      <li><b>Museo Botero + Casa de Moneda</b><span class="muted">Gratis y excelente, en La Candelaria.</span></li>
+      <li><b>Zona del Parque de la 93 / Chapinero</b><span class="muted">Vuestra zona: restaurantes, terrazas y ambiente seguro de noche.</span></li>
+    </ul>`,
+  "Comida & restaurantes":`
+    <h3>Platos que probar</h3>
+    <p><b>Ajiaco santafereño</b> (sopa de tres papas, pollo, maíz, alcaparras y crema), <b>tamal con chocolate</b>, <b>chocolate completo</b> (con queso DENTRO del chocolate — fundidlo, es la ley), almojábanas y changua si hay valor.</p>
+    <h3>Dónde</h3>
+    <ul>
+      <li><b>La Puerta Falsa <span class="tag eco">económico</span></b><span class="muted">Desde 1816 junto a la Plaza de Bolívar: tamal, ajiaco y chocolate completo. Parada obligatoria del martes.</span></li>
+      <li><b>Prudencia <span class="tag top">capricho</span></b><span class="muted">En La Candelaria, cocina de autor a mediodía. Si queréis cerrar el viaje por lo alto.</span></li>
+      <li><b>Abasto (Usaquén/93) <span class="tag mid">media</span></b><span class="muted">Producto colombiano de mercado, desayunos y almuerzos excelentes cerca del hotel.</span></li>
+      <li><b>Andrés D.C. <span class="tag mid">media</span></b><span class="muted">El delirio rumbero-carnívoro colombiano hecho restaurante. Si queda energía la noche del 3.</span></li>
+      <li><b>Wok / Crepes & Waffles <span class="tag eco">económico</span></b><span class="muted">Cadenas locales queridísimas, útiles y fiables a cualquier hora.</span></li>
+    </ul>`,
+  "Vuestro plan":`
+    <div class="dayplan"><span class="d">3 ago · Tarde bogotana</span>
+    <p class="small">Llegáis 13:30 a El Dorado; taxi/Uber al NH Urban 93 (~40-60 min según tráfico). Ojo: el lunes el Museo del Oro está cerrado, así que la tarde perfecta es <b>Monserrate</b> (subid ~16:30, atardecer arriba, abrigo: hace frío) y cena por el <b>Parque de la 93</b> junto al hotel.</p></div>
+    <div class="dayplan"><span class="d">4 ago · Candelaria exprés y a casa</span>
+    <p class="small">Checkout con maletas en consigna. 09:00 <b>Museo del Oro</b> (martes ✓) → paseo por <b>La Candelaria</b> y Plaza de Bolívar → almuerzo en <b>La Puerta Falsa</b> (tamal + chocolate completo) → hotel a por maletas y al aeropuerto a las <b>14:00</b> (el tráfico a El Dorado es traicionero; vuelo 17:20).</p></div>
+    <div class="note">🧥 Bogotá es FRÍA para lo que traeréis del Caribe: 7–19 °C, chubascos. Sacad la chaqueta de la maleta. La altitud se nota: caminad tranquilos el primer día y hidrataos.</div>`
+  }
+}
+];
+
+/* ================= VISTA CIUDADES ================= */
+document.getElementById('view-ciudades').innerHTML = `
+  <p class="muted" style="margin:2px 2px 12px">Toca una parada para abrir su guía completa 👇</p>
+  ${CIUDADES.map(c=>`
+  <button class="city-card" style="--c:${c.color}" onclick="go('ciudad','${c.id}')">
+    <span class="em">${c.em}</span>
+    <span><h3>${c.nombre}</h3><span class="muted small">${c.fechas} · ${c.intro}</span></span>
+    <span class="arrow">›</span>
+  </button>`).join("")}
+`;
+
+function buildCity(id){
+  const c = CIUDADES.find(x=>x.id===id);
+  const keys = Object.keys(c.secs);
+  document.getElementById('view-ciudad').innerHTML = `
+    <div class="city-head" style="--c:${c.color};background:${c.color}">
+      <button class="back" onclick="go('ciudades')">‹ Ciudades</button>
+      <h2>${c.em} ${c.nombre}</h2>
+      <div class="dates">${c.fechas} · ${c.intro}</div>
+      ${HOTELES[c.id]?`<a class="hotel-btn" href="${gmaps(HOTELES[c.id])}" target="_blank" rel="noopener">🏨 Vuestro hotel en Maps ›</a>`:""}
+    </div>
+    <div class="secnav" style="--c:${c.color}">
+      ${keys.map((k,i)=>`<button class="${i===0?'on':''}" style="--c:${c.color}" onclick="openSec(this,'${c.id}-s${i}')">${k}</button>`).join("")}
+    </div>
+    ${keys.map((k,i)=>`<div class="sec ${i===0?'on':''}" id="${c.id}-s${i}" style="--c:${c.color}">${c.secs[k]}</div>`).join("")}
+  `;
+  /* botón de modo historia al inicio de la sección Historia */
+  const hist = document.getElementById(c.id+'-s0');
+  if(hist && STORIES[c.id]){
+    hist.insertAdjacentHTML('afterbegin',
+      `<button class="story-btn" style="--c:${c.color}" onclick="openStory('${c.id}')">
+        <span><span class="big">▶ Ver como historia</span><br><span class="sub">${STORIES[c.id].slides.length} momentos que explican ${c.nombre.split('&')[0].trim()}</span></span>
+        <span class="play">🎬</span>
+      </button>`);
+  }
+  /* añade 📍 a cada sitio/restaurante de las listas */
+  document.querySelectorAll('#view-ciudad .sec li > b').forEach(b=>{
+    const name = Array.from(b.childNodes).filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim();
+    if(name.length>2) b.insertAdjacentHTML('beforeend', gmLink(name + ', ' + c.nombre.split('&')[0].trim() + ', Colombia'));
+  });
+}
+function openSec(btn,id){
+  const wrap = document.getElementById('view-ciudad');
+  wrap.querySelectorAll('.secnav button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  wrap.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+/* ================= PRÁCTICO ================= */
+document.getElementById('view-practico').innerHTML = `
+  <h2>Guía práctica 🇨🇴</h2>
+  <div class="card conv" style="border-left:6px solid var(--deep)">
+    <h3 style="font-size:17px;margin-bottom:2px">💱 Conversor rápido</h3>
+    <div class="row"><span class="cur">COP</span><input id="cop" inputmode="numeric" placeholder="50.000" oninput="convFrom('cop')"><span class="eq">≈</span><span class="cur">EUR</span><input id="eur" inputmode="decimal" placeholder="11" oninput="convFrom('eur')"></div>
+    <div class="chips">
+      ${[10000,20000,50000,100000,200000,500000].map(v=>`<button onclick="setCop(${v})">${v.toLocaleString('es')}</button>`).join('')}
+    </div>
+    <div class="rate-row">Tasa: 1 € = <input id="rate" inputmode="numeric" onchange="setRate()"> COP <span class="muted">(edítala con el cambio del día)</span></div>
+  </div>
+  <details><summary><span class="em">🎟️</span>Códigos de reserva</summary><div class="bd">
+    <ul>
+      <li><b>CTG→PEI</b> JetSmart JA5541 · reserva <b>X6I57S</b> (conf. XDJDHN)</li>
+      <li><b>PEI→MDE</b> Clic Air VE9059 · PNR <b>TDFUTW</b></li>
+      <li><b>MDE→ADZ</b> JetSmart JA5450 · reserva <b>B5E14C</b> (conf. ODG8XN)</li>
+      <li><b>ADZ→BOG</b> JetSmart JA5361 · reserva <b>JE7KYK</b></li>
+      <li><b>MAD↔BOG</b> Iberia IB153 / IB152</li>
+    </ul>
+  </div></details>
+  <details open><summary><span class="em">💰</span>Dinero</summary><div class="bd">
+    <ul>
+      <li>Moneda: <b>peso colombiano (COP)</b>. Regla rápida: quita 3 ceros y divide entre ~4,5 → 50.000 COP ≈ 11 €. Comprueba el cambio del día al llegar.</li>
+      <li>Sacad de cajero (Bancolombia, Davivienda) en vez de cambiar euros; sacad importes grandes para minimizar comisiones (300–600k por operación).</li>
+      <li>Tarjeta aceptada en ciudades; <b>efectivo imprescindible</b> en Salento, playas de San Andrés, tours, Willys y comida callejera.</li>
+      <li>Propina: 10 % ("servicio incluido" — os preguntarán "¿desea incluir el servicio?": decid sí si todo fue bien).</li>
+      <li>Regateo suave OK en mercados y taxis sin taxímetro; acordad SIEMPRE el precio antes de subir.</li>
+    </ul>
+  </div></details>
+  <details><summary><span class="em">🛡️</span>Seguridad</summary><div class="bd">
+    <ul>
+      <li>La regla de oro colombiana: <b>"no dar papaya"</b> = no exhibir móvil/joyas/cámara donde no toca, ni contar dinero en la calle.</li>
+      <li>Moveos en <b>Uber, inDrive, Cabify o DiDi</b> de noche; en el aeropuerto usad los taxis oficiales de counter.</li>
+      <li>Centro de Medellín y Candelaria en Bogotá: de día bien, de noche mejor no pasear.</li>
+      <li>No aceptéis bebidas de desconocidos ni dejéis el vaso solo (burundanga: real pero evitable).</li>
+      <li>Emergencias: <b>123</b>. Copia del pasaporte en el móvil; original en la caja fuerte del hotel.</li>
+    </ul>
+  </div></details>
+  <details><summary><span class="em">📱</span>Móvil e internet</summary><div class="bd">
+    <ul>
+      <li>eSIM (Holafly, Airalo…) o SIM física <b>Claro</b> (mejor cobertura, también en San Andrés): en tiendas oficiales con pasaporte, ~COP 40–60k con datos de sobra para 2 semanas.</li>
+      <li>WhatsApp es LA herramienta en Colombia: reservas de restaurantes, buceo, taxis… todo por WhatsApp.</li>
+      <li>Google Maps funciona bien; descargad mapas offline de cada ciudad (y esta app funciona sin conexión 😉).</li>
+    </ul>
+  </div></details>
+  <details><summary><span class="em">🔌</span>Enchufes y demás</summary><div class="bd">
+    <ul>
+      <li>Enchufes <b>tipo A/B (americano) a 110 V</b>: necesitáis adaptador desde España. Los cargadores modernos aguantan 110 V sin problema.</li>
+      <li>Agua del grifo: potable en <b>Bogotá, Medellín y Salento</b>; en Cartagena y San Andrés, embotellada.</li>
+      <li>Sin jet lag brutal: Colombia es UTC-5 (7 h menos que España en verano).</li>
+      <li>Altitud en Bogotá (2.640 m): primer día tranquilo, mucha agua, poco alcohol.</li>
+      <li>Julio-agosto: temporada alta local (vacaciones escolares) — reservad tours de Cocora y cayos con 1-2 días de antelación.</li>
+    </ul>
+  </div></details>
+  <details><summary><span class="em">🎫</span>Tarjeta de Turismo San Andrés</summary><div class="bd">
+    <ul>
+      <li><b>Obligatoria</b> para entrar al archipiélago: <b>COP 153.000 por persona (tarifa 2026)</b> ≈ 36 €.</li>
+      <li>Se compra el <b>30 jul en el counter de JetSmart en Rionegro</b>, antes de embarcar. Efectivo o tarjeta.</li>
+      <li>Rellenar en <b>MAYÚSCULAS, sin tachones</b> (un error = pagar otra): pasaporte + nombre y dirección del alojamiento (Dreamer Beach Club).</li>
+      <li><b>Conservadla</b> durante toda la estancia: la piden al aterrizar y pueden pedirla después.</li>
+      <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
+    </ul>
+  </div></details>
+  <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
+    <ul>
+      <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
+      <li><b>Chévere / bacano / una chimba</b> — genial (la última, informal).</li>
+      <li><b>A la orden</b> — lo oiréis mil veces: "a su servicio / de nada".</li>
+      <li><b>Tinto</b> — café solo (no vino 🍷❌☕✓). <b>Guaro</b> — aguardiente.</li>
+      <li><b>Dar papaya</b> — ponérselo fácil a los ladrones. <b>¡Qué pena!</b> — perdón/disculpe.</li>
+      <li><b>Regalar</b> — "¿me regalas un tinto?" = ¿me pones un café? (se paga igual 😄).</li>
+    </ul>
+  </div></details>
+`;
+
+/* ================= TAREAS ================= */
+/* Almacenamiento con fallback en memoria (en GitHub Pages persiste entre sesiones) */
+const MEM = {};
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)) ?? MEM[k] ?? null }catch(e){ return MEM[k] ?? null } },
+  set(k,v){ MEM[k]=v; try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
+};
+const KEY_DONE='co-done-v1', KEY_CUSTOM='co-custom-v1';
+
+/* ci: recordatorio de check-in (con hora de apertura calculada según cada aerolínea) */
+const DIAS = [
+ {k:"0718", f:"Antes de salir", w:"🏠 Casa", wc:"#6b7f7d", items:[
+   {id:"prep-1", t:"Adaptador de enchufe tipo A/B (americano) x2"},
+   {id:"prep-2", t:"Chubasquero (Salento) y chaqueta de abrigo (Bogotá 7-19 °C)"},
+   {id:"prep-3", t:"Protector solar reef-safe + repelente + escarpines/snorkel si tenéis"},
+   {id:"prep-4", t:"Efectivo en € para cambiar + avisar al banco del viaje"},
+   {id:"prep-5", t:"Copia del pasaporte en el móvil y en papel"},
+   {id:"prep-6", t:"Carlos: reservar escuela de buceo por WhatsApp (pedir día 3 = viernes por la MAÑANA) + cuestionario médico"},
+   {id:"prep-7", t:"Comprobar si el vuelo de Iberia lleva maleta facturada añadida (no está incluida)"},
+   {id:"prep-8", t:"Descargar mapas offline de Google Maps: Cartagena, Salento, Medellín, San Andrés, Bogotá"},
+   {id:"prep-9", t:"Reservar mesa en Celele (Cartagena) — se llena semanas antes"},
+ ]},
+ {k:"0720", f:"Lun 20 jul", w:"🏠 Casa", wc:"#6b7f7d", items:[
+   {id:"ci-ib153", ci:1, t:"CHECK-IN Iberia MAD→BOG", c:"Abre hoy a las 16:25 (24 h antes). App de Iberia."},
+   {id:"0720-1", t:"Hacer maletas (ropa ligera + capas montaña + abrigo Bogotá)"},
+ ]},
+ {k:"0721", f:"Mar 21 jul", w:"✈️ MAD→CTG", wc:"#6b7f7d", items:[
+   {id:"0721-1", t:"Llegar a Barajas T4S a las 13:30 (vuelo 16:25)"},
+   {id:"0721-2", t:"Al aterrizar en BOG (19:30): migración + conexión a Cartagena"},
+   {id:"0721-3", t:"Sacar primeros COP del cajero en el aeropuerto"},
+   {id:"0721-4", t:"Taxi al Faranda Collection: 10 min, es la zona de Cielo Mar"},
+ ]},
+ {k:"0722", f:"Mié 22 jul", w:"🏰 Cartagena", wc:"var(--ctg)", items:[
+   {id:"ci-ja5541", ci:1, t:"CHECK-IN JetSmart CTG→PEI", c:"Abre hoy a las 20:28 (72 h antes). ¡Hacedlo online: en aeropuerto cobran!"},
+   {id:"0722-1", t:"Adriana: congreso día 1 · Carlos: día 1 del Open Water 🤿"},
+   {id:"0722-2", t:"Noche juntos en el centro: muralla al atardecer + La Cevichería (taxi ~20 min)"},
+ ]},
+ {k:"0723", f:"Jue 23 jul", w:"🏰 Cartagena", wc:"var(--ctg)", items:[
+   {id:"0723-1", t:"Adriana: congreso día 2 · Carlos: día 2 del Open Water 🤿"},
+   {id:"0723-1b", t:"Noche juntos: Getsemaní (Plaza Trinidad + Caffé Lunático)"},
+   {id:"0723-2", t:"Confirmar taxi Pereira→Salento con La Posada de la Plaza (llegada 25/7 ~22:00)"},
+ ]},
+ {k:"0724", f:"Vie 24 jul", w:"🏰 Cartagena", wc:"var(--ctg)", items:[
+   {id:"0724-1", t:"Carlos: ÚLTIMO buceo por la mañana (acaba ~13:00 ✓) · Adriana: fin del congreso a mediodía"},
+   {id:"0724-1b", t:"Tarde JUNTOS: ciudad amurallada + atardecer en la muralla"},
+   {id:"0724-2", t:"Noche de salsa en Café Havana 💃"},
+ ]},
+ {k:"0725", f:"Sáb 25 jul", w:"✈️ CTG→Salento", wc:"var(--sal)", items:[
+   {id:"0725-1", t:"Checkout + último paseo/ceviche"},
+   {id:"0725-2", t:"Mañana: Castillo San Felipe (8:00) + Getsemaní · quizá playa del hotel"},
+   {id:"0725-2b", t:"Al aeropuerto a las 18:30 — está a 10 min del hotel (vuelo 20:28)"},
+   {id:"0725-3", t:"Taxi PEI→Salento (~1 h, COP 110-140k, acordar precio antes)"},
+ ]},
+ {k:"0726", f:"Dom 26 jul", w:"🌴 Salento", wc:"var(--sal)", items:[
+   {id:"0726-1", t:"Willys 7:30 al Valle de Cocora (llevar efectivo y chubasquero)"},
+   {id:"0726-2", t:"Tarde: Calle Real + mirador · Noche: tejo en Los Amigos 💥"},
+ ]},
+ {k:"0727", f:"Lun 27 jul", w:"🌴 Salento", wc:"var(--sal)", items:[
+   {id:"ci-ve9059", ci:1, t:"CHECK-IN Clic Air PEI→EOH", c:"Abre hoy 4:40 y CIERRA mañana 13:40 (3 h antes del vuelo). Hacedlo hoy en clicair.co."},
+   {id:"ci-ja5450", ci:1, t:"CHECK-IN JetSmart MDE→ADZ", c:"Abre hoy a las 8:00 (72 h antes). Aprovechad y listo."},
+   {id:"0727-1", t:"Mañana: tour de café (El Ocaso o Don Elías)"},
+   {id:"0727-2", t:"Tarde: Filandia (Helena Adentro + mirador)"},
+ ]},
+ {k:"0728", f:"Mar 28 jul", w:"✈️ Salento→MDE", wc:"var(--med)", items:[
+   {id:"0728-1", t:"Salir hacia aeropuerto Pereira a las 14:00 (vuelo 16:40)"},
+   {id:"0728-2", t:"Reservar tour Comuna 13 para mañana 10:00"},
+   {id:"0728-3", t:"Pedir en el hotel taxi para el 30/7 a las 05:00 a Rionegro"},
+ ]},
+ {k:"0729", f:"Mié 29 jul", w:"🌸 Medellín", wc:"var(--med)", items:[
+   {id:"0729-1", t:"Comuna 13 (mañana) + bandeja paisa + Plaza Botero"},
+   {id:"0729-2", t:"Metrocable por la tarde · acostarse PRONTO"},
+   {id:"0729-3", t:"Preparar efectivo COP 306.000 para las 2 tarjetas de turismo de mañana"},
+ ]},
+ {k:"0730", f:"Jue 30 jul", w:"✈️ MDE→ADZ", wc:"var(--adz)", items:[
+   {id:"0730-1", t:"⏰ 04:30 en pie · taxi 05:00 a Rionegro (vuelo 08:00)"},
+   {id:"0730-2", t:"Comprar TARJETA DE TURISMO en counter JetSmart (COP 153.000 c/u, MAYÚSCULAS, sin tachones, dirección: Dreamer Beach Club)"},
+   {id:"0730-3", t:"Ventanilla izquierda para ver los 7 colores al aterrizar 🌈"},
+   {id:"0730-4", t:"Reservar tour Johnny Cay + Acuario para mañana"},
+ ]},
+ {k:"0731", f:"Vie 31 jul", w:"🌊 San Andrés", wc:"var(--adz)", items:[
+   {id:"ci-ja5361", ci:1, t:"CHECK-IN JetSmart ADZ→BOG", c:"Abre hoy a las 11:15 (72 h antes)."},
+   {id:"0731-1", t:"Día de cayos: Johnny Cay + Acuario/Haynes Cay 🚤"},
+   {id:"0731-2", t:"Reservar carrito de golf y buceo de Carlos por WhatsApp"},
+ ]},
+ {k:"0801", f:"Sáb 1 ago", w:"🌊 San Andrés", wc:"var(--adz)", items:[
+   {id:"0801-1", t:"Vuelta a la isla en carrito: West View → Hoyo Soplador → San Luis → Rocky Cay"},
+   {id:"0801-2", t:"Encargar rondón para mañana en Restaurante Lidia"},
+ ]},
+ {k:"0802", f:"Dom 2 ago", w:"🌊 San Andrés", wc:"var(--adz)", items:[
+   {id:"0802-1", t:"Carlos: 2 inmersiones ANTES de las 13:00 (vuelo mañana 11:15) 🤿"},
+   {id:"0802-2", t:"Tarde de playa + rondón de despedida"},
+ ]},
+ {k:"0803", f:"Lun 3 ago", w:"✈️ ADZ→Bogotá", wc:"var(--bog)", items:[
+   {id:"ci-ib152", ci:1, t:"CHECK-IN Iberia BOG→MAD", c:"Abre hoy a las 17:20 (24 h antes). App de Iberia."},
+   {id:"0803-1", t:"Aeropuerto 09:15 · llevar la tarjeta de turismo a mano"},
+   {id:"0803-2", t:"Tarde: Monserrate al atardecer (¡abrigo!) + cena Parque 93"},
+ ]},
+ {k:"0804", f:"Mar 4 ago", w:"⛰️ Bogotá→MAD", wc:"var(--bog)", items:[
+   {id:"0804-1", t:"Checkout, maletas en consigna del NH"},
+   {id:"0804-2", t:"09:00 Museo del Oro + Candelaria + La Puerta Falsa"},
+   {id:"0804-3", t:"14:00 recoger maletas y a El Dorado (vuelo 17:20)"},
+ ]},
+];
+
+function hoyKey(){
+  const n = new Date();
+  if(n.getFullYear()!==2026) return null;
+  return String(n.getMonth()+1).padStart(2,'0') + String(n.getDate()).padStart(2,'0');
+}
+function allItems(){ 
+  const custom = store.get(KEY_CUSTOM) || {};
+  return DIAS.flatMap(d=>[...d.items, ...(custom[d.k]||[])]);
+}
+function renderTareas(){
+  const done = store.get(KEY_DONE) || {};
+  const custom = store.get(KEY_CUSTOM) || {};
+  const items = allItems();
+  const nDone = items.filter(i=>done[i.id]).length;
+  const hk = hoyKey();
+  document.getElementById('view-tareas').innerHTML = `
+    <div class="card" style="border-left:6px solid var(--deep)">
+      <h2 style="font-size:20px">Tareas del viaje</h2>
+      <p class="muted small" style="margin:4px 0 8px">${nDone}/${items.length} completadas. Se guardan en este móvil ✓</p>
+      <div class="progressbar"><i style="width:${items.length?Math.round(nDone/items.length*100):0}%"></i></div>
+    </div>
+    ${DIAS.map(d=>{
+      const extra = custom[d.k]||[];
+      const today = d.k===hk;
+      return `
+      <div class="day-card ${today?'today':''}">
+        <div class="dh"><h3>${d.f}</h3>${today?'<span class="today-tag">HOY</span>':''}<span class="where" style="background:${d.wc}">${d.w}</span></div>
+        ${[...d.items, ...extra].map(it=>`
+          <label class="todo ${done[it.id]?'done':''} ${it.ci?'checkin':''}">
+            <input type="checkbox" ${done[it.id]?'checked':''} onchange="toggleTodo('${it.id}')">
+            <span class="tx">${it.ci?'✈️ ':''}${it.t}${it.c?`<span class="ck">${it.c}</span>`:''}</span>
+            ${it.custom?`<button class="del" onclick="delTodo(event,'${d.k}','${it.id}')" aria-label="Borrar">✕</button>`:''}
+          </label>`).join('')}
+        <div class="addrow">
+          <input id="add-${d.k}" placeholder="Añadir tarea…" onkeydown="if(event.key==='Enter')addTodo('${d.k}')">
+          <button onclick="addTodo('${d.k}')" aria-label="Añadir">+</button>
+        </div>
+      </div>`;
+    }).join('')}
+  `;
+}
+function toggleTodo(id){
+  const done = store.get(KEY_DONE) || {};
+  done[id] = !done[id];
+  store.set(KEY_DONE, done);
+  renderTareas();
+}
+function addTodo(dk){
+  const inp = document.getElementById('add-'+dk);
+  const t = (inp.value||'').trim();
+  if(!t) return;
+  const custom = store.get(KEY_CUSTOM) || {};
+  (custom[dk] ||= []).push({id:'c-'+Date.now(), t, custom:true});
+  store.set(KEY_CUSTOM, custom);
+  renderTareas();
+}
+function delTodo(ev,dk,id){
+  ev.preventDefault();
+  const custom = store.get(KEY_CUSTOM) || {};
+  custom[dk] = (custom[dk]||[]).filter(x=>x.id!==id);
+  store.set(KEY_CUSTOM, custom);
+  renderTareas();
+}
+renderTareas();
+
+/* ================= MODO HISTORIA ================= */
+const STORIES = {
+ ctg:{color:"#B33A31", slides:[
+  {e:"⚓", y:"1533", t:"Nace un puerto", x:"Pedro de Heredia funda Cartagena. Pronto será LA puerta de América: por aquí sale el oro del continente rumbo a Sevilla."},
+  {e:"🏴‍☠️", y:"1586", t:"Llegan los piratas", x:"Francis Drake saquea la ciudad y cobra rescate por no quemarla. España responde con 11 km de murallas y el mayor castillo del continente."},
+  {e:"🦿", y:"1741", t:"El Mediohombre", x:"Blas de Lezo — cojo, tuerto y manco — vence con 6 barcos a los casi 200 del almirante inglés Vernon. Inglaterra ya había acuñado monedas celebrando una victoria… que nunca llegó."},
+  {e:"✊", y:"~1600", t:"Palenque: libertad", x:"Esclavizados fugados fundan San Basilio de Palenque, el primer pueblo libre de América. Sus palenqueras de frutas son hoy el icono de la ciudad."},
+  {e:"🗽", y:"1811", t:"Independencia", x:"El 11 de noviembre Cartagena se declara independiente de España — antes que Colombia entera. Por eso la llaman 'La Heroica'."},
+  {e:"✍️", y:"s. XX", t:"La ciudad de Gabo", x:"García Márquez empieza aquí como periodista y la convierte en escenario de 'El amor en los tiempos del cólera'. Sus cenizas descansan en el claustro de La Merced."},
+ ]},
+ sal:{color:"#2F7448", slides:[
+  {e:"🥾", y:"1842", t:"Pueblo de arrieros", x:"Nace Salento, el pueblo más antiguo del Quindío, en plena colonización antioqueña: familias paisas abriendo montaña a machete y mula."},
+  {e:"☕", y:"s. XIX", t:"Llega el café", x:"Estas laderas resultan perfectas para el arábica. El café pasa de cultivo casero a motor de todo un país."},
+  {e:"🚙", y:"1946", t:"Los Willys", x:"Jeeps militares sobrantes de la II Guerra Mundial llegan a Colombia... y se convierten en el 4x4 cafetero eterno. Un 'yipao' (Willys a tope) sigue siendo unidad de medida local."},
+  {e:"🌴", y:"1985", t:"Salvar la palma", x:"La palma de cera — 60 m, la más alta del mundo — casi se extingue por el Domingo de Ramos. Se declara árbol nacional y se prohíbe cortarla."},
+  {e:"🏆", y:"2011", t:"Patrimonio UNESCO", x:"El Paisaje Cultural Cafetero entra en la lista de la Humanidad: fincas, balcones de colores y una forma de vivir el café única."},
+ ]},
+ med:{color:"#A23E66", slides:[
+  {e:"⛏️", y:"1616", t:"Valle de Aburrá", x:"Colonos vascos y españoles se asientan en este valle a 1.500 m. Del aislamiento entre montañas nace una cultura propia: la paisa."},
+  {e:"🏭", y:"s. XX", t:"Café y telares", x:"Medellín se industrializa con textiles y café. Trabajadora, montañera y orgullosa: 'el que es paisa, es paisa donde sea'."},
+  {e:"🕯️", y:"1980s", t:"Los años oscuros", x:"El cartel de Escobar la convierte en la ciudad más violenta del mundo. Una generación entera crece entre miedo... y resistencia."},
+  {e:"🚇", y:"1995", t:"El metro de la dignidad", x:"Se inaugura el único metro de Colombia. Los paisas lo cuidan como un templo: es el símbolo de que otra ciudad era posible."},
+  {e:"🚡", y:"2004", t:"Cables a los barrios", x:"Los metrocables y las escaleras eléctricas de la Comuna 13 conectan las laderas olvidadas. El urbanismo social se estudia en el mundo entero."},
+  {e:"🏅", y:"2013", t:"La más innovadora", x:"Wall Street Journal la nombra ciudad más innovadora del mundo. Las gordas de Botero, hijo de la ciudad, presiden la plaza que lleva su nombre."},
+ ]},
+ adz:{color:"#0F7A83", slides:[
+  {e:"⛵", y:"1629", t:"Puritanos ingleses", x:"Colonos puritanos y jamaicanos pueblan el archipiélago. Por eso aquí se reza en iglesias bautistas y se habla creole, a 720 km de Colombia y solo 190 de Nicaragua."},
+  {e:"🏴‍☠️", y:"1670", t:"El pirata Morgan", x:"Henry Morgan usa San Andrés como base para asaltar Panamá. Dicen que su tesoro sigue escondido en la cueva que lleva su nombre…"},
+  {e:"🇨🇴", y:"1822", t:"Adhesión a Colombia", x:"El archipiélago jura la constitución de la Gran Colombia. Nace un territorio único: caribeño, raizal, angloparlante y colombiano."},
+  {e:"🎶", y:"s. XX", t:"Cultura raizal", x:"Reggae, calipso y soca en creole sanandresano. El rondón cocinándose lento en leche de coco es su plato-ceremonia."},
+  {e:"🐠", y:"2000", t:"Reserva Seaflower", x:"La UNESCO declara todo el archipiélago Reserva de Biosfera: la tercera barrera de coral más grande del planeta."},
+  {e:"🌈", y:"Hoy", t:"Los 7 colores", x:"Arena, coral, pasto marino y profundidades distintas pintan franjas reales de turquesa a cobalto. Contadlos al aterrizar: ventanilla izquierda."},
+ ]},
+ bog:{color:"#9A7420", slides:[
+  {e:"🛶", y:"~600", t:"Los muiscas", x:"En esta sabana a 2.600 m florece la civilización muisca. Su cacique se cubre de oro y se sumerge en la laguna de Guatavita: nace la leyenda de El Dorado."},
+  {e:"🏛️", y:"1538", t:"Santa Fe", x:"Jiménez de Quesada funda Santa Fe de Bogotá, futura capital del Virreinato de Nueva Granada."},
+  {e:"🏺", y:"1810", t:"El florero", x:"Una disputa por un florero prestado (¡el florero de Llorente!) enciende el 20 de julio el grito de independencia."},
+  {e:"🥣", y:"Hoy", t:"8 millones en las nubes", x:"Tercera capital más alta del mundo. Su ajiaco lleva guascas, una hierba que casi solo crece aquí, y los domingos 120 km de calles son solo para bicis."},
+ ]},
+};
+
+let stCity=null, stIdx=0;
+function openStory(id){
+  stCity=id; stIdx=0;
+  const s=document.getElementById('story');
+  s.querySelector('.bg').style.background =
+    `linear-gradient(165deg, ${STORIES[id].color} 0%, color-mix(in srgb, ${STORIES[id].color} 45%, #0B2A2C) 100%)`;
+  s.classList.add('on');
+  document.body.style.overflow='hidden';
+  renderStory();
+}
+function renderStory(){
+  const st=STORIES[stCity], sl=st.slides[stIdx];
+  const s=document.getElementById('story');
+  s.querySelector('.bars').innerHTML = st.slides.map((_,i)=>`<i class="${i<=stIdx?'done':''}"></i>`).join('');
+  const el=s.querySelector('.slide');
+  el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+  el.innerHTML = `<div class="em">${sl.e}</div><div class="yr">${sl.y}</div><div class="tt">${sl.t}</div><div class="tx">${sl.x}</div>`;
+}
+function storyMove(dir){
+  if(navigator.vibrate) navigator.vibrate(8);
+  stIdx += dir;
+  if(stIdx < 0){ stIdx = 0; return; }
+  if(stIdx >= STORIES[stCity].slides.length){ closeStory(); return; }
+  renderStory();
+}
+function closeStory(){
+  document.getElementById('story').classList.remove('on');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('story').classList.contains('on')) return;
+  if(e.key==='Escape') closeStory();
+  if(e.key==='ArrowRight') storyMove(1);
+  if(e.key==='ArrowLeft') storyMove(-1);
+});
+
+/* ================= CONVERSOR ================= */
+function getRate(){ return store.get('co-rate') || 4500; }
+function setRate(){
+  const v = parseFloat(document.getElementById('rate').value.replace(',','.'));
+  if(v>0) store.set('co-rate', v);
+  document.getElementById('rate').value = getRate();
+  convFrom('cop');
+}
+function convFrom(src){
+  const cop = document.getElementById('cop'), eur = document.getElementById('eur');
+  const num = s => parseFloat(String(s).replace(/\./g,'').replace(',','.'));
+  if(src==='cop'){
+    const v = num(cop.value);
+    eur.value = isFinite(v) ? (v/getRate()).toLocaleString('es',{maximumFractionDigits:2}) : '';
+  }else{
+    const v = parseFloat(String(eur.value).replace(',','.'));
+    cop.value = isFinite(v) ? Math.round(v*getRate()).toLocaleString('es') : '';
+  }
+}
+function setCop(v){
+  document.getElementById('cop').value = v.toLocaleString('es');
+  convFrom('cop');
+}
+document.getElementById('rate').value = getRate();
+setCop(50000);
+
+/* ================= NAVEGACIÓN (con botón atrás del móvil) ================= */
+function go(v, id){
+  const hash = v==='ciudad' ? '#ciudad-'+id : '#'+v;
+  if(location.hash !== hash){ location.hash = hash; return; } /* hashchange renderiza */
+  render(v, id);
+}
+function render(v, id){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  document.getElementById('view-'+v).classList.add('on');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('on'));
+  const tb = document.getElementById('tab-'+(v==='ciudad'?'ciudades':v)); if(tb) tb.classList.add('on');
+  window.scrollTo({top:0});
+}
+function route(){
+  const hsh = location.hash || '#itinerario';
+  if(hsh.startsWith('#ciudad-')){ buildCity(hsh.slice(8)); render('ciudad'); }
+  else{
+    const v = hsh.slice(1);
+    render(['itinerario','ciudades','tareas','practico'].includes(v) ? v : 'itinerario');
+  }
+}
+window.addEventListener('hashchange', route);
+route();
+
+/* Offline */
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>
