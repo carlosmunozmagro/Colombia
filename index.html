@@ -16,6 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{
   --ink:#17302E; --ink-soft:#4A615E; --paper:#FBFAF4; --card:#FFFFFF;
@@ -180,6 +182,30 @@ a.gm{text-decoration:none;font-size:13px;margin-left:6px;vertical-align:1px}
   font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer}
 .rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--ink-soft)}
 .rate-row input{width:76px;border:1px solid var(--line);border-radius:8px;padding:4px 8px;font:inherit;font-size:14px;text-align:center;background:var(--paper)}
+
+/* ---------- Mapa por ciudad ---------- */
+.map-wrap{height:62vh;min-height:380px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+.map-legend{display:flex;gap:14px;margin:10px 2px 0;font-size:12.5px;color:var(--ink-soft);font-weight:700}
+.pin{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50% 50% 50% 8px;
+  transform:rotate(0deg);font-size:17px;box-shadow:0 3px 8px rgba(0,0,0,.35);border:2.5px solid #fff}
+.leaflet-popup-content{font-family:'Karla',sans-serif;font-size:13.5px;margin:10px 14px}
+.leaflet-popup-content b{font-family:'Fraunces',serif;font-size:15px}
+.leaflet-popup-content a{color:#0E7C86;font-weight:700;text-decoration:none}
+
+/* ---------- Stats y datos en historias ---------- */
+#story .stat{display:flex;align-items:baseline;gap:8px;margin:12px 0 2px;
+  opacity:0;transform:translateY(16px);transition:all .5s ease .45s}
+#story .mo.vis .stat{opacity:1;transform:none}
+#story .stat .n{font-family:'Fraunces',serif;font-weight:900;font-size:44px;color:#FFD98E;text-shadow:0 2px 14px rgba(0,0,0,.4)}
+#story .stat .u{font-size:15px;font-weight:700;opacity:.9;max-width:180px;line-height:1.2}
+#story .dato{margin-top:14px;opacity:0;transition:opacity .5s ease .55s}
+#story .mo.vis .dato{opacity:1}
+#story .dato > button{border:1.5px solid rgba(255,255,255,.55);background:rgba(0,0,0,.25);color:#fff;
+  font-family:inherit;font-weight:700;font-size:13px;padding:7px 14px;border-radius:999px;cursor:pointer;backdrop-filter:blur(4px)}
+#story .dato .dx{display:none;margin-top:10px;font-size:14.5px;line-height:1.5;background:rgba(0,0,0,.35);
+  border-left:3px solid #FFD98E;padding:10px 12px;border-radius:0 10px 10px 0;backdrop-filter:blur(4px)}
+#story .dato.open .dx{display:block;animation:fade .3s ease}
+#story .dato.open > button{display:none}
 
 /* ---------- Modo historia (scrollytelling) ---------- */
 .story-btn{display:flex;align-items:center;gap:10px;width:100%;border:none;cursor:pointer;font-family:inherit;
@@ -540,6 +566,92 @@ const CIUDADES = [
 }
 ];
 
+
+/* ================= MAPAS (coordenadas verificadas con Google Places) ================= */
+const MAPA = {
+ ctg:[
+  {n:"Castillo San Felipe",lat:10.422506,lng:-75.539271,c:"v",x:"Ir a las 8:00, antes del calor"},
+  {n:"Plaza Santo Domingo",lat:10.42434,lng:-75.551975,c:"v",x:"El corazón de la Ciudad Amurallada"},
+  {n:"Plaza de la Trinidad",lat:10.420606,lng:-75.545363,c:"v",x:"Getsemaní: la plaza que nunca duerme"},
+  {n:"Cerro de la Popa",lat:10.419159,lng:-75.525547,c:"v",x:"La mejor vista · subir en taxi acordado"},
+  {n:"Café del Mar (muralla)",lat:10.424479,lng:-75.553784,c:"v",x:"Atardecer sobre la muralla ~18:15"},
+  {n:"La Cevichería",lat:10.427993,lng:-75.548186,c:"c",x:"EL ceviche · cola habitual"},
+  {n:"Celele",lat:10.42227,lng:-75.544505,c:"c",x:"El capricho · reservar con tiempo"},
+  {n:"Caffé Lunático",lat:10.422075,lng:-75.543865,c:"c",x:"Fresco y con toque español"},
+  {n:"Café Havana",lat:10.422191,lng:-75.545331,c:"c",x:"Salsa en vivo desde las 20:00"},
+  {n:"Faranda Collection 🏨",lat:10.462327,lng:-75.503811,c:"h",x:"Vuestro hotel · Cielo Mar, junto a La Boquilla"},
+ ],
+ sal:[
+  {n:"Plaza de Bolívar",lat:4.637249,lng:-75.569807,c:"v",x:"Los Willys a Cocora salen de aquí"},
+  {n:"Valle de Cocora",lat:4.637712,lng:-75.48907,c:"v",x:"Caminata completa ~5 h o mirador ~1,5 h"},
+  {n:"Finca El Ocaso",lat:4.623703,lng:-75.59527,c:"v",x:"Tour del café · 3,8 km del pueblo"},
+  {n:"Mirador Alto de la Cruz",lat:4.639798,lng:-75.566388,c:"v",x:"~200 escalones · atardecer"},
+  {n:"Filandia",lat:4.674768,lng:-75.658131,c:"v",x:"El pueblo hermano, a 40 min"},
+  {n:"Tejo Los Amigos",lat:4.639615,lng:-75.569499,c:"v",x:"¡Pólvora + cerveza! 5.000 COP"},
+  {n:"Café Jesús Martín",lat:4.637277,lng:-75.570552,c:"c",x:"La referencia cafetera"},
+  {n:"Bernabé",lat:4.638295,lng:-75.568692,c:"c",x:"El gastro del pueblo · ojo: cierra viernes"},
+  {n:"Helena Adentro (Filandia)",lat:4.677155,lng:-75.659095,c:"c",x:"Comed aquí si vais a Filandia"},
+  {n:"La Posada de la Plaza 🏨",lat:4.637536,lng:-75.570093,c:"h",x:"Vuestro hotel · en la mismísima plaza"},
+ ],
+ med:[
+  {n:"Comuna 13 · Graffitour",lat:6.247937,lng:-75.622028,c:"v",x:"Tour 10:00 · metro hasta San Javier"},
+  {n:"Plaza Botero",lat:6.252118,lng:-75.568614,c:"v",x:"23 gordas de Botero · de día y atentos"},
+  {n:"Pueblito Paisa",lat:6.236384,lng:-75.579098,c:"v",x:"Vistas 360º al atardecer"},
+  {n:"Parque Arví",lat:6.280371,lng:-75.50265,c:"v",x:"Metrocable L/K: el trayecto es la atracción"},
+  {n:"Provenza",lat:6.208472,lng:-75.565777,c:"v",x:"Vuestro barrio de terrazas y cafés"},
+  {n:"Mondongo's",lat:6.209776,lng:-75.567727,c:"c",x:"Bandeja paisa canónica"},
+  {n:"Alambique",lat:6.210863,lng:-75.570768,c:"c",x:"Colombiano moderno · reservad por WhatsApp"},
+  {n:"Mercado del Río",lat:6.225978,lng:-75.57543,c:"c",x:"Mercado gastro: cada uno pide algo"},
+  {n:"Pergamino Café",lat:6.210714,lng:-75.565759,c:"c",x:"El café de especialidad"},
+  {n:"Poblado Guest House 🏨",lat:6.213716,lng:-75.573609,c:"h",x:"Vuestro hotel · El Poblado"},
+ ],
+ adz:[
+  {n:"Playa Spratt Bight",lat:12.583903,lng:-81.691351,c:"v",x:"La playa principal, a un paso del hotel"},
+  {n:"Johnny Cay",lat:12.6,lng:-81.689722,c:"v",x:"Lancha 15 min desde Spratt Bight"},
+  {n:"El Acuario · Haynes Cay",lat:12.537,lng:-81.679,c:"v",x:"Se hace pie en medio del mar · snorkel"},
+  {n:"Rocky Cay",lat:12.541754,lng:-81.701876,c:"v",x:"Se camina por el agua hasta el islote"},
+  {n:"West View + Piscinita",lat:12.521003,lng:-81.729078,c:"v",x:"El mejor snorkel · trampolín al mar"},
+  {n:"Hoyo Soplador",lat:12.481416,lng:-81.731212,c:"v",x:"Géiser natural · piden consumir algo"},
+  {n:"Cueva de Morgan",lat:12.542572,lng:-81.728015,c:"v",x:"¿El tesoro del pirata? Muy turística"},
+  {n:"La Regatta",lat:12.58052,lng:-81.691576,c:"c",x:"La cena especial · cierra domingos"},
+  {n:"Fisherman Place",lat:12.590652,lng:-81.700739,c:"c",x:"Pescado del día · solo mediodía"},
+  {n:"Dreamer Beach Club 🏨",lat:12.584529,lng:-81.697369,c:"h",x:"Vuestro hotel · 10 min andando del aeropuerto"},
+ ],
+ bog:[
+  {n:"Plaza de Bolívar",lat:4.59819,lng:-74.076053,c:"v",x:"El km 0 de Colombia"},
+  {n:"Museo del Oro",lat:4.601913,lng:-74.072041,c:"v",x:"⚠️ Cierra los LUNES → vuestro martes 9:00"},
+  {n:"Monserrate (estación)",lat:4.602993,lng:-74.061006,c:"v",x:"Funicular/teleférico · abrigo para arriba"},
+  {n:"Museo Botero",lat:4.596698,lng:-74.07335,c:"v",x:"Gratis y excelente"},
+  {n:"Chorro de Quevedo",lat:4.597751,lng:-74.069782,c:"v",x:"Donde nació Bogotá · chicha y cuentos"},
+  {n:"Parque de la 93",lat:4.676634,lng:-74.048276,c:"v",x:"Vuestra zona de cenas"},
+  {n:"La Puerta Falsa",lat:4.598013,lng:-74.074814,c:"c",x:"Desde 1816 · tamal + chocolate completo"},
+  {n:"Abasto Usaquén",lat:4.694426,lng:-74.030228,c:"c",x:"Desayunos top cerca del hotel"},
+  {n:"Andrés D.C.",lat:4.666407,lng:-74.054408,c:"c",x:"El delirio rumbero-carnívoro"},
+  {n:"NH Urban 93 🏨",lat:4.680084,lng:-74.053633,c:"h",x:"Vuestro hotel · Chicó"},
+ ],
+};
+const LMAPS = {};
+function ensureMap(id){
+  if(LMAPS[id] || typeof L==='undefined') return;
+  const el = document.getElementById('lmap-'+id);
+  if(!el) return;
+  const c = CIUDADES.find(x=>x.id===id);
+  const m = L.map(el,{scrollWheelZoom:false});
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(m);
+  const cols = {v:getComputedStyle(document.documentElement).getPropertyValue('--'+id).trim()||'#333', c:'#E8A13D', h:'#10393B'};
+  const ems = {v:'⭐',c:'🍽️',h:'🏨'};
+  const bounds = [];
+  MAPA[id].forEach(p=>{
+    const icon = L.divIcon({html:`<div class="pin" style="background:${cols[p.c]}">${ems[p.c]}</div>`,className:'',iconSize:[34,34],iconAnchor:[17,30]});
+    L.marker([p.lat,p.lng],{icon}).addTo(m)
+      .bindPopup(`<b>${p.n}</b><br>${p.x}<br><a href="${gmaps(p.n.replace(' 🏨','')+', '+c.nombre.split('&')[0]+', Colombia')}" target="_blank" rel="noopener">Cómo llegar ›</a>`);
+    bounds.push([p.lat,p.lng]);
+  });
+  m.fitBounds(bounds,{padding:[28,28]});
+  LMAPS[id]=m;
+  setTimeout(()=>m.invalidateSize(),150);
+}
+
 /* ================= VISTA CIUDADES ================= */
 document.getElementById('view-ciudades').innerHTML = `
   <p class="muted" style="margin:2px 2px 12px">Toca una parada para abrir su guía completa 👇</p>
@@ -553,7 +665,13 @@ document.getElementById('view-ciudades').innerHTML = `
 
 function buildCity(id){
   const c = CIUDADES.find(x=>x.id===id);
-  const keys = Object.keys(c.secs);
+  const secs = {...c.secs};
+  const entries = Object.entries(secs);
+  entries.splice(2, 0, ["🗺️ Mapa", `<div class="map-wrap" id="lmap-${id}"></div>
+    <div class="map-legend"><span>⭐ Qué ver</span><span>🍽️ Comer</span><span>🏨 Hotel</span></div>
+    <p class="muted small" style="margin-top:8px">Toca un pin para ver el consejo y abrir la ruta en Google Maps.</p>`]);
+  const keys = entries.map(e=>e[0]);
+  c._secs = Object.fromEntries(entries);
   document.getElementById('view-ciudad').innerHTML = `
     <div class="city-head" style="--c:${c.color};background:${c.color}">
       <button class="back" onclick="go('ciudades')">‹ Ciudades</button>
@@ -564,7 +682,7 @@ function buildCity(id){
     <div class="secnav" style="--c:${c.color}">
       ${keys.map((k,i)=>`<button class="${i===0?'on':''}" style="--c:${c.color}" onclick="openSec(this,'${c.id}-s${i}')">${k}</button>`).join("")}
     </div>
-    ${keys.map((k,i)=>`<div class="sec ${i===0?'on':''}" id="${c.id}-s${i}" style="--c:${c.color}">${c.secs[k]}</div>`).join("")}
+    ${keys.map((k,i)=>`<div class="sec ${i===0?'on':''}" id="${c.id}-s${i}" style="--c:${c.color}">${c._secs[k]}</div>`).join("")}
   `;
   /* botón de modo historia al inicio de la sección Historia */
   const hist = document.getElementById(c.id+'-s0');
@@ -586,7 +704,10 @@ function openSec(btn,id){
   wrap.querySelectorAll('.secnav button').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   wrap.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
+  const sec = document.getElementById(id);
+  sec.classList.add('on');
+  const mapEl = sec.querySelector('.map-wrap');
+  if(mapEl) ensureMap(mapEl.id.replace('lmap-',''));
 }
 
 /* ================= PRÁCTICO ================= */
@@ -837,40 +958,40 @@ renderTareas();
 const STORIES = {
  ctg:{color:"#B33A31", slides:[
   {w:"Cartagena de Indias", e:"⚓", y:"1533", t:"Nace un puerto", x:"Pedro de Heredia funda Cartagena. Pronto será LA puerta de América: por aquí sale el oro del continente rumbo a Sevilla."},
-  {w:"Francis Drake", e:"🏴‍☠️", y:"1586", t:"Llegan los piratas", x:"Francis Drake saquea la ciudad y cobra rescate por no quemarla. España responde con 11 km de murallas y el mayor castillo del continente."},
-  {w:"Blas de Lezo", e:"🦿", y:"1741", t:"El Mediohombre", x:"Blas de Lezo — cojo, tuerto y manco — vence con 6 barcos a los casi 200 del almirante inglés Vernon. Inglaterra ya había acuñado monedas celebrando una victoria… que nunca llegó."},
-  {w:"San Basilio de Palenque", e:"✊", y:"~1600", t:"Palenque: libertad", x:"Esclavizados fugados fundan San Basilio de Palenque, el primer pueblo libre de América. Sus palenqueras de frutas son hoy el icono de la ciudad."},
+  {w:"Francis Drake", e:"🏴‍☠️", y:"1586", t:"Llegan los piratas", st:{n:11,u:"km de murallas como respuesta"}, x:"Francis Drake saquea la ciudad y cobra rescate por no quemarla. España responde con 11 km de murallas y el mayor castillo del continente."},
+  {w:"Blas de Lezo", e:"🦿", y:"1741", t:"El Mediohombre", st:{n:186,u:"barcos ingleses contra sus 6"}, d:"Inglaterra estaba tan segura de ganar que acuñó monedas conmemorando la victoria ANTES de la batalla. Hoy son piezas de coleccionista… de la derrota más vergonzosa de su armada.", x:"Blas de Lezo — cojo, tuerto y manco — vence con 6 barcos a los casi 200 del almirante inglés Vernon. Inglaterra ya había acuñado monedas celebrando una victoria… que nunca llegó."},
+  {w:"San Basilio de Palenque", e:"✊", y:"~1600", t:"Palenque: libertad", d:"En Palenque se habla palenquero, la única lengua criolla de base española del mundo. Y de aquí salió Kid Pambelé, el boxeador que dio a Colombia su primer título mundial (1972).", x:"Esclavizados fugados fundan San Basilio de Palenque, el primer pueblo libre de América. Sus palenqueras de frutas son hoy el icono de la ciudad."},
   {w:"Castillo San Felipe de Barajas", e:"🗽", y:"1811", t:"Independencia", x:"El 11 de noviembre Cartagena se declara independiente de España — antes que Colombia entera. Por eso la llaman 'La Heroica'."},
-  {w:"Gabriel García Márquez", e:"✍️", y:"s. XX", t:"La ciudad de Gabo", x:"García Márquez empieza aquí como periodista y la convierte en escenario de 'El amor en los tiempos del cólera'. Sus cenizas descansan en el claustro de La Merced."},
+  {w:"Gabriel García Márquez", e:"✍️", y:"s. XX", t:"La ciudad de Gabo", st:{n:1982,u:"Premio Nobel de Literatura"}, x:"García Márquez empieza aquí como periodista y la convierte en escenario de 'El amor en los tiempos del cólera'. Sus cenizas descansan en el claustro de La Merced."},
  ]},
  sal:{color:"#2F7448", slides:[
   {w:"Salento (Quindío)", e:"🥾", y:"1842", t:"Pueblo de arrieros", x:"Nace Salento, el pueblo más antiguo del Quindío, en plena colonización antioqueña: familias paisas abriendo montaña a machete y mula."},
   {w:"Café de Colombia", e:"☕", y:"s. XIX", t:"Llega el café", x:"Estas laderas resultan perfectas para el arábica. El café pasa de cultivo casero a motor de todo un país."},
-  {w:"Willys MB", e:"🚙", y:"1946", t:"Los Willys", x:"Jeeps militares sobrantes de la II Guerra Mundial llegan a Colombia... y se convierten en el 4x4 cafetero eterno. Un 'yipao' (Willys a tope) sigue siendo unidad de medida local."},
-  {w:"Ceroxylon quindiuense", e:"🌴", y:"1985", t:"Salvar la palma", x:"La palma de cera — 60 m, la más alta del mundo — casi se extingue por el Domingo de Ramos. Se declara árbol nacional y se prohíbe cortarla."},
-  {w:"Paisaje Cultural Cafetero", e:"🏆", y:"2011", t:"Patrimonio UNESCO", x:"El Paisaje Cultural Cafetero entra en la lista de la Humanidad: fincas, balcones de colores y una forma de vivir el café única."},
+  {w:"Willys MB", e:"🚙", y:"1946", t:"Los Willys", d:"Un ‘yipao’ llega a cargar más de una tonelada. En las fiestas de la zona hay concursos de yipao: gana quien más carga… y quien conduce el Willys en dos ruedas.", x:"Jeeps militares sobrantes de la II Guerra Mundial llegan a Colombia... y se convierten en el 4x4 cafetero eterno. Un 'yipao' (Willys a tope) sigue siendo unidad de medida local."},
+  {w:"Ceroxylon quindiuense", e:"🌴", y:"1985", t:"Salvar la palma", st:{n:60,u:"metros: la palmera más alta del mundo"}, d:"Crece apenas unos centímetros al año: las palmas gigantes que veréis en Cocora ya estaban ahí antes de que naciera vuestra bisabuela. Viven hasta 200 años.", x:"La palma de cera — 60 m, la más alta del mundo — casi se extingue por el Domingo de Ramos. Se declara árbol nacional y se prohíbe cortarla."},
+  {w:"Paisaje Cultural Cafetero", e:"🏆", y:"2011", t:"Patrimonio UNESCO", st:{n:47,u:"municipios forman el Paisaje Cafetero"}, x:"El Paisaje Cultural Cafetero entra en la lista de la Humanidad: fincas, balcones de colores y una forma de vivir el café única."},
  ]},
  med:{color:"#A23E66", slides:[
   {w:"Valle de Aburrá", e:"⛏️", y:"1616", t:"Valle de Aburrá", x:"Colonos vascos y españoles se asientan en este valle a 1.500 m. Del aislamiento entre montañas nace una cultura propia: la paisa."},
   {w:"Medellín", e:"🏭", y:"s. XX", t:"Café y telares", x:"Medellín se industrializa con textiles y café. Trabajadora, montañera y orgullosa: 'el que es paisa, es paisa donde sea'."},
   {e:"🕯️", y:"1980s", t:"Los años oscuros", x:"El cartel de Escobar la convierte en la ciudad más violenta del mundo. Una generación entera crece entre miedo... y resistencia."},
-  {w:"Metro de Medellín", e:"🚇", y:"1995", t:"El metro de la dignidad", x:"Se inaugura el único metro de Colombia. Los paisas lo cuidan como un templo: es el símbolo de que otra ciudad era posible."},
-  {w:"Metrocable (Medellín)", e:"🚡", y:"2004", t:"Cables a los barrios", x:"Los metrocables y las escaleras eléctricas de la Comuna 13 conectan las laderas olvidadas. El urbanismo social se estudia en el mundo entero."},
+  {w:"Metro de Medellín", e:"🚇", y:"1995", t:"El metro de la dignidad", st:{n:1000000,u:"viajes cada día, sin un solo grafiti"}, d:"Existe la ‘cultura Metro’: los paisas no comen, no ensucian y no rayan su metro. Es probablemente el sistema de transporte más querido (y limpio) de América Latina.", x:"Se inaugura el único metro de Colombia. Los paisas lo cuidan como un templo: es el símbolo de que otra ciudad era posible."},
+  {w:"Metrocable (Medellín)", e:"🚡", y:"2004", t:"Cables a los barrios", st:{n:384,u:"metros de escaleras eléctricas en la Comuna 13"}, x:"Los metrocables y las escaleras eléctricas de la Comuna 13 conectan las laderas olvidadas. El urbanismo social se estudia en el mundo entero."},
   {w:"Fernando Botero", e:"🏅", y:"2013", t:"La más innovadora", x:"Wall Street Journal la nombra ciudad más innovadora del mundo. Las gordas de Botero, hijo de la ciudad, presiden la plaza que lleva su nombre."},
  ]},
  adz:{color:"#0F7A83", slides:[
   {w:"San Andrés (isla)", e:"⛵", y:"1629", t:"Puritanos ingleses", x:"Colonos puritanos y jamaicanos pueblan el archipiélago. Por eso aquí se reza en iglesias bautistas y se habla creole, a 720 km de Colombia y solo 190 de Nicaragua."},
-  {w:"Henry Morgan", e:"🏴‍☠️", y:"1670", t:"El pirata Morgan", x:"Henry Morgan usa San Andrés como base para asaltar Panamá. Dicen que su tesoro sigue escondido en la cueva que lleva su nombre…"},
+  {w:"Henry Morgan", e:"🏴‍☠️", y:"1670", t:"El pirata Morgan", d:"Morgan acabó… ¡de gobernador de Jamaica, nombrado por la corona inglesa! El tesoro de sus saqueos a Panamá jamás apareció. Los isleños juran que sigue en la cueva.", x:"Henry Morgan usa San Andrés como base para asaltar Panamá. Dicen que su tesoro sigue escondido en la cueva que lleva su nombre…"},
   {w:"Providencia (isla)", e:"🇨🇴", y:"1822", t:"Adhesión a Colombia", x:"El archipiélago jura la constitución de la Gran Colombia. Nace un territorio único: caribeño, raizal, angloparlante y colombiano."},
   {w:"Raizales", e:"🎶", y:"s. XX", t:"Cultura raizal", x:"Reggae, calipso y soca en creole sanandresano. El rondón cocinándose lento en leche de coco es su plato-ceremonia."},
-  {w:"Seaflower Biosphere Reserve", lang:"en", e:"🐠", y:"2000", t:"Reserva Seaflower", x:"La UNESCO declara todo el archipiélago Reserva de Biosfera: la tercera barrera de coral más grande del planeta."},
-  {w:"Johnny Cay", e:"🌈", y:"Hoy", t:"Los 7 colores", x:"Arena, coral, pasto marino y profundidades distintas pintan franjas reales de turquesa a cobalto. Contadlos al aterrizar: ventanilla izquierda."},
+  {w:"Seaflower Biosphere Reserve", lang:"en", e:"🐠", y:"2000", t:"Reserva Seaflower", st:{n:180000,u:"km² de reserva marina (⅓ de España)"}, x:"La UNESCO declara todo el archipiélago Reserva de Biosfera: la tercera barrera de coral más grande del planeta."},
+  {w:"Johnny Cay", e:"🌈", y:"Hoy", t:"Los 7 colores", st:{n:7,u:"tonos de azul, contadlos al aterrizar"}, x:"Arena, coral, pasto marino y profundidades distintas pintan franjas reales de turquesa a cobalto. Contadlos al aterrizar: ventanilla izquierda."},
  ]},
  bog:{color:"#9A7420", slides:[
-  {w:"Balsa muisca", e:"🛶", y:"~600", t:"Los muiscas", x:"En esta sabana a 2.600 m florece la civilización muisca. Su cacique se cubre de oro y se sumerge en la laguna de Guatavita: nace la leyenda de El Dorado."},
+  {w:"Balsa muisca", e:"🛶", y:"~600", t:"Los muiscas", d:"La laguna de Guatavita fue dinamitada y casi drenada por buscadores de tesoros durante siglos. Se recuperaron algunas piezas… que ahora podréis ver en el Museo del Oro el 4 de agosto.", x:"En esta sabana a 2.600 m florece la civilización muisca. Su cacique se cubre de oro y se sumerge en la laguna de Guatavita: nace la leyenda de El Dorado."},
   {w:"Bogotá", e:"🏛️", y:"1538", t:"Santa Fe", x:"Jiménez de Quesada funda Santa Fe de Bogotá, futura capital del Virreinato de Nueva Granada."},
-  {w:"Florero de Llorente", e:"🏺", y:"1810", t:"El florero", x:"Una disputa por un florero prestado (¡el florero de Llorente!) enciende el 20 de julio el grito de independencia."},
-  {w:"Monserrate", e:"🥣", y:"Hoy", t:"8 millones en las nubes", x:"Tercera capital más alta del mundo. Su ajiaco lleva guascas, una hierba que casi solo crece aquí, y los domingos 120 km de calles son solo para bicis."},
+  {w:"Florero de Llorente", e:"🏺", y:"1810", t:"El florero", d:"El florero existió de verdad: los criollos pidieron prestado el jarrón al español Llorente sabiendo que diría que no, para provocar la revuelta. Sus restos se exponen en el Museo de la Independencia, en la Plaza de Bolívar.", x:"Una disputa por un florero prestado (¡el florero de Llorente!) enciende el 20 de julio el grito de independencia."},
+  {w:"Monserrate", e:"🥣", y:"Hoy", t:"8 millones en las nubes", st:{n:2640,u:"metros sobre el mar"}, x:"Tercera capital más alta del mundo. Su ajiaco lleva guascas, una hierba que casi solo crece aquí, y los domingos 120 km de calles son solo para bicis."},
  ]},
 };
 
@@ -884,7 +1005,10 @@ async function wikiImg(title, lang){
     const r = await fetch(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
     if(!r.ok) throw 0;
     const j = await r.json();
-    const u = (j.originalimage && j.originalimage.source && j.thumbnail) ? j.thumbnail.source.replace(/\/\d+px-/, '/1100px-') : (j.thumbnail?j.thumbnail.source:null);
+    let u = null;
+    if(j.originalimage && j.originalimage.width <= 3200) u = j.originalimage.source;
+    else if(j.thumbnail) u = j.thumbnail.source;
+    else if(j.originalimage) u = j.originalimage.source;
     WIKI_CACHE[key] = u || null;
     return WIKI_CACHE[key];
   }catch(e){ WIKI_CACHE[key] = null; return null; }
@@ -907,6 +1031,8 @@ function openStory(id){
         <div class="yr">${sl.y}</div>
         ${sl.t?`<div class="tt">${sl.t}</div>`:''}
         <div class="tx">${sl.x}</div>
+        ${sl.st?`<div class="stat"><span class="n" data-n="${sl.st.n}">0</span><span class="u">${sl.st.u}</span></div>`:''}
+        ${sl.d?`<div class="dato"><button onclick="this.parentElement.classList.add('open')">✨ Dato curioso</button><div class="dx">${sl.d}</div></div>`:''}
       </div>
       ${sl.w?'<div class="cred">📷 Wikipedia</div>':''}
       ${sl.hero?'<div class="down">⌄</div>':''}
@@ -926,6 +1052,16 @@ function openStory(id){
         const i = +en.target.dataset.i;
         bars.forEach((b,bi)=>b.classList.toggle('done', bi<=i));
         if(navigator.vibrate) navigator.vibrate(6);
+        const num = en.target.querySelector('.stat .n');
+        if(num && !num.dataset.done){
+          num.dataset.done = 1;
+          const target = +num.dataset.n, t0 = performance.now(), dur = 1400;
+          (function tick(t){
+            const p = Math.min((t-t0)/dur, 1), ease = 1-Math.pow(1-p,3);
+            num.textContent = Math.round(target*ease).toLocaleString('es');
+            if(p<1) requestAnimationFrame(tick);
+          })(t0);
+        }
       }
     });
   },{root:flow, threshold:.55});

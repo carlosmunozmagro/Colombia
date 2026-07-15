@@ -1,6 +1,6 @@
-const CACHE = 'colombia-v6';
+const CACHE = 'colombia-v7';
 const FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
-const REMOTE_OK = h => h.endsWith('wikipedia.org') || h.endsWith('wikimedia.org');
+const REMOTE_OK = h => ['wikipedia.org','wikimedia.org','openstreetmap.org','cdnjs.cloudflare.com','fonts.googleapis.com','fonts.gstatic.com'].some(d => h.endsWith(d));
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
 });
