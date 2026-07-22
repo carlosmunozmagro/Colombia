@@ -28,35 +28,36 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
+html,body{height:100%}
 body{
   font-family:'Karla',system-ui,sans-serif;background:var(--paper);color:var(--ink);
   font-size:16px;line-height:1.55;
-  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  height:100dvh;display:flex;flex-direction:column;overflow:hidden;
 }
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
 .stripe{height:5px;background:var(--stripe);border-radius:3px}
 
 /* ---------- Header ---------- */
 header.app{
-  background:var(--deep);color:#F2EFE4;padding:calc(14px + env(safe-area-inset-top)) 18px 16px;
-  position:sticky;top:0;z-index:40;
+  background:var(--deep);color:#F2EFE4;padding:calc(12px + env(safe-area-inset-top)) 18px 13px;
+  flex:none;z-index:40;
 }
 header.app .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.75;font-weight:700}
-header.app h1{font-size:26px;font-weight:900;margin:2px 0 8px}
+header.app h1{font-size:23px;font-weight:900;margin:2px 0 7px}
 header.app h1 em{font-style:italic;color:#7FD8C9}
 header.app .stripe{opacity:.95}
 
 /* ---------- Layout ---------- */
-main{max-width:640px;margin:0 auto;padding:16px 16px 32px}
+main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 24px;width:100%;max-width:640px;margin:0 auto}
 .view{display:none;animation:fade .25s ease}
 .view.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ---------- Bottom nav ---------- */
 nav.tabs{
-  position:fixed;bottom:0;left:0;right:0;z-index:50;height:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  flex:none;z-index:50;height:calc(var(--nav-h) + env(safe-area-inset-bottom));
   padding-bottom:env(safe-area-inset-bottom);
-  background:rgba(251,250,244,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(251,250,244,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-top:1px solid var(--line);display:flex;
 }
 nav.tabs button{
@@ -183,35 +184,38 @@ a.gm{text-decoration:none;font-size:13px;margin-left:6px;vertical-align:1px}
 .rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--ink-soft)}
 .rate-row input{width:76px;border:1px solid var(--line);border-radius:8px;padding:4px 8px;font:inherit;font-size:14px;text-align:center;background:var(--paper)}
 
-/* ---------- Calculadora grande ---------- */
-.calc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px;margin-bottom:14px}
-.calc .disp{background:linear-gradient(160deg,#10393B,#0B2A2C);border-radius:16px;padding:16px 18px;color:#F2EFE4}
-.calc .lab{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
-.calc .cop{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(34px,10vw,50px);line-height:1.05;
-  letter-spacing:-.02em;word-break:break-all;min-height:52px}
-.calc .cop .cur2{font-size:.42em;opacity:.65;margin-left:6px;font-weight:700}
-.calc .sep{height:1px;background:rgba(255,255,255,.16);margin:12px 0}
-.calc .eur{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(30px,8.6vw,44px);color:#7FD8C9;line-height:1.05}
-.calc .eur .cur2{font-size:.44em;opacity:.75;margin-left:6px}
-.calc .hint2{font-size:12px;opacity:.6;margin-top:8px}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
-.steps button{border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-family:inherit;
-  font-weight:700;font-size:15px;padding:13px 4px;border-radius:13px;cursor:pointer}
-.steps button.plus{border-color:#9FD3BE;background:#EFF7F2;color:#1F6B4A}
-.steps button.minus{border-color:#EBC3BC;background:#FDF1EF;color:#9C4335}
-.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.qgrid button{border:1.5px solid var(--deep);background:transparent;color:var(--deep);font-family:inherit;
-  font-weight:700;font-size:15px;padding:13px 4px;border-radius:13px;cursor:pointer}
-.calcrow{display:flex;gap:8px;margin-top:10px}
-.calcrow button{flex:1;border:none;background:var(--deep);color:#fff;font-family:inherit;font-weight:700;
-  font-size:14px;padding:12px;border-radius:13px;cursor:pointer}
-.calcrow button.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft)}
-.calc .manual{display:flex;gap:8px;align-items:center;margin-top:12px}
-.calc .manual input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;
-  font:inherit;font-size:17px;font-weight:700;background:var(--paper)}
-.ref{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
-.ref:last-child{border-bottom:none}
-.ref b{color:var(--deep)}
+/* ---------- Calculadora ---------- */
+.calc{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px 14px 14px}
+.calc .disp{background:linear-gradient(155deg,#10393B,#0A2426);border-radius:18px;padding:16px 18px 15px;color:#F2EFE4;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.calc .lab{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.62}
+.calc .cop{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(34px,10.5vw,52px);line-height:1.04;
+  letter-spacing:-.025em;word-break:break-all}
+.calc .cop .cur2{font-size:.36em;opacity:.55;margin-left:7px;font-weight:700;letter-spacing:0}
+.calc .sep{height:1px;background:rgba(255,255,255,.14);margin:11px 0}
+.calc .eur{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(28px,8.4vw,42px);color:#7FD8C9;line-height:1.04;letter-spacing:-.02em}
+.calc .eur .cur2{font-size:.38em;opacity:.7;margin-left:7px}
+
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.qgrid button{border:1.5px solid #DCD7C6;background:linear-gradient(180deg,#FFFFFF,#F7F4E9);color:var(--deep);
+  font-family:'Fraunces',serif;font-weight:700;font-size:19px;padding:15px 4px;border-radius:15px;cursor:pointer;
+  box-shadow:0 1px 2px rgba(0,0,0,.05);transition:transform .08s ease}
+.qgrid button:active{transform:scale(.95);background:#EFEADC}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:9px}
+.steps button{border:none;font-family:'Karla',sans-serif;font-weight:700;font-size:15.5px;padding:14px 2px;
+  border-radius:15px;cursor:pointer;letter-spacing:-.01em;transition:transform .08s ease}
+.steps button:active{transform:scale(.94)}
+.steps .minus{background:linear-gradient(180deg,#FCEFEC,#F7E2DD);color:#A2453A;box-shadow:inset 0 0 0 1.5px #EFCFC7}
+.steps .plus{background:linear-gradient(180deg,#E9F6EE,#DBEEE3);color:#1E6B48;box-shadow:inset 0 0 0 1.5px #BFE0CD}
+
+.calcbar{display:flex;gap:9px;margin-top:12px;align-items:center}
+.calcbar button{border:none;background:var(--deep);color:#fff;font-family:inherit;font-weight:700;
+  font-size:14px;padding:12px 16px;border-radius:14px;cursor:pointer;flex:none}
+.calcbar button.ghost{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink-soft)}
+.calcbar .rt{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft);font-weight:700}
+.calcbar .rt input{width:66px;border:1.5px solid var(--line);border-radius:11px;padding:8px 6px;
+  font:inherit;font-size:14.5px;font-weight:700;text-align:center;background:var(--paper);color:var(--ink)}
 
 /* ---------- Lectura larga ---------- */
 .longread{font-size:16.5px;line-height:1.72}
@@ -1537,46 +1541,29 @@ document.getElementById('view-cambio').innerHTML = `
       <div class="lab">Pesos colombianos</div>
       <div class="cop" id="d-cop">50.000<span class="cur2">COP</span></div>
       <div class="sep"></div>
-      <div class="lab">Son aproximadamente</div>
+      <div class="lab">Equivale a</div>
       <div class="eur" id="d-eur">11,11<span class="cur2">EUR</span></div>
-      <div class="hint2" id="d-rate"></div>
-    </div>
-    <div class="steps">
-      <button class="minus" onclick="bump(-1000)">−1K</button>
-      <button class="minus" onclick="bump(-5000)">−5K</button>
-      <button class="plus" onclick="bump(5000)">+5K</button>
-      <button class="plus" onclick="bump(10000)">+10K</button>
-    </div>
-    <div class="steps">
-      <button class="minus" onclick="bump(-20000)">−20K</button>
-      <button class="minus" onclick="bump(-50000)">−50K</button>
-      <button class="plus" onclick="bump(50000)">+50K</button>
-      <button class="plus" onclick="bump(100000)">+100K</button>
     </div>
     <div class="qgrid">
-      ${[5000,10000,15000,20000,30000,40000,50000,60000,80000,100000,150000,200000,300000,500000,1000000]
-        .map(v=>`<button onclick="setCop(${v})">${v>=1000000?(v/1000000)+'M':(v/1000)+'K'}</button>`).join('')}
+      ${[5000,10000,20000,50000,100000,200000].map(v=>`<button onclick="setCop(${v})">${v/1000}K</button>`).join('')}
     </div>
-    <div class="calcrow">
+    <div class="steps">
+      <button class="minus" onclick="bump(-50000)">−50K</button>
+      <button class="minus" onclick="bump(-10000)">−10K</button>
+      <button class="plus" onclick="bump(10000)">+10K</button>
+      <button class="plus" onclick="bump(50000)">+50K</button>
+    </div>
+    <div class="steps">
+      <button class="minus" onclick="bump(-5000)">−5K</button>
+      <button class="minus" onclick="bump(-1000)">−1K</button>
+      <button class="plus" onclick="bump(1000)">+1K</button>
+      <button class="plus" onclick="bump(5000)">+5K</button>
+    </div>
+    <div class="calcbar">
       <button class="ghost" onclick="setCop(0)">Borrar</button>
       <button onclick="flipCalc()">€ → COP</button>
+      <span class="rt">1 € =<input id="rate" inputmode="numeric" onchange="setRate()"></span>
     </div>
-    <div class="manual">
-      <span class="muted small" style="flex:none">Tasa 1 € =</span>
-      <input id="rate" inputmode="numeric" onchange="setRate()">
-      <span class="muted small" style="flex:none">COP</span>
-    </div>
-  </div>
-  <div class="card">
-    <h3 style="font-size:16px;margin-bottom:6px">Precios de referencia</h3>
-    <div class="ref"><span>Taxi corto en ciudad</span><b>10–25.000</b></div>
-    <div class="ref"><span>Almuerzo del día (menú)</span><b>15–25.000</b></div>
-    <div class="ref"><span>Cerveza / jugo natural</span><b>5–10.000</b></div>
-    <div class="ref"><span>Cena en restaurante bueno</span><b>60–120.000</b></div>
-    <div class="ref"><span>Willys a Cocora (por trayecto)</span><b>~6.000</b></div>
-    <div class="ref"><span>Tour cayos San Andrés</span><b>70–100.000</b></div>
-    <div class="ref"><span>Carrito de golf (día)</span><b>150–250.000</b></div>
-    <div class="ref"><span>Tarjeta de turismo San Andrés</span><b>153.000</b></div>
   </div>
 `;
 
@@ -1586,7 +1573,6 @@ function paint(){
   const e = CV/r;
   document.getElementById('d-eur').innerHTML =
     e.toLocaleString('es',{minimumFractionDigits:2, maximumFractionDigits:2}) + '<span class="cur2">EUR</span>';
-  document.getElementById('d-rate').textContent = 'Tasa usada: 1 € = ' + fmt(r) + ' COP';
   const ri = document.getElementById('rate'); if(ri) ri.value = r;
 }
 function setCop(v){ CV = Math.max(0, v); if(navigator.vibrate) navigator.vibrate(5); paint(); }
@@ -1616,7 +1602,7 @@ function render(v, id){
   document.getElementById('view-'+v).classList.add('on');
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('on'));
   const tb = document.getElementById('tab-'+(v==='ciudad'?'ciudades':v)); if(tb) tb.classList.add('on');
-  window.scrollTo({top:0});
+  const m = document.querySelector('main'); if(m) m.scrollTop = 0;
 }
 function route(){
   const hsh = location.hash || '#cambio';
