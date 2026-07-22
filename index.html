@@ -23,7 +23,7 @@
   --ink:#17302E; --ink-soft:#4A615E; --paper:#FBFAF4; --card:#FFFFFF;
   --line:#E4E0D2; --deep:#10393B;
   --ctg:#E2574C; --sal:#3E8E5A; --med:#C94F7C; --adz:#1699A3; --bog:#C99527;
-  --radius:16px; --nav-h:54px;
+  --radius:16px; --nav-h:54px; --app-h:100dvh; --safe-b:0px;
   --stripe:linear-gradient(90deg,#0E7C86 0%,#12A5A0 18%,#35C4B5 36%,#7FD8C9 52%,#B8E8DB 66%,#E2574C 82%,#C99527 100%);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -33,7 +33,7 @@ body{
   font-family:'Karla',system-ui,sans-serif;background:var(--deep);color:var(--ink);
   font-size:16px;line-height:1.55;
   position:fixed;top:0;right:0;bottom:0;left:0;
-  height:100%;min-height:-webkit-fill-available;
+  height:var(--app-h);min-height:-webkit-fill-available;
   display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;
 }
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
@@ -58,8 +58,8 @@ main{flex:1;min-height:0;background:var(--paper);overflow-y:auto;overscroll-beha
 /* ---------- Bottom nav ---------- */
 nav.tabs{
   flex:none;z-index:50;position:relative;
-  height:calc(var(--nav-h) + max(env(safe-area-inset-bottom) - 16px, 0px));
-  padding-bottom:max(calc(env(safe-area-inset-bottom) - 16px), 0px);
+  height:calc(var(--nav-h) + var(--safe-b));
+  padding-bottom:var(--safe-b);
   background:var(--deep);display:flex;align-items:stretch;
 }
 nav.tabs::after{content:"";position:absolute;top:100%;left:0;right:0;height:120px;background:var(--deep)}
@@ -379,6 +379,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid #35C4B5;outline-off
   <section id="view-practico" class="view pract"></section>
 </main>
 
+<div id="safeprobe" style="position:fixed;left:0;bottom:0;width:0;visibility:hidden;pointer-events:none;height:env(safe-area-inset-bottom)"></div>
+
 <div id="story" role="dialog" aria-label="Historia visual">
   <div class="pbar"></div>
   <div class="top"><span class="cy"></span><span class="ct2"></span></div>
@@ -388,7 +390,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #35C4B5;outline-off
 </div>
 
 <nav class="tabs">
-  <button id="tab-cambio" class="on" onclick="go('cambio')"><span class="ico">💱</span>Cambio</button>
+  <button id="tab-cambio" class="on" onclick="go('cambio')"><span class="ico">🪙</span>Cambio</button>
   <button id="tab-itinerario" onclick="go('itinerario')"><span class="ico">🧭</span>Itinerario</button>
   <button id="tab-ciudades" onclick="go('ciudades')"><span class="ico">🏝️</span>Ciudades</button>
   <button id="tab-tareas" onclick="go('tareas')"><span class="ico">✅</span>Tareas</button>
@@ -1178,7 +1180,7 @@ document.getElementById('view-practico').innerHTML = `
       <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
     </ul>
   </div></details>
-  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v14 · actualizada</p>
+  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v15 · actualizada</p>
   <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
     <ul>
       <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
@@ -1621,6 +1623,29 @@ function route(){
 }
 window.addEventListener('hashchange', route);
 route();
+
+/* ====== AJUSTE DINÁMICO A LA PANTALLA ====== */
+function fitScreen(){
+  const r = document.documentElement;
+  /* alto real visible (cambia con barras del navegador, orientación, etc.) */
+  const vv = window.visualViewport;
+  const hgt = Math.round(vv ? vv.height : window.innerHeight);
+  if(hgt > 200) r.style.setProperty('--app-h', hgt + 'px');
+  /* margen inferior REAL del dispositivo, medido con la sonda */
+  const probe = document.getElementById('safeprobe');
+  const inset = probe ? Math.round(probe.getBoundingClientRect().height) : 0;
+  /* solo reservamos lo justo para no pisar la barra de gestos */
+  r.style.setProperty('--safe-b', (inset > 0 ? Math.min(Math.round(inset*0.35), 12) : 0) + 'px');
+}
+fitScreen();
+window.addEventListener('resize', fitScreen);
+window.addEventListener('orientationchange', ()=>setTimeout(fitScreen,180));
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', fitScreen);
+  window.visualViewport.addEventListener('scroll', fitScreen);
+}
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) fitScreen(); });
+window.addEventListener('load', ()=>setTimeout(fitScreen,120));
 
 /* Offline */
 if('serviceWorker' in navigator){
