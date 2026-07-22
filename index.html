@@ -183,6 +183,55 @@ a.gm{text-decoration:none;font-size:13px;margin-left:6px;vertical-align:1px}
 .rate-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--ink-soft)}
 .rate-row input{width:76px;border:1px solid var(--line);border-radius:8px;padding:4px 8px;font:inherit;font-size:14px;text-align:center;background:var(--paper)}
 
+/* ---------- Calculadora grande ---------- */
+.calc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px;margin-bottom:14px}
+.calc .disp{background:linear-gradient(160deg,#10393B,#0B2A2C);border-radius:16px;padding:16px 18px;color:#F2EFE4}
+.calc .lab{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
+.calc .cop{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(34px,10vw,50px);line-height:1.05;
+  letter-spacing:-.02em;word-break:break-all;min-height:52px}
+.calc .cop .cur2{font-size:.42em;opacity:.65;margin-left:6px;font-weight:700}
+.calc .sep{height:1px;background:rgba(255,255,255,.16);margin:12px 0}
+.calc .eur{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(30px,8.6vw,44px);color:#7FD8C9;line-height:1.05}
+.calc .eur .cur2{font-size:.44em;opacity:.75;margin-left:6px}
+.calc .hint2{font-size:12px;opacity:.6;margin-top:8px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.steps button{border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font-family:inherit;
+  font-weight:700;font-size:15px;padding:13px 4px;border-radius:13px;cursor:pointer}
+.steps button.plus{border-color:#9FD3BE;background:#EFF7F2;color:#1F6B4A}
+.steps button.minus{border-color:#EBC3BC;background:#FDF1EF;color:#9C4335}
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.qgrid button{border:1.5px solid var(--deep);background:transparent;color:var(--deep);font-family:inherit;
+  font-weight:700;font-size:15px;padding:13px 4px;border-radius:13px;cursor:pointer}
+.calcrow{display:flex;gap:8px;margin-top:10px}
+.calcrow button{flex:1;border:none;background:var(--deep);color:#fff;font-family:inherit;font-weight:700;
+  font-size:14px;padding:12px;border-radius:13px;cursor:pointer}
+.calcrow button.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft)}
+.calc .manual{display:flex;gap:8px;align-items:center;margin-top:12px}
+.calc .manual input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;
+  font:inherit;font-size:17px;font-weight:700;background:var(--paper)}
+.ref{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.ref:last-child{border-bottom:none}
+.ref b{color:var(--deep)}
+
+/* ---------- Lectura larga ---------- */
+.longread{font-size:16.5px;line-height:1.72}
+.longread h3{font-size:19px;margin:26px 0 8px}
+.longread h3:first-child{margin-top:8px}
+.longread p{margin-bottom:13px}
+.longread .lead{font-size:18px;line-height:1.6;font-family:'Fraunces',serif;font-weight:500;
+  border-left:4px solid var(--c,#333);padding-left:14px;margin-bottom:18px}
+.longread blockquote{margin:16px 0;padding:14px 16px;background:#F5F2E6;border-radius:0 14px 14px 0;
+  border-left:4px solid var(--c,#333);font-family:'Fraunces',serif;font-size:16.5px;line-height:1.5}
+.longread .rtime{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;
+  color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.longread ul{margin:4px 0 14px;padding-left:0}
+.longread li{border-bottom:none;padding:5px 0 5px 20px;position:relative}
+.longread li::before{content:"›";position:absolute;left:6px;color:var(--c,#333);font-weight:700}
+.longread .barrio{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c,#333);
+  border-radius:14px;padding:14px 16px;margin:14px 0}
+.longread .barrio h4{font-size:17px;font-family:'Fraunces',serif;margin-bottom:5px}
+.longread .barrio .meta{font-size:12px;font-weight:700;color:var(--c,#333);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+
 /* ---------- Mapa por ciudad ---------- */
 .map-wrap{height:62vh;min-height:380px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
 .map-legend{display:flex;gap:14px;margin:10px 2px 0;font-size:12.5px;color:var(--ink-soft);font-weight:700}
@@ -312,7 +361,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid #35C4B5;outline-off
 </header>
 
 <main>
-  <section id="view-itinerario" class="view on"></section>
+  <section id="view-cambio" class="view on"></section>
+  <section id="view-itinerario" class="view"></section>
   <section id="view-ciudades" class="view"></section>
   <section id="view-ciudad" class="view"></section>
   <section id="view-tareas" class="view"></section>
@@ -328,7 +378,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid #35C4B5;outline-off
 </div>
 
 <nav class="tabs">
-  <button id="tab-itinerario" class="on" onclick="go('itinerario')"><span class="ico">🧭</span>Itinerario</button>
+  <button id="tab-cambio" class="on" onclick="go('cambio')"><span class="ico">💱</span>Cambio</button>
+  <button id="tab-itinerario" onclick="go('itinerario')"><span class="ico">🧭</span>Itinerario</button>
   <button id="tab-ciudades" onclick="go('ciudades')"><span class="ico">🏝️</span>Ciudades</button>
   <button id="tab-tareas" onclick="go('tareas')"><span class="ico">✅</span>Tareas</button>
   <button id="tab-practico" onclick="go('practico')"><span class="ico">💡</span>Práctico</button>
@@ -616,6 +667,308 @@ const CIUDADES = [
 ];
 
 
+
+/* ================= LECTURAS LARGAS ================= */
+const LECTURA = {
+sal:`<span class="rtime">📖 Lectura de ~20 min</span>
+<p class="lead">El Eje Cafetero no es un paisaje: es una forma de vivir que se inventó hace siglo y medio a golpe de machete, y que sigue funcionando. Salento es el pueblo donde mejor se ve, y el Valle de Cocora es lo que pasa cuando la naturaleza decide superar a cualquier arquitecto.</p>
+
+<h3>La colonización antioqueña: cómo se pobló esta montaña</h3>
+<p>A mediados del siglo XIX, Antioquia (la región de Medellín) tenía un problema: demasiada gente y muy poca tierra buena. Empezó entonces una migración lenta hacia el sur, familia a familia, mula a mula, abriendo camino con machete por una cordillera cubierta de selva. No fue una colonización organizada por el Estado sino una expansión campesina espontánea que en pocas décadas fundó decenas de pueblos: Salento (1842), Filandia, Circasia, Manizales, Pereira, Armenia.</p>
+<p>Aquellos colonos traían un modelo cultural muy definido: familias enormes y católicas, propiedad pequeña trabajada por sus dueños, arquitectura de <strong>bahareque</strong> (una estructura de guadua —el bambú andino— rellena de barro y estiércol, ligera, barata y sorprendentemente antisísmica) y una ética del trabajo casi obsesiva. La palabra que resume todo eso es <em>"berraquera"</em>: tesón, empuje, no rendirse.</p>
+<p>Ese modelo explica lo que veréis. Los pueblos del Eje Cafetero tienen todos la misma estructura —plaza con iglesia, calles en cuadrícula, casas de un piso con zócalo pintado, puertas y ventanas de colores intensos— porque son hijos de la misma migración. Y los colores no son turismo: pintar la casa con lo que sobraba de otras pinturas era una costumbre práctica que se volvió identidad.</p>
+<p>Salento tiene además el mérito de ser el más antiguo del Quindío y de haber estado en la ruta del <em>Camino Nacional</em>, la vía que Simón Bolívar mandó construir para conectar Bogotá con el occidente. Todavía se pueden caminar tramos empedrados de aquella ruta.</p>
+
+<h3>El café: por qué aquí y por qué importa tanto</h3>
+<p>El café llegó a esta zona a finales del XIX y encontró el sitio perfecto: altitud entre 1.200 y 2.000 metros, temperaturas estables de 18-22 °C, lluvias repartidas, suelo volcánico rico y sombra de montaña. Esa combinación produce un grano de maduración lenta, más denso y más aromático: lo que en el mundo se conoce como <em>café suave lavado</em>, la especialidad colombiana.</p>
+<p>Pero lo que hizo grande al café colombiano no fue solo la geografía: fue la organización. En 1927 se creó la <strong>Federación Nacional de Cafeteros</strong>, una entidad de los propios productores que fija precios de garantía, financia investigación (el centro Cenicafé desarrolla variedades resistentes a plagas) y construyó carreteras, escuelas y hospitales en zonas donde el Estado no llegaba. En 1958 inventaron a <strong>Juan Valdez</strong>, el cafetero de sombrero y mula, para diferenciar el café colombiano en Estados Unidos. Funcionó tan bien que hoy es una de las marcas de origen más reconocidas del planeta.</p>
+<p>La estructura sigue siendo de minifundio: más de 500.000 familias cafeteras, la mayoría con fincas de menos de dos hectáreas. Por eso el tour del café aquí no es una visita a una industria, sino a una casa. Y por eso se recoge a mano, grano a grano, solo los rojos: la <em>recolección selectiva</em> que explica buena parte de la calidad.</p>
+
+<h3>Qué vais a ver realmente en un tour de café</h3>
+<p>Merece la pena saber de antemano el proceso, porque así el tour deja de ser una caminata bonita y se vuelve fascinante:</p>
+<ul>
+<li><strong>El cafeto</strong>: un arbusto que da flores blancas con olor a jazmín y, meses después, cerezas que pasan de verde a rojo intenso. Cada cereza tiene dos granos.</li>
+<li><strong>Recolección</strong>: a mano, solo las rojas. Un buen recolector llena un canasto con 50-60 kg al día y cobra por kilo. Es un trabajo durísimo, y hoy hay escasez de recolectores.</li>
+<li><strong>Despulpado</strong>: se retira la piel y queda el grano cubierto de un mucílago dulce y pegajoso.</li>
+<li><strong>Fermentación</strong>: 12-24 horas en tanques. Aquí se juega buena parte del sabor final; las fincas de especialidad experimentan con fermentaciones largas, anaeróbicas o con levaduras.</li>
+<li><strong>Lavado y secado</strong>: al sol en marquesinas o en secadores. Hasta que el grano queda con un 11% de humedad.</li>
+<li><strong>Trilla y tueste</strong>: se quita el pergamino y se tuesta. Y aquí el dato incómodo: durante décadas el mejor café se exportaba entero y en Colombia se bebía lo que sobraba, tostado casi negro y con azúcar. Eso ha cambiado radicalmente en los últimos quince años con la revolución del café de especialidad.</li>
+</ul>
+<p>En la <strong>cata</strong> final os enseñarán a sorber ruidosamente (para airear el café y repartirlo por la lengua) y a identificar acidez, cuerpo y notas. Los cafés de esta zona suelen tener acidez cítrica, cuerpo medio y notas a caramelo, panela y frutas rojas.</p>
+<blockquote>Vocabulario esencial: un "tinto" es un café negro pequeño, y os lo ofrecerán todo el día. Un "perico" o "pintadito" lleva un poco de leche. Si pedís "café con leche" os traerán un vaso grande de leche caliente con un chorrito de café.</blockquote>
+
+<h3>El Valle de Cocora y las palmas imposibles</h3>
+<p>A 11 kilómetros de Salento, la carretera termina en un valle verde flanqueado por montañas, y de la hierba salen unas columnas de treinta, cuarenta, sesenta metros rematadas por un penacho de hojas. Son <strong>palmas de cera del Quindío</strong> (Ceroxylon quindiuense), la palmera más alta del mundo y el árbol nacional de Colombia.</p>
+<p>Lo extraordinario no es solo su altura, sino que crecen a 2.500 metros de altitud, en un clima frío y de niebla donde ninguna palmera debería sobrevivir. Su tronco está cubierto de una capa de cera que durante el siglo XIX se explotó para fabricar velas y jabón: se talaba el árbol entero para raspar la cera. Eso, sumado a la costumbre de cortar las hojas para el Domingo de Ramos, casi las extinguió. En 1985 fueron declaradas árbol nacional y protegidas por ley.</p>
+<p>Hoy hay otro problema, más silencioso: la mayoría de las palmas que veréis son adultas y viejas —pueden vivir 150-200 años— y los brotes jóvenes no prosperan porque el ganado se los come. Muchos de los ejemplares que fotografiaréis llevan ahí desde antes de que existiera Colombia como país.</p>
+<p><strong>Cómo hacerlo:</strong> hay dos versiones. La <em>caminata completa</em> (unos 12 km, 5-6 horas) recorre un circuito que sube por el bosque de niebla, cruza seis puentes colgantes sobre el río Quindío, pasa por la Casa de los Colibríes —donde por unos pesos sirven agua de panela con queso y se ven colibríes a un palmo— y baja por el mirador entre las palmas. La versión corta va directa al mirador (1,5-2 h ida y vuelta). Si tenéis tiempo y piernas, haced la completa <em>en sentido antihorario</em>: se sube por el bosque cuando aún hace fresco y se termina bajando entre las palmas con la mejor luz.</p>
+<p>Consejos prácticos: botas o zapatillas que se puedan embarrar (el barro es parte del plan), chubasquero siempre, agua, y salir temprano —los Willys empiezan a las 6:30 desde la plaza y la niebla suele entrar a partir de mediodía. Se paga una pequeña entrada al acceder a las fincas privadas del recorrido.</p>
+
+<h3>Los Willys, el yipao y una cultura sobre ruedas</h3>
+<p>Después de la Segunda Guerra Mundial, Estados Unidos vendió a precio de saldo miles de jeeps Willys. En una región de montaña sin carreteras asfaltadas fueron una revolución: podían subir donde no llegaba nada más, cargados hasta lo imposible. Se convirtieron en el transporte del café y, con el tiempo, en un símbolo cultural.</p>
+<p>El <strong>"yipao"</strong> es la unidad de medida: lo que cabe en un Willys. Y cabe muchísimo —hasta una tonelada—: plátanos, sacos de café, muebles, una familia entera, gallinas, un colchón. En las ferias de la zona se celebran concursos de yipao donde gana quien más carga lleve y quien consiga conducirlo con las ruedas delanteras en el aire.</p>
+<p>En la plaza de Salento salen a diario hacia Cocora y las fincas. Se paga en efectivo, unos 6.000 pesos por trayecto, y si va lleno se viaja de pie en el estribo trasero agarrado a la barra. Es incómodo, es ruidoso y es una de las mejores cosas que haréis en el viaje.</p>
+
+<h3>Salento y sus alrededores, punto por punto</h3>
+<div class="barrio"><div class="meta">El pueblo</div><h4>Calle Real y la plaza</h4>
+<p>La Carrera 6, conocida como Calle Real, sube desde la plaza de Bolívar entre casas de colores convertidas en tiendas de artesanía, cafés y restaurantes, hasta las escaleras del <strong>mirador Alto de la Cruz</strong> (unos 200 escalones). Desde arriba se ve el valle del río Quindío y, en días claros, los nevados. Id al atardecer.</p>
+<p>La plaza es el centro de todo: de ahí salen los Willys, ahí está vuestro hotel, y ahí se sienta la gente del pueblo por la tarde. Salento tiene unos 7.000 habitantes y recibe muchísimo turismo; en julio (temporada alta colombiana) estará lleno. Para verlo tranquilo, salid a la calle antes de las ocho de la mañana: es otro pueblo.</p></div>
+
+<div class="barrio"><div class="meta">A 40 minutos</div><h4>Filandia</h4>
+<p>El pueblo hermano, igual de bonito y bastante menos saturado. Su plaza es probablemente más armoniosa que la de Salento, y tiene el <strong>Mirador Colina Iluminada</strong>, una torre de madera desde la que se ven tres departamentos. Aquí se rodó la serie <em>Café con aroma de mujer</em>. Es también un centro de cestería en bejuco. Se llega en bus o Willys desde Salento en unos 40 minutos.</p></div>
+
+<div class="barrio"><div class="meta">Si sobra tiempo</div><h4>Otras opciones de la zona</h4>
+<p><strong>Termales de Santa Rosa de Cabal</strong> (a ~1,5 h): aguas termales al pie de una cascada, ideal si las piernas quedan destrozadas tras Cocora. <strong>Recuca</strong>: una finca-museo donde se hace el recorrido del café disfrazado de recolector, muy divertido si se va con niños o con ganas de reírse. <strong>Pijao</strong>: pueblo cittaslow, aún menos turístico.</p></div>
+
+<h3>La mesa paisa de montaña</h3>
+<p>Aquí cambia todo respecto a la costa: hace fresco, se trabaja duro y la comida es contundente y de tierra adentro.</p>
+<p>La estrella local es la <strong>trucha arcoíris</strong>, criada en los ríos fríos de la zona, servida al ajillo, en salsa de champiñones, con maracuyá o simplemente frita, casi siempre acompañada de un <strong>patacón gigante</strong> del tamaño de un plato. La <strong>bandeja paisa</strong> es el plato-monumento: frijoles cargados, arroz, carne molida, chicharrón, chorizo, morcilla, huevo frito, tajadas de plátano maduro, arepa y aguacate. Es comida diseñada para alguien que va a cortar caña doce horas; pedid una para compartir salvo que tengáis hambre real.</p>
+<p>Otras cosas que probar: <strong>sancocho</strong> de gallina (sopa espesa de tubérculos), <strong>arepa de chócolo</strong> con quesito (dulce, de maíz tierno), <strong>empanadas</strong> con ají, <strong>chorizo con arepa</strong>, y de postre <strong>brevas con arequipe</strong> o <strong>solteritas</strong>. Para beber: agua de panela con queso (la panela es azúcar de caña sin refinar; el queso se echa dentro y se derrite), <strong>canelazo</strong> si hace frío, y por supuesto café de la finca de al lado.</p>
+<p>Y el <strong>aguardiente</strong>: anisado, se bebe en chupitos fríos y cada región tiene el suyo. Aquí, Aguardiente Cristal.</p>
+
+<h3>El tejo: el deporte nacional que explota</h3>
+<p>Tenéis que jugarlo. El tejo es un juego de origen indígena muisca que consiste en lanzar un disco de metal de casi un kilo contra una caja de arcilla inclinada, donde hay colocadas unas <strong>mechas</strong>: pequeños sobres de papel con pólvora. Si le das a una, explota. Se juega con cerveza en la mano y se grita mucho.</p>
+<p>Es gratis o casi (unos 5.000 pesos por persona) siempre que consumáis bebida, y en Salento el sitio clásico es la cancha Los Amigos. Os explicarán las reglas encantados. Es probablemente la actividad más divertida y más genuinamente colombiana de todo el viaje, y no aparece en ninguna guía de las bonitas.</p>
+
+<h3>Detalles prácticos que importan aquí</h3>
+<ul>
+<li><strong>Efectivo</strong>: hay pocos cajeros en Salento y a veces se quedan sin billetes. Sacad dinero en Pereira o Armenia antes de subir. Willys, entradas y muchos restaurantes son solo efectivo.</li>
+<li><strong>Clima</strong>: 1.900 m de altitud. Mañanas soleadas, tardes de chubasco, noches frescas (12-15 °C). Capas y chubasquero. La lluvia de julio suele ser corta e intensa.</li>
+<li><strong>Altitud</strong>: no es Bogotá, pero si venís del nivel del mar de Cartagena, el primer día notaréis algo de falta de aire subiendo cuestas. Normal.</li>
+<li><strong>Llegada nocturna</strong>: aterrizáis en Pereira a las 21:54 y Salento está a una hora. Dejadlo cerrado con el hotel; llegar de noche a la plaza de un pueblo dormido tiene su encanto.</li>
+</ul>
+`,
+med:`<span class="rtime">📖 Lectura de ~20 min</span>
+<p class="lead">Ninguna ciudad del mundo ha cambiado tanto en treinta años como Medellín. Pasó de ser la capital mundial del homicidio a ser un caso de estudio de urbanismo social que se explica en universidades de medio planeta. Entender ese arco es entender por qué los paisas son como son.</p>
+
+<h3>El valle, los paisas y una identidad muy marcada</h3>
+<p>Medellín está en el Valle de Aburrá, una hondonada estrecha a 1.500 metros entre dos ramales de la cordillera Central. Ese encierro geográfico produjo dos cosas: un clima constante de unos 22-24 °C todo el año —de ahí lo de "la ciudad de la eterna primavera"— y un aislamiento histórico que forjó una cultura muy propia.</p>
+<p>Los antioqueños o <strong>paisas</strong> tienen fama en toda Colombia de trabajadores, comerciantes natos, orgullosos, hospitalarios y algo fanfarrones. Se cuenta que un paisa te vende algo que no necesitas y te deja tan contento que le das las gracias. Hablan con un acento cantarín inconfundible, usan el "vos" en vez del "tú" ("¿vos qué decís, pues?") y rematan las frases con "pues" con una frecuencia que os hará gracia el primer día y os saldrá a vosotros el tercero.</p>
+<p>La región se pobló con minería de oro y luego con café —Antioquia fue el motor de la colonización que llenó el Eje Cafetero— y a principios del siglo XX se industrializó con textiles: Coltejer, Fabricato, Everfit. Medellín era "el Manchester colombiano". Esa base industrial explica por qué hoy es la ciudad más emprendedora del país.</p>
+
+<h3>Los años que todo el mundo conoce (y cómo hablar de ellos)</h3>
+<p>En los años ochenta el Cartel de Medellín, liderado por Pablo Escobar, convirtió la ciudad en el epicentro del narcotráfico mundial y en el lugar más violento del planeta: en 1991 se registraron 6.349 homicidios, una tasa de 381 por cada 100.000 habitantes. Coches bomba, sicarios en moto, magistrados y periodistas asesinados, un avión derribado en pleno vuelo. Una generación entera creció con eso.</p>
+<p>Aquí conviene un apunte de sensibilidad, porque afecta a cómo os van a tratar: <strong>a los medellinenses no les gusta el turismo de Escobar</strong>. Existen tours a su tumba, a su antigua cárcel y a la casa donde murió, y hay quien los hace, pero para mucha gente local es como hacer turismo sobre el asesino de su familia. Series como <em>Narcos</em> son un tema espinoso: convirtieron en icono pop a alguien que aquí es simplemente el hombre que puso bombas en los barrios donde vivían. Si sale el tema en una conversación, escuchad más que hablar. Y si queréis entender esa época en serio, el <strong>Museo Casa de la Memoria</strong> lo cuenta desde el punto de vista de las víctimas, que es infinitamente más interesante.</p>
+<p>Escobar murió en 1993, pero la violencia continuó con bandas, milicias guerrilleras urbanas y paramilitares que se disputaron las comunas hasta bien entrados los 2000. La Comuna 13 fue el último gran episodio: en 2002 el Estado lanzó la Operación Orión, una intervención militar con helicópteros sobre un barrio densamente poblado, con un saldo de muertos y desaparecidos que todavía se investiga.</p>
+
+<h3>El milagro: urbanismo social</h3>
+<p>Lo que pasó después es lo que hace especial a Medellín. A partir de los años 90, y sobre todo con la alcaldía de Sergio Fajardo (2004-2007), la ciudad aplicó una idea sencilla y radical: <em>llevar la mejor arquitectura, el mejor transporte y los mejores edificios públicos a los barrios más pobres</em>. La frase que lo resume es "lo más bello para los más humildes".</p>
+<p>En la práctica significó:</p>
+<ul>
+<li><strong>El Metro</strong> (1995), el único de Colombia. Limpio, puntual, sin grafitis, sin basura. Existe la "cultura Metro": los paisas lo cuidan como un símbolo de que su ciudad podía ser otra cosa. Nadie come dentro. Nadie raya nada. Lo veréis y no os lo creeréis.</li>
+<li><strong>Los Metrocables</strong> (2004): teleféricos integrados al metro que suben a los barrios de ladera. Un trayecto que antes eran dos horas de buses y escaleras pasó a ser quince minutos. No es una atracción turística: es transporte público para vecinos, y por eso funciona.</li>
+<li><strong>Bibliotecas-parque</strong>: edificios espectaculares de arquitectos de primera línea colocados deliberadamente en los barrios más golpeados.</li>
+<li><strong>Las escaleras eléctricas de la Comuna 13</strong> (2011): 384 metros de escaleras mecánicas al aire libre que salvan el equivalente a un edificio de 28 pisos. Costaron menos que un tramo de autopista.</li>
+</ul>
+<p>En 2013 el Wall Street Journal, junto con Citi y el Urban Land Institute, la eligió Ciudad Más Innovadora del Mundo por encima de Tel Aviv y Nueva York. Los homicidios bajaron más de un 95% respecto al pico de 1991.</p>
+<p>No todo es idílico: la desigualdad sigue siendo enorme, hay barrios donde el control lo ejercen bandas, la gentrificación por el turismo y los nómadas digitales ha disparado los alquileres en El Poblado, y la ciudad sufre episodios graves de contaminación del aire por su geografía de valle cerrado. Pero la transformación es real y la gente está profundamente orgullosa de ella.</p>
+
+<h3>Barrio por barrio</h3>
+<div class="barrio"><div class="meta">Vuestra base</div><h4>El Poblado y Provenza</h4>
+<p>La ladera este, el barrio rico. Es donde se aloja casi todo el turismo internacional: calles arboladas, edificios altos, cafés de especialidad, restaurantes de todo tipo. <strong>Provenza</strong> es su núcleo de moda —unas pocas manzanas alrededor de la carrera 35 y la calle 8— con terrazas, cócteles y ambiente hasta tarde. El <strong>Parque Lleras</strong>, a un paso, es la zona de fiesta más intensa y también la más problemática: prostitución, drogas y timos a turistas. Se puede pasear, pero no es donde queréis pasar la noche.</p>
+<p>El Poblado es cómodo y seguro, pero no es Medellín: es una burbuja. Merece la pena bajar al centro y subir a las comunas para ver la ciudad de verdad.</p></div>
+
+<div class="barrio"><div class="meta">La ciudad real</div><h4>La Candelaria (Centro)</h4>
+<p>El casco histórico y el corazón comercial: caótico, ruidoso, lleno de vendedores ambulantes y con una energía tremenda. Aquí están la <strong>Plaza Botero</strong> con sus 23 esculturas monumentales donadas por el propio Fernando Botero (nacido en Medellín en 1932), el <strong>Museo de Antioquia</strong> —uno de los mejores del país, con la mayor colección de Botero—, el <strong>Palacio de la Cultura Rafael Uribe Uribe</strong> con su fachada ajedrezada blanquinegra, y el <strong>Parque Berrío</strong>.</p>
+<p>Regla clara: de día, con el móvil guardado y sin joyas, es perfectamente visitable y muy recomendable. De noche, no. Es la zona donde más carteristas hay; llevad poco encima y disfrutadlo sin ansiedad.</p></div>
+
+<div class="barrio"><div class="meta">El símbolo</div><h4>Comuna 13 · San Javier</h4>
+<p>Una ladera empinadísima al occidente, poblada por desplazados del conflicto armado que fueron llegando durante décadas y construyendo sus casas ladrillo a ladrillo. Fue el territorio más disputado de la ciudad. Hoy es el gran símbolo de la transformación: escaleras eléctricas, murales que cuentan la historia del barrio, grupos de breakdance y hip-hop, miradores, puestos de mango biche y helado de mango.</p>
+<p>Cómo hacerlo bien: id con un <strong>guía local</strong>, del barrio, no con una agencia de fuera. La diferencia es abismal: los guías locales vivieron aquello, os enseñarán las balas todavía incrustadas en las paredes, os explicarán qué significa cada mural y qué pasó en cada esquina. Hay free tours con propina (dad 30-50.000 por persona si os gusta) y tours de pago. Ir por la mañana: por la tarde se llena mucho. Y sí, es seguro; es probablemente el sitio más vigilado de la ciudad.</p></div>
+
+<div class="barrio"><div class="meta">Alternativa con encanto</div><h4>Laureles y Estadio</h4>
+<p>Barrio de clase media diseñado en los años cuarenta con calles circulares y muchísimos árboles. Menos turístico que El Poblado, más auténtico, con bares de barrio, La 70 (una avenida llena de sitios donde ver fútbol y bailar), y precios más razonables. Si volvéis alguna vez a Medellín, alojaos aquí.</p></div>
+
+<div class="barrio"><div class="meta">Arriba del todo</div><h4>Santo Domingo y el Parque Arví</h4>
+<p>La línea K del metrocable sube desde Acevedo hasta Santo Domingo Savio sobrevolando los tejados de ladrillo de las comunas del nororiente: es la mejor lección de geografía social que se puede recibir en quince minutos. Arriba está la <strong>Biblioteca España</strong> (tres bloques negros icónicos, cerrada desde hace años por problemas constructivos, pero el entorno merece la subida) y el enlace con la línea L, un cable de cuatro kilómetros que cruza la montaña hasta el <strong>Parque Arví</strong>, una reserva de bosque altoandino con senderos y un mercado campesino. Nota: la línea L tiene tarifa aparte y hace falta efectivo.</p></div>
+
+<h3>La mesa paisa</h3>
+<p>La comida antioqueña es de montaña, contundente y sin complejos. La <strong>bandeja paisa</strong> ya la conocéis: frijoles, arroz, chicharrón, carne molida, chorizo, morcilla, huevo, arepa, plátano y aguacate. Nació como "plato montañero" para alimentar a arrieros y campesinos.</p>
+<p>Más allá: el <strong>mondongo</strong> (sopa de callos, mucho mejor de lo que suena), el <strong>sancocho antioqueño</strong>, la <strong>arepa paisa</strong> —fina, blanca, sin sal, que aquí es un acompañamiento neutro tipo pan y no un plato en sí como en Venezuela—, los <strong>buñuelos</strong> (bolas fritas de queso, imprescindibles) y la <strong>mazamorra</strong>: maíz cocido en leche que se toma con panela y que es el postre-merienda de la abuela paisa.</p>
+<p>Y luego está el otro Medellín gastronómico: la ciudad se ha convertido en un destino de café de especialidad y cocina moderna de nivel. Pergamino, Rituales o Café Velvet para tomar el mejor café de vuestra vida; y restaurantes como Alambique o El Cielo (este último, de alta cocina) para ver hasta dónde llega la creatividad local.</p>
+
+<h3>Moverse y comportarse</h3>
+<ul>
+<li><strong>Metro</strong>: barato, seguro y una experiencia. Comprad billete sencillo en taquilla. Combina con metrocable en el mismo viaje.</li>
+<li><strong>Uber, inDrive, DiDi, Cabify</strong>: funcionan bien y son baratos. Uber opera en un limbo legal, así que a veces piden que os sentéis delante para simular que sois un amigo.</li>
+<li><strong>Seguridad</strong>: "no dar papaya". El móvil no se saca en la calle en el centro; usadlo dentro de tiendas o cafés. Es la ciudad donde más ocurre el robo en moto.</li>
+<li><strong>Bebidas</strong>: no aceptéis tragos de desconocidos en la zona de Lleras; las escopolaminas son un problema real allí.</li>
+<li><strong>Aeropuertos</strong>: ojo, son dos. Llegáis a <strong>Olaya Herrera (EOH)</strong>, que está dentro de la ciudad, y salís desde <strong>José María Córdova (MDE)</strong> en Rionegro, a 45-60 minutos por una carretera de montaña. Ese detalle vale una hora de vuestra vida el día 30.</li>
+</ul>
+
+<h3>Dos días bien aprovechados</h3>
+<p>Con solo una jornada completa, el orden que mejor funciona es: mañana en la Comuna 13 con guía local (10:00), almuerzo de bandeja paisa, tarde en el centro con Plaza Botero y el Museo de Antioquia, y al final del día subir en metrocable para ver la ciudad encenderse desde arriba. Cena tranquila en Provenza y a dormir pronto, porque el vuelo del jueves sale de Rionegro a las ocho.</p>
+`,
+adz:`<span class="rtime">📖 Lectura de ~20 min</span>
+<p class="lead">San Andrés es Colombia solo en el pasaporte. Está más cerca de Nicaragua que del continente colombiano, se colonizó con puritanos ingleses, se reza en iglesias bautistas, se habla creole y suena reggae. Es el rincón más raro y más fascinante del país.</p>
+
+<h3>Una isla que no debería ser colombiana (y casi no lo es)</h3>
+<p>Coged un mapa. San Andrés está a 720 km de la costa colombiana y a 190 km de Nicaragua. Que sea territorio de Colombia es una consecuencia enrevesada de la historia colonial: España reclamaba estas aguas dentro de la Capitanía General de Guatemala y luego del Virreinato de Nueva Granada, pero nunca las pobló de verdad.</p>
+<p>Quienes sí lo hicieron fueron los ingleses. Hacia 1629 llegaron colonos puritanos —la misma corriente religiosa del Mayflower— que se asentaron sobre todo en Providencia, y más adelante llegaron plantadores y esclavizados desde Jamaica. Durante dos siglos estas islas fueron un mundo anglocaribeño: algodón, coco, iglesias protestantes e inglés como lengua.</p>
+<p>En 1822, tras la independencia, los isleños juraron la Constitución de la Gran Colombia y el archipiélago quedó bajo bandera colombiana. Nicaragua nunca lo aceptó del todo, y el pleito llegó hasta la Corte Internacional de Justicia de La Haya, que en 2012 confirmó la soberanía colombiana sobre las islas pero le entregó a Nicaragua unos 75.000 km² de mar. Fue un shock nacional en Colombia y golpeó duramente a los pescadores locales, que perdieron caladeros históricos. Si sacáis el tema con un isleño, preparaos para escuchar sentimientos fuertes.</p>
+
+<h3>Los raizales: quiénes son realmente los dueños de esto</h3>
+<p>La población originaria de las islas se llama <strong>raizal</strong>: afrodescendientes de origen jamaicano y anglocaribeño, protestantes (bautistas y adventistas), con apellidos como Archbold, Livingston, Newball, Bent o Robinson, y con lengua propia.</p>
+<p>Esa lengua es el <strong>creole sanandresano</strong>, un criollo de base inglesa emparentado con el jamaicano. La mayoría de los raizales son trilingües: creole en casa y en la calle, inglés en la iglesia y español en la escuela y con el continente. Escuchad con atención en un colectivo o en un puesto de comida: reconoceréis palabras sueltas en inglés dentro de una música completamente distinta.</p>
+<p>La historia moderna del archipiélago tiene un punto de inflexión amargo: en 1953 el gobierno de Rojas Pinilla declaró San Andrés <strong>puerto libre</strong>. La isla se llenó de comercios de electrónica y perfumes libres de impuestos y de migración desde el continente. En pocas décadas los raizales pasaron de ser la mayoría a ser una minoría en su propia tierra. Desde 1991 la Constitución les reconoce como grupo étnico con derechos especiales, existe un control de circulación (la tarjeta OCCRE regula quién puede residir en la isla) y hay un movimiento cultural fuerte por preservar la lengua y la iglesia bautista, cuyo templo de loma —blanco, de madera, de 1847— es el edificio más antiguo y más querido de San Andrés.</p>
+<p>Todo esto convierte la visita en algo más interesante que "playa caribeña": estáis entrando en un territorio con una identidad propia que ha tenido que pelear por existir.</p>
+
+<h3>Piratas, tesoros y una cueva</h3>
+<p>El pirata galés <strong>Henry Morgan</strong> usó estas islas como base a finales del siglo XVII para asaltar Panamá y Portobelo. La leyenda dice que escondió parte de su botín en una cueva de la costa oeste de San Andrés, que hoy se visita como "Cueva de Morgan". El tesoro jamás apareció, y los historiadores dudan de casi todo el relato, pero la historia real es aún mejor: Morgan acabó siendo nombrado teniente gobernador de Jamaica por la Corona inglesa, murió rico y respetable, y hoy da nombre a una marca de ron.</p>
+<p>La cueva en sí es una atracción modesta y bastante turística; lo que la rodea (un pequeño museo de la cultura isleña, casas de madera típicas) tiene más interés que el agujero.</p>
+
+<h3>El mar de los siete colores: por qué es de verdad</h3>
+<p>El apodo suena a eslogan, pero tiene una explicación física preciosa. El color del agua depende de lo que hay debajo y de la profundidad: la arena blanca de coral triturado refleja la luz y da turquesa claro; las praderas de pasto marino dan verde oliva; las formaciones de coral dan tonos marrones y dorados; los canales profundos dan azul cobalto; y las zonas intermedias, aguamarina y esmeralda. Como el archipiélago está sobre una plataforma poco profunda con parches de todo eso, el resultado son franjas de color perfectamente distinguibles.</p>
+<p>La mejor manera de verlo es desde el avión al aterrizar: pedid ventanilla y mirad en los últimos minutos del vuelo. La segunda mejor es desde el mirador de la carretera del oeste, o desde una lancha camino de los cayos.</p>
+<p>Todo esto forma parte de la <strong>Reserva de Biosfera Seaflower</strong>, declarada por la UNESCO en 2000: unos 180.000 km² de mar protegido que albergan la tercera barrera coralina más larga del mundo. De ahí que insistan tanto con el protector solar biodegradable y con no tocar ni pisar el coral: el 80% de estos arrecifes está bajo amenaza por el blanqueamiento y el turismo masivo.</p>
+
+<h3>Vuelta a la isla: qué hay en cada punto</h3>
+<p>San Andrés mide unos 13 km de largo por 3 de ancho y tiene una carretera circular de unos 30 km. Recorrerla en carrito de golf o moto es EL plan de la isla, y se hace en medio día parando en todas partes. Va así, empezando por el norte y bajando por la costa este:</p>
+<div class="barrio"><div class="meta">Norte</div><h4>El Centro y Spratt Bight</h4>
+<p>Donde está todo: el aeropuerto (a diez minutos andando de vuestro hotel), la playa principal con su paseo peatonal, los comercios de puerto libre, restaurantes y vida nocturna. La playa de Spratt Bight es preciosa aunque puede tener sargazo según la época. Frente a ella está el cayo más famoso.</p></div>
+<div class="barrio"><div class="meta">Costa este</div><h4>San Luis y Rocky Cay</h4>
+<p>La zona más tradicionalmente raizal, con casas de madera de colores sobre pilotes y una playa larga y tranquila. Frente a la playa de Rocky Cay hay un islote al que se puede llegar caminando por el agua con marea baja (con precaución: ha habido accidentes) y un barco encallado que se ha convertido en icono fotográfico. Aquí están algunos de los mejores sitios para comer con los pies en la arena.</p></div>
+<div class="barrio"><div class="meta">Sur</div><h4>Hoyo Soplador</h4>
+<p>En la punta sur, un agujero en la roca coralina por el que el mar expulsa una columna de agua cuando coinciden marea y oleaje. Es un fenómeno natural genuino, aunque muy turistificado: los vendedores insisten en que consumáis algo. Si el mar está plano, no pasa nada de nada. Aun así, la carretera hasta allí y el paisaje de roca negra merecen la parada.</p></div>
+<div class="barrio"><div class="meta">Costa oeste</div><h4>West View y La Piscinita</h4>
+<p>El lado que da a mar abierto, sin playa de arena pero con el agua más clara y la mejor vida marina de la isla. Son dos balnearios naturales sobre roca con escaleras al agua, trampolines y toboganes. Se alquila equipo de snorkel y venden pan para atraer a los peces. Es el mejor sitio de la isla si os gusta el agua: hay peces loro, sargentos y a veces barracudas pequeñas. Llevad escarpines.</p></div>
+<div class="barrio"><div class="meta">Interior</div><h4>La Loma</h4>
+<p>La parte alta y el corazón raizal de la isla. Aquí está la <strong>Primera Iglesia Bautista</strong> (1847), de madera blanca, con vistas increíbles desde su torre. Los domingos por la mañana el canto de los coros se oye desde la calle: es una de las cosas más bonitas y menos turísticas que se pueden hacer aquí. También está la Casa Museo Isleña, que explica cómo se vivía antes del puerto libre.</p></div>
+
+<h3>Los cayos: Johnny Cay y El Acuario</h3>
+<p><strong>Johnny Cay</strong> es un islote de arena blanca y palmeras a quince minutos en lancha de Spratt Bight, declarado parque regional. Tiene iguanas, música a todo volumen, puestos de pescado frito y el famoso "coco loco" (coco con ron dentro). Es precioso y es masivo: id lo más temprano posible y alejaos del punto de desembarco. El mar alrededor es fuerte y hay zonas donde no se puede bañar; hacedle caso a las banderas.</p>
+<p><strong>El Acuario y Haynes Cay</strong> están al este, en la zona de aguas someras: es literalmente un banco de arena en medio del mar donde el agua cubre por la cintura y se ven peces y a veces rayas. La imagen icónica de San Andrés sale de ahí.</p>
+<p>Los tours combinados se compran en la playa o en cualquier hotel (70.000-100.000 pesos por persona más entradas). Advertencia: en algunos puntos ofrecen fotos con mantarrayas sujetándolas, o pulpos sacados del agua. Es maltrato animal; no participéis y decidlo con naturalidad.</p>
+
+<h3>Bucear aquí</h3>
+<p>San Andrés es un destino de buceo de primera categoría y muy accesible: agua a 28-29 °C, visibilidad de 20-30 metros, y unos 40 puntos de inmersión a pocos minutos en barco. Hay paredes coralinas que caen en vertical (la Pared de Pichonas, el Blue Hole), jardines de coral poco profundos ideales para recién certificados, y varios pecios hundidos a propósito, como el Blue Diamond o el Nicaragüense.</p>
+<p>Para alguien recién certificado como Carlos, lo lógico son dos inmersiones de arrecife entre 12 y 18 metros: Palacio de la Cherna, Cantil de Villa Erika o los jardines cercanos a Rocky Cay. Precio orientativo: 200.000-300.000 pesos por inmersión, algo menos si se contratan dos el mismo día. Centros con buena reputación: Banda Dive Shop, Blue Life, Sharky Dive Shop. Reservad por WhatsApp con un par de días.</p>
+<p>Dos avisos importantes: llevad el carnet o la certificación digital, y respetad el intervalo sin volar. Con el vuelo del lunes a las 11:15, la última inmersión debe terminar el domingo a mediodía como muy tarde. Adriana, si no bucea, puede hacer un bautismo (discover scuba) o snorkel desde el mismo barco.</p>
+
+<h3>Comer isleño</h3>
+<p>La cocina raizal es una rama del Caribe anglófono, no de la colombiana continental, y eso se nota en todo.</p>
+<p>El plato ceremonial es el <strong>rondón</strong> (del inglés "run down"): pescado, caracol pala, cola de cerdo salada, yuca, ñame, plátano y albóndigas de harina cocinados lentamente en leche de coco hasta que todo se funde. Tarda horas y se encarga con antelación —por la mañana para comerlo por la noche—. Es contundente, dulzón, ahumado y absolutamente distinto a todo lo demás que vais a comer en Colombia. No os vayáis sin probarlo.</p>
+<p>Después: <strong>pescado frito con arroz de coco y patacón</strong> (la comida diaria), <strong>caracol pala</strong> —el molusco emblemático— en albóndigas, ceviche o guisado, <strong>cangrejo negro</strong> en temporada (es una especie endémica que migra en masa al mar para desovar, y durante la migración está prohibido cogerlos), <strong>langosta</strong> a la parrilla, y <strong>patties</strong>, empanadillas de origen jamaicano. De postre, pie de coco o de limón.</p>
+<p>Para beber: agua de coco recién abierta a machetazos, jugos naturales, cerveza fría y ron. Y el <strong>coco loco</strong>: coco con ron, leche condensada y lo que caiga.</p>
+
+<h3>Cosas que conviene saber antes de llegar</h3>
+<ul>
+<li><strong>Tarjeta de Turismo obligatoria</strong>: 153.000 pesos por persona (tarifa 2026). Se compra en el aeropuerto de origen antes de embarcar, se rellena en mayúsculas y sin tachones, y se conserva todo el viaje.</li>
+<li><strong>Efectivo</strong>: imprescindible. Lanchas, tours, comida de playa, carritos de golf y muchos restaurantes solo aceptan efectivo, y los cajeros se quedan sin billetes con frecuencia en temporada alta. Traed pesos desde el continente.</li>
+<li><strong>Todo es más caro</strong>: se importa por barco o avión. Contad con un 30-50% más que en Medellín.</li>
+<li><strong>Agua</strong>: embotellada siempre. La isla tiene problemas serios de suministro.</li>
+<li><strong>Alquiler de carrito</strong>: 150.000-250.000 pesos el día; se paga en efectivo y suelen pedir el pasaporte. Comprobad frenos y batería antes de salir, y llenad de gasolina.</li>
+<li><strong>Protector solar</strong>: reef-safe (sin oxibenzona ni octinoxato). Es reserva de biosfera y en algunos puntos lo exigen.</li>
+<li><strong>Sargazo</strong>: entre mayo y agosto puede llegar alga marrón a las playas del este. No es contaminación, es un fenómeno natural del Atlántico. Las playas del oeste y los cayos suelen estar limpios.</li>
+<li><strong>Ritmo isleño</strong>: aquí nadie corre y las cosas empiezan tarde. Si un tour dice a las nueve, saldrá a las nueve y media. Es parte del trato.</li>
+</ul>
+`,
+bog:`<span class="rtime">📖 Lectura de ~20 min</span>
+<p class="lead">Bogotá no seduce en veinte minutos como Cartagena. Es fría, enorme, gris a ratos, y está a 2.640 metros de altitud. Pero es la ciudad donde Colombia piensa, discute, come mejor de lo que parece y guarda el oro de sus antepasados. Con día y medio bien usados, se le coge el punto.</p>
+
+<h3>La sabana, los muiscas y El Dorado</h3>
+<p>Antes de los españoles, esta altiplanicie a 2.600 metros estaba habitada por los <strong>muiscas</strong>, una de las cuatro grandes civilizaciones precolombinas de América junto a mayas, aztecas e incas. No construyeron pirámides de piedra —su arquitectura era de madera y barro, y por eso desapareció— pero tenían una organización política sofisticada dividida en dos confederaciones, una red comercial que llegaba hasta Venezuela y una orfebrería extraordinaria.</p>
+<p>Su rasgo más famoso es el ritual de investidura del cacique de Guatavita: el nuevo gobernante se cubría el cuerpo de polvo de oro, navegaba en una balsa hasta el centro de la laguna sagrada y se sumergía mientras se arrojaban ofrendas de oro y esmeraldas al agua. De ahí nació la leyenda de <strong>El Dorado</strong>, que enloqueció a los europeos durante dos siglos y provocó expediciones suicidas por toda Sudamérica. Buscaban una ciudad de oro; lo que había era un rito.</p>
+<p>La pieza que representa ese ritual —la <strong>Balsa Muisca</strong>, una figura de oro de apenas 20 centímetros encontrada casualmente en 1969 en una cueva— es el objeto más importante del Museo del Oro y probablemente el más famoso de Colombia. Vais a verla el martes por la mañana.</p>
+<p>Gonzalo Jiménez de Quesada fundó aquí Santa Fe en 1538. La ciudad se convirtió en capital del Virreinato de Nueva Granada y en un centro intelectual con fama de culto: la llamaban "la Atenas suramericana", en parte con orgullo y en parte con sorna.</p>
+
+<h3>El florero, el Bogotazo y las cicatrices</h3>
+<p>El 20 de julio de 1810, un grupo de criollos entró en la tienda del comerciante español José González Llorente a pedirle prestado un florero para agasajar a un visitante. Sabían que se negaría. La negativa provocó una trifulca planeada, la trifulca provocó un tumulto y el tumulto acabó en la formación de una junta de gobierno. Es la fecha nacional de Colombia y todo empezó, literalmente, por un jarrón. Los restos del florero se conservan en el Museo de la Independencia, en la Plaza de Bolívar.</p>
+<p>El otro día que marcó a la ciudad fue el <strong>9 de abril de 1948</strong>: el asesinato a tiros del líder liberal Jorge Eliécer Gaitán, favorito para ganar la presidencia, desató una explosión de furia popular que arrasó el centro. Se conoce como el <strong>Bogotazo</strong>: tres días de incendios, saqueos y miles de muertos que destruyeron buena parte de la arquitectura colonial y marcaron el inicio de La Violencia, el periodo de guerra civil entre liberales y conservadores que dejó unos 200.000 muertos y del que arranca, en última instancia, el conflicto armado colombiano.</p>
+<p>Por eso el centro de Bogotá es una mezcla extraña de casonas coloniales supervivientes, edificios modernos levantados sobre lo quemado y grandes moles de los años cincuenta. Y por eso la Plaza de Bolívar, rodeada por el Capitolio, la Catedral, la Alcaldía y el Palacio de Justicia —este último también asaltado y quemado en 1985 durante la toma del M-19—, no es solo una plaza bonita: es donde ha pasado todo.</p>
+
+<h3>Vivir a 2.640 metros</h3>
+<p>La altitud lo condiciona todo. El aire tiene un 25% menos de oxígeno que a nivel del mar; subiendo cuestas os faltará el aliento los primeros días, el alcohol pega bastante más y conviene beber mucha agua. Si venís directos de San Andrés —del nivel del mar y del calor—, el contraste será brutal: pasaréis de 30 °C a un día bogotano de 12-19 °C con lluvia fina.</p>
+<p>Bogotá no tiene estaciones: tiene el mismo clima todos los días del año, entre 7 y 19 grados, y una capacidad legendaria para darte sol, granizo y arcoíris en la misma tarde. Los bogotanos salen siempre con chaqueta y paraguas, hagan el tiempo que hagan. Copiadles.</p>
+<p>Un par de detalles culturales: los bogotanos, llamados <em>rolos</em> o <em>cachacos</em>, tienen fama en el resto del país de formales, corteses hasta el exceso y algo distantes. Usan el "usted" incluso entre amigos íntimos y en la pareja, lo cual descoloca a cualquier español. Hablan un castellano muy claro, considerado de los más neutros de América.</p>
+
+<h3>Barrio por barrio</h3>
+<div class="barrio"><div class="meta">El casco histórico</div><h4>La Candelaria</h4>
+<p>El centro colonial y el sitio con más cosas que ver: la <strong>Plaza de Bolívar</strong>, el <strong>Museo del Oro</strong> (34.000 piezas de orfebrería prehispánica; el mejor de su clase en el mundo, y cuesta poco más de un euro), el <strong>Museo Botero</strong> (gratis, con obra propia del artista y su colección personal de Picasso, Monet o Dalí), la casa-museo de la Quinta de Bolívar y el <strong>Chorro de Quevedo</strong>, la plazoleta donde se supone que se fundó la ciudad y donde hoy se bebe <em>chicha</em>, la bebida fermentada de maíz de los muiscas.</p>
+<p>Es un barrio de calles empinadas y estrechas, casas coloniales pintadas de colores, universidades, arte urbano de primer nivel y muchos estudiantes. De día es fantástico. De noche, mejor moverse en taxi y no callejear.</p></div>
+<div class="barrio"><div class="meta">Vuestra zona</div><h4>Chicó, Parque de la 93 y Zona T</h4>
+<p>El norte acomodado, donde está vuestro hotel. El <strong>Parque de la 93</strong> es una manzana verde rodeada de restaurantes y terrazas, agradable y muy segura, perfecta para cenar sin complicaciones. Un poco más al sur, la <strong>Zona T</strong> y la <strong>Zona G</strong> (de "gourmet") concentran la mejor oferta gastronómica de la ciudad. Es una Bogotá cómoda y algo burbuja, pero después de dos semanas de viaje se agradece.</p></div>
+<div class="barrio"><div class="meta">Con encanto</div><h4>Usaquén</h4>
+<p>Un antiguo pueblo colonial absorbido por la ciudad, al norte. Tiene plaza, iglesia, calles empedradas y un mercado de las pulgas los domingos muy popular. Buenos restaurantes en casas antiguas. Si tuvierais una mañana extra, aquí.</p></div>
+<div class="barrio"><div class="meta">La montaña</div><h4>Monserrate</h4>
+<p>El cerro de 3.152 metros que preside la ciudad, con su santuario del Señor Caído, destino de peregrinación desde el siglo XVII. Se sube en funicular, en teleférico o andando (un camino de escaleras que los bogotanos usan como gimnasio los domingos; no se recomienda subir a pie fuera de horas concurridas). Arriba hace frío y viento, hay restaurantes y un mercadillo, y la vista de los ocho millones de habitantes extendiéndose por la sabana es sobrecogedora, sobre todo al atardecer, cuando se encienden las luces.</p></div>
+
+<h3>La cocina bogotana</h3>
+<p>El plato emblema es el <strong>ajiaco santafereño</strong>: una sopa espesa de pollo con tres variedades de papa —una de ellas, la criolla, se deshace y da cuerpo—, mazorca, alcaparras, crema de leche y una hierba llamada <em>guascas</em> que apenas se usa fuera de esta zona y que le da todo el sabor. Con el frío de aquí, es exactamente lo que el cuerpo pide.</p>
+<p>Después: el <strong>tamal</strong> —masa de maíz con pollo, cerdo, garbanzos y verduras envuelta en hoja de plátano y cocida al vapor—, que se come de desayuno acompañado de <strong>chocolate completo</strong>: una taza de chocolate caliente con un trozo de queso fresco dentro que se derrite y se come con cuchara. Suena raro, funciona perfectamente, y es el desayuno bogotano de siempre. Añadid una <strong>almojábana</strong> o un <strong>pandebono</strong>.</p>
+<p>Otras cosas: la <strong>changua</strong> (sopa de leche con huevo y cilantro, desayuno de resistencia), el <strong>puchero</strong>, la fritanga de plaza de mercado, y los <strong>obleas</strong> con arequipe de postre. Y una recomendación: Bogotá tiene hoy una escena gastronómica seria, con restaurantes de cocina colombiana contemporánea que trabajan con ingredientes amazónicos y del Pacífico que no encontraréis en ningún otro sitio.</p>
+<blockquote>Curiosidad frutal: pedid un jugo de <em>lulo</em>, de <em>curuba</em>, de <em>feijoa</em> o de <em>gulupa</em>. Colombia tiene decenas de frutas que no se exportan porque no aguantan el viaje. Es de las mejores cosas del país.</blockquote>
+
+<h3>Moverse, y el asunto del tráfico</h3>
+<p>Bogotá tiene fama merecida de atascos monumentales. El sistema de transporte principal es <strong>TransMilenio</strong>, autobuses articulados en carril exclusivo: eficaz en teoría, saturadísimo en la práctica y con problemas de carterismo; con maletas no es opción. Para vosotros, taxi por app (Uber, Cabify, DiDi, inDrive) es lo sensato.</p>
+<p>Dato crítico para el día 4: del norte al aeropuerto El Dorado puede haber entre 40 y 90 minutos según la hora. Con un vuelo internacional a las 17:20, salir del hotel a las 14:00 no es exagerado, es prudente.</p>
+<p>Y un detalle bonito: los domingos y festivos, de 7 a 14 h, más de 120 km de vías principales se cierran al tráfico para la <strong>Ciclovía</strong>, y la ciudad entera sale a pedalear, correr y pasear al perro. Nació en 1974 y se ha copiado en decenas de ciudades del mundo. Vuestro domingo caerá en San Andrés, pero merece saberse.</p>
+
+<h3>Cómo aprovechar tarde y mañana</h3>
+<p>Llegáis el lunes a las 13:30, y el lunes tiene una trampa: el Museo del Oro cierra los lunes. Así que la tarde ideal es Monserrate —subid sobre las 16:00-16:30 para ver la ciudad de día y de noche— y cena tranquila cerca del hotel.</p>
+<p>El martes por la mañana, con las maletas en consigna: Museo del Oro a las 9:00 en punto (abre a esa hora y se disfruta vacío), paseo por La Candelaria hasta la Plaza de Bolívar, y almuerzo temprano de tamal y chocolate completo en algún clásico del centro. A las 14:00, de vuelta al hotel a por el equipaje y al aeropuerto.</p>
+<p>Si el cuerpo pide museos, dos apuntes: el <strong>Museo Botero</strong> es gratuito y está a cinco minutos del Museo del Oro, y el <strong>Museo Nacional</strong>, en un antiguo panóptico, cuenta la historia del país entero. Cualquiera de los dos encaja si el martes cunde.</p>
+`,
+ctg:`<span class="rtime">📖 Lectura de ~20 min</span>
+<p class="lead">Cartagena no se entiende como una ciudad, sino como una fortaleza que resultó ser bellísima. Todo lo que veréis —las murallas, los balcones, el color, incluso la comida— existe porque durante trescientos años esta fue la caja fuerte del imperio español en América, y todo el mundo quería reventarla.</p>
+
+<h3>Por qué existe Cartagena</h3>
+<p>Miradlo en un mapa. La bahía de Cartagena es una bolsa de agua protegida, con dos bocas estrechas, capaz de albergar una flota entera a salvo de los huracanes del Caribe. En 1533 Pedro de Heredia fundó aquí una ciudad y en cuestión de décadas se convirtió en el puerto donde se concentraba todo: la plata de Potosí subida desde el Perú, el oro de Nueva Granada, las esmeraldas de Muzo. Una vez al año partía de aquí la Flota de Indias hacia Sevilla cargada con la riqueza de medio continente.</p>
+<p>Eso convirtió a Cartagena en el objetivo más goloso del Atlántico. En 1544 la saqueó el francés Roberto Baal; en 1586, Francis Drake, que la ocupó cien días y solo se marchó tras cobrar un rescate descomunal en oro; en 1697 el barón de Pointis con una flota francesa. Cada saqueo tuvo la misma consecuencia: más piedra. Las murallas que hoy recorréis al atardecer no son decorativas: son la respuesta acumulada a dos siglos de miedo. Once kilómetros de muro de hasta veinte metros de espesor, levantados con coral extraído del fondo del mar, que tardaron doscientos años en completarse y costaron tanto que en Madrid corría el chiste de que desde el palacio real deberían verse ya asomando por el horizonte.</p>
+<p>Es importante entender esto porque cambia la forma de mirar. Cuando paseéis por la muralla al caer el sol, con la brisa y los vendedores de cerveza, estáis caminando sobre una obra de ingeniería militar diseñada por ingenieros que nunca imaginaron que su fortaleza terminaría siendo el sitio más romántico de Colombia.</p>
+
+<h3>Blas de Lezo y la batalla que Inglaterra intentó olvidar</h3>
+<p>En 1741 llegó el ataque definitivo. El almirante británico Edward Vernon se presentó ante Cartagena con unos 186 barcos y más de 25.000 hombres: la mayor flota anfibia hasta el desembarco de Normandía. Enfrente, un puñado de defensores y seis navíos al mando de Blas de Lezo, un marino vasco que a esas alturas de su vida había perdido una pierna, un ojo y el uso de un brazo en distintas batallas. Le llamaban "Mediohombre".</p>
+<p>Vernon estaba tan seguro del resultado que envió a Inglaterra la noticia de la victoria antes de tomar la ciudad, y se acuñaron medallas conmemorativas mostrando a Lezo arrodillado. Aún se conservan. Lo que ocurrió fue lo contrario: Lezo hundió sus propios barcos para bloquear los canales, resistió en el castillo de San Felipe, alargó el asedio hasta que las enfermedades tropicales diezmaron a los ingleses, y Vernon se retiró tras dos meses con miles de muertos. Es una de las derrotas más humillantes de la historia naval británica, y durante mucho tiempo estuvo prácticamente prohibido hablar de ella en Inglaterra.</p>
+<p>Lezo murió pocos meses después, enfermo y en desgracia política, y fue enterrado en un lugar que nunca se identificó con certeza. Su estatua está frente al castillo de San Felipe: id a verla y quedaos un minuto. Es difícil encontrar una historia mejor en todo el Caribe.</p>
+
+<h3>La otra Cartagena: el puerto de esclavos</h3>
+<p>Hay una parte de la historia que las postales no cuentan y que conviene conocer antes de pisar la ciudad. Cartagena fue, junto con Veracruz, el gran puerto negrero de la América española. Por sus muelles entraron cientos de miles de africanos esclavizados durante dos siglos. La Plaza de los Coches, esa plaza preciosa junto a la Torre del Reloj por donde pasaréis mil veces, fue el mercado donde se les vendía.</p>
+<p>De ahí nace lo más extraordinario: <strong>San Basilio de Palenque</strong>. A finales del siglo XVI, un grupo de esclavizados liderado por Benkos Biohó escapó a los montes y fundó un poblado fortificado que la Corona nunca logró someter. En 1691 tuvo que reconocer su libertad por decreto: fue el primer pueblo libre de América. Todavía existe, a unos cincuenta kilómetros de aquí, y allí se habla el palenquero, la única lengua criolla del mundo con base española. Su cultura —los tambores, los peinados como mapas de rutas de fuga, los ritos funerarios del lumbalú— está declarada Patrimonio Inmaterial de la Humanidad.</p>
+<p>Las <em>palenqueras</em>, esas mujeres con vestidos de colores y palanganas de fruta en la cabeza que veréis en la ciudad amurallada, descienden de esa historia. Se ganan la vida vendiendo fruta y posando para fotos; si les hacéis una, es costumbre pagarles (unos 10.000 pesos suele estar bien) y conviene pactarlo antes con una sonrisa.</p>
+<p>También merece un momento la figura de <strong>San Pedro Claver</strong>, el jesuita catalán que durante cuarenta años bajó a los barcos negreros a atender a los recién llegados, y que se autodenominaba "esclavo de los esclavos para siempre". Su iglesia, junto a la plaza que lleva su nombre, es uno de los edificios más serenos del centro.</p>
+
+<h3>Barrio por barrio</h3>
+
+<div class="barrio"><div class="meta">El corazón turístico</div><h4>El Centro y San Diego</h4>
+<p>Lo que todo el mundo llama "la ciudad amurallada" son en realidad dos barrios. <strong>El Centro</strong> era la zona de los nobles y el clero: calles de casas encaladas, balcones de madera cargados de buganvilla, plazas con iglesias enormes. Aquí están la Plaza de Santo Domingo (con la gorda de Botero recostada, a la que todo el mundo toca), la Plaza de Bolívar y el Museo del Oro Zenú. <strong>San Diego</strong>, hacia el norte, era la zona de artesanos y comerciantes: más pequeño, más tranquilo, con la plaza homónima llena de mesas por la noche y las Bóvedas, antiguos almacenes de munición reconvertidos en tiendas de artesanía.</p>
+<p>Consejo: la ciudad amurallada se recorre sin plan. Es de las pocas ciudades del mundo donde perderse a propósito da mejores resultados que cualquier itinerario. Hacedlo a primera hora (antes de las 10) o a partir de las 17:00; entre medias el calor es brutal.</p></div>
+
+<div class="barrio"><div class="meta">Donde late la vida</div><h4>Getsemaní</h4>
+<p>Extramuros, pegado a la muralla, estaba el barrio de los artesanos, los negros libres y los trabajadores del puerto. Fue el barrio que encendió la independencia en 1811 —los llamados "lanceros de Getsemaní"—, luego cayó en decadencia y a finales del siglo XX tenía muy mala fama. Hoy es la zona más viva y más interesante de Cartagena: calles con banderines de colores, murales enormes, hostales bohemios, bares diminutos.</p>
+<p>El centro de todo es la <strong>Plaza de la Trinidad</strong>. Al caer la tarde se llena de vecinos, niños jugando al fútbol, puestos de arepas y carimañolas, gente bebiendo cerveza sentada en las escaleras de la iglesia. Es gratis, es auténtico y es probablemente el mejor plan nocturno de la ciudad. La calle de la Sierpe y el callejón Angosto concentran el arte urbano.</p>
+<p>Getsemaní vive una gentrificación acelerada y es un tema de conversación local: muchas familias de toda la vida han vendido sus casas a hoteles boutique. Si habláis con alguien del barrio, os lo contarán.</p></div>
+
+<div class="barrio"><div class="meta">Vuestra base</div><h4>La Boquilla, Cielo Mar y la Zona Norte</h4>
+<p>Aquí está vuestro hotel, el Faranda Collection. Es la franja de playa que se extiende al norte del aeropuerto: hoteles nuevos, mar abierto, y pegado, <strong>La Boquilla</strong>, un pueblo de pescadores afrocolombianos que ha quedado engullido por el desarrollo turístico pero conserva su identidad. Allí se puede hacer un paseo en canoa por los manglares con pescadores locales (muy recomendable, temprano por la mañana) y comer pescado frito en las casetas de la playa, mucho mejor y más barato que en cualquier hotel.</p>
+<p>Lo importante en clave práctica: estáis a 15-20 minutos en taxi del centro histórico, así que conviene pensar los días en bloques —bajar al centro y quedarse unas horas, en vez de ir y volver varias veces. La ventaja enorme es el aeropuerto a diez minutos, tanto al llegar de madrugada el día 21 como al salir el 25.</p></div>
+
+<div class="barrio"><div class="meta">La Cartagena moderna</div><h4>Bocagrande</h4>
+<p>La península de rascacielos que se ve desde la muralla. Es el barrio residencial acomodado, lleno de torres de apartamentos, centros comerciales y cadenas hoteleras; la gente lo compara con Miami y no va desencaminada. La playa es de arena grisácea y con bastante venta ambulante. No es una prioridad turística, pero es el sitio donde ver a la Cartagena que vive, trabaja y va al gimnasio.</p></div>
+
+<h3>Comer en la costa: el mapa mental</h3>
+<p>La cocina caribeña colombiana tiene tres pilares: el pescado, el coco y el frito. Entenderlo os ahorrará muchas dudas de carta.</p>
+<p>El <strong>arroz de coco</strong> (arroz con leche de coco y un punto dulce por el caramelo del titoté) acompaña casi todo pescado. El <strong>patacón</strong> es plátano verde aplastado y frito dos veces; si es enorme y lleva cosas encima, es un "patacón con todo". Las <strong>arepas de huevo</strong> —masa de maíz frita con un huevo dentro— son el desayuno costeño por antonomasia y se comen de pie, en la calle, antes de las nueve. La <strong>carimañola</strong> es un torpedo de yuca relleno de carne. La <strong>posta negra</strong> es carne cocinada largo rato en una salsa oscura y dulzona: el plato de domingo familiar.</p>
+<p>Del mar: la <strong>mojarra frita</strong> entera (con cabeza, ojos incluidos, así se come), el pargo rojo, el ceviche —aquí más suave y a menudo con toque de salsa rosada, no confundir con el peruano— y el cóctel de camarones. En temporada, la <strong>langosta</strong>. Y de postre, cocadas de las palenqueras, o unas <strong>butifarras</strong> soledeñas si os las cruzáis.</p>
+<blockquote>Regla de oro: donde comen los taxistas se come bien y barato. Los almuerzos ejecutivos de mediodía (sopa + principal + jugo, 15-25.000 pesos) son la mejor relación calidad-precio de Colombia.</blockquote>
+<p>Para beber: <strong>limonada de coco</strong> (batida con leche de coco, adictiva), jugos de frutas que no habéis visto nunca —lulo, corozo, zapote, níspero, guanábana, tomate de árbol—, agua de coco directamente del coco. Cerveza: Águila es la costeña, Club Colombia si queréis algo mejor. Y el ron: Ron Viejo de Caldas, o el Dictador cartagenero, que es excelente.</p>
+
+<h3>Cultura viva: qué está pasando ahora mismo</h3>
+<p>Cartagena es la capital de la <strong>champeta</strong>, un género nacido en los barrios afrodescendientes a partir de la música africana que llegaba en discos con los marineros. Se baila pegado y con mucha cadera, suena en picós (enormes equipos de sonido pintados a mano) y desde hace unos años ha saltado al mainstream: si escucháis a Charles King o a Mr. Black, eso es champeta. En los bares del centro sonará más salsa y vallenato, pero la champeta es lo genuinamente local.</p>
+<p>El <strong>vallenato</strong> —acordeón, caja y guacharaca— es del interior de la costa (Valledupar), pero se escucha en todas partes; sus letras cuentan historias largas, y hay quien dice que Cien años de soledad es un vallenato de 400 páginas. García Márquez, que vivió aquí y ambientó en la ciudad El amor en los tiempos del cólera, lo dijo casi con esas palabras.</p>
+<p>Y algo que sorprende a los españoles: el costeño habla rápido, se come las eses finales y usa el "usted" con la gente cercana y el "tú" con desconocidos, justo al revés de lo que uno esperaría. No os preocupéis: en tres días os entra el oído.</p>
+
+<h3>Cómo comportarse (y no dar papaya)</h3>
+<p>Cartagena es turística y segura en las zonas por las que os vais a mover, pero tiene una intensidad comercial que agota si no se sabe gestionar. En la ciudad amurallada os van a ofrecer sombreros, gafas, masajes, tours, fruta y fotos cada cincuenta metros. La técnica local es un "no, gracias" amable y seguir caminando sin detenerse; pararse a explicar alarga la conversación diez minutos.</p>
+<p>Pactad siempre el precio antes de subir a un taxi (no llevan taxímetro) o usad Uber/inDrive. Del hotel al centro deberían ser unos 25-35.000 pesos. Si os ofrecen una excursión a Islas del Rosario en la calle, comprobad que la lancha sea de una empresa registrada y que incluya el impuesto de muelle.</p>
+<p>Y una recomendación de ritmo: julio es húmedo y caluroso, con chubascos cortos por la tarde. No intentéis exprimir el día. Los cartageneros no lo hacen: la ciudad se para entre las 12 y las 15, y vuelve a la vida cuando baja el sol. Copiadles.</p>
+
+<h3>Para el buceo de Carlos</h3>
+<p>Cartagena es un sitio razonable para certificarse: hay escuelas serias, el mar está caliente todo el año (28-29 °C, apenas hace falta traje) y las inmersiones se hacen en las Islas del Rosario, un parque nacional con arrecifes coralinos. La visibilidad en julio es moderada (10-20 m) porque es época de lluvias suaves; no es el Caribe de postal de Providencia, pero para un Open Water es perfecto: aguas tranquilas, poca corriente, fondo de arena para practicar ejercicios.</p>
+<p>El curso estándar son tres días: teoría y piscina el primero, dos inmersiones en mar abierto el segundo y dos más el tercero. Preguntad por el tamaño del grupo (idealmente cuatro alumnos por instructor) y confirmad que la certificación (PADI o SSI, ambas válidas internacionalmente) va incluida en el precio. Y lo más importante para vuestro itinerario: la última inmersión debe terminar con al menos 18-24 horas de margen antes de volar. Con el último buceo el viernes por la mañana y el vuelo el sábado a las 20:28, vais sobrados.</p>
+`,
+};
+
 /* ================= MAPAS (coordenadas verificadas con Google Places) ================= */
 const MAPA = {
  ctg:[
@@ -716,7 +1069,8 @@ function buildCity(id){
   const c = CIUDADES.find(x=>x.id===id);
   const secs = {...c.secs};
   const entries = Object.entries(secs);
-  entries.splice(2, 0, ["🗺️ Mapa", `<div class="map-wrap" id="lmap-${id}"></div>
+  if(LECTURA[id]) entries.splice(1, 0, ["📖 Lectura larga", `<div class="longread" style="--c:${c.color}">${LECTURA[id]}</div>`]);
+  entries.splice(3, 0, ["🗺️ Mapa", `<div class="map-wrap" id="lmap-${id}"></div>
     <div class="map-legend"><span>⭐ Qué ver</span><span>🍽️ Comer</span><span>🏨 Hotel</span></div>
     <p class="muted small" style="margin-top:8px">Toca un pin para ver el consejo y abrir la ruta en Google Maps.</p>`]);
   const keys = entries.map(e=>e[0]);
@@ -762,14 +1116,6 @@ function openSec(btn,id){
 /* ================= PRÁCTICO ================= */
 document.getElementById('view-practico').innerHTML = `
   <h2>Guía práctica 🇨🇴</h2>
-  <div class="card conv" style="border-left:6px solid var(--deep)">
-    <h3 style="font-size:17px;margin-bottom:2px">💱 Conversor rápido</h3>
-    <div class="row"><span class="cur">COP</span><input id="cop" inputmode="numeric" placeholder="50.000" oninput="convFrom('cop')"><span class="eq">≈</span><span class="cur">EUR</span><input id="eur" inputmode="decimal" placeholder="11" oninput="convFrom('eur')"></div>
-    <div class="chips">
-      ${[10000,20000,50000,100000,200000,500000].map(v=>`<button onclick="setCop(${v})">${v.toLocaleString('es')}</button>`).join('')}
-    </div>
-    <div class="rate-row">Tasa: 1 € = <input id="rate" inputmode="numeric" onchange="setRate()"> COP <span class="muted">(edítala con el cambio del día)</span></div>
-  </div>
   <details><summary><span class="em">🎟️</span>Códigos de reserva</summary><div class="bd">
     <ul>
       <li><b>CTG→PEI</b> JetSmart JA5541 · reserva <b>X6I57S</b> (conf. XDJDHN)</li>
@@ -1180,31 +1526,84 @@ document.addEventListener('keydown', e=>{
   if(e.key==='ArrowUp') f.scrollBy({top:-f.clientHeight*.7,behavior:'smooth'});
 });
 
-/* ================= CONVERSOR ================= */
+/* ================= CALCULADORA (pantalla de inicio) ================= */
+let CV = 50000;
 function getRate(){ return store.get('co-rate') || 4500; }
+const fmt = n => Math.round(n).toLocaleString('es');
+
+document.getElementById('view-cambio').innerHTML = `
+  <div class="calc">
+    <div class="disp">
+      <div class="lab">Pesos colombianos</div>
+      <div class="cop" id="d-cop">50.000<span class="cur2">COP</span></div>
+      <div class="sep"></div>
+      <div class="lab">Son aproximadamente</div>
+      <div class="eur" id="d-eur">11,11<span class="cur2">EUR</span></div>
+      <div class="hint2" id="d-rate"></div>
+    </div>
+    <div class="steps">
+      <button class="minus" onclick="bump(-1000)">−1K</button>
+      <button class="minus" onclick="bump(-5000)">−5K</button>
+      <button class="plus" onclick="bump(5000)">+5K</button>
+      <button class="plus" onclick="bump(10000)">+10K</button>
+    </div>
+    <div class="steps">
+      <button class="minus" onclick="bump(-20000)">−20K</button>
+      <button class="minus" onclick="bump(-50000)">−50K</button>
+      <button class="plus" onclick="bump(50000)">+50K</button>
+      <button class="plus" onclick="bump(100000)">+100K</button>
+    </div>
+    <div class="qgrid">
+      ${[5000,10000,15000,20000,30000,40000,50000,60000,80000,100000,150000,200000,300000,500000,1000000]
+        .map(v=>`<button onclick="setCop(${v})">${v>=1000000?(v/1000000)+'M':(v/1000)+'K'}</button>`).join('')}
+    </div>
+    <div class="calcrow">
+      <button class="ghost" onclick="setCop(0)">Borrar</button>
+      <button onclick="flipCalc()">€ → COP</button>
+    </div>
+    <div class="manual">
+      <span class="muted small" style="flex:none">Tasa 1 € =</span>
+      <input id="rate" inputmode="numeric" onchange="setRate()">
+      <span class="muted small" style="flex:none">COP</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;margin-bottom:6px">Precios de referencia</h3>
+    <div class="ref"><span>Taxi corto en ciudad</span><b>10–25.000</b></div>
+    <div class="ref"><span>Almuerzo del día (menú)</span><b>15–25.000</b></div>
+    <div class="ref"><span>Cerveza / jugo natural</span><b>5–10.000</b></div>
+    <div class="ref"><span>Cena en restaurante bueno</span><b>60–120.000</b></div>
+    <div class="ref"><span>Willys a Cocora (por trayecto)</span><b>~6.000</b></div>
+    <div class="ref"><span>Tour cayos San Andrés</span><b>70–100.000</b></div>
+    <div class="ref"><span>Carrito de golf (día)</span><b>150–250.000</b></div>
+    <div class="ref"><span>Tarjeta de turismo San Andrés</span><b>153.000</b></div>
+  </div>
+`;
+
+function paint(){
+  const r = getRate();
+  document.getElementById('d-cop').innerHTML = fmt(CV) + '<span class="cur2">COP</span>';
+  const e = CV/r;
+  document.getElementById('d-eur').innerHTML =
+    e.toLocaleString('es',{minimumFractionDigits:2, maximumFractionDigits:2}) + '<span class="cur2">EUR</span>';
+  document.getElementById('d-rate').textContent = 'Tasa usada: 1 € = ' + fmt(r) + ' COP';
+  const ri = document.getElementById('rate'); if(ri) ri.value = r;
+}
+function setCop(v){ CV = Math.max(0, v); if(navigator.vibrate) navigator.vibrate(5); paint(); }
+function bump(d){ CV = Math.max(0, CV + d); if(navigator.vibrate) navigator.vibrate(5); paint(); }
 function setRate(){
-  const v = parseFloat(document.getElementById('rate').value.replace(',','.'));
+  const v = parseFloat(String(document.getElementById('rate').value).replace(/\./g,'').replace(',','.'));
   if(v>0) store.set('co-rate', v);
-  document.getElementById('rate').value = getRate();
-  convFrom('cop');
+  paint();
 }
-function convFrom(src){
-  const cop = document.getElementById('cop'), eur = document.getElementById('eur');
-  const num = s => parseFloat(String(s).replace(/\./g,'').replace(',','.'));
-  if(src==='cop'){
-    const v = num(cop.value);
-    eur.value = isFinite(v) ? (v/getRate()).toLocaleString('es',{maximumFractionDigits:2}) : '';
-  }else{
-    const v = parseFloat(String(eur.value).replace(',','.'));
-    cop.value = isFinite(v) ? Math.round(v*getRate()).toLocaleString('es') : '';
-  }
+function flipCalc(){
+  const cur = CV/getRate();
+  const v = prompt('¿Cuántos EUROS quieres convertir a pesos?', cur.toFixed(2));
+  if(v===null) return;
+  const n = parseFloat(String(v).replace(',','.'));
+  if(isFinite(n)) setCop(Math.round(n*getRate()));
 }
-function setCop(v){
-  document.getElementById('cop').value = v.toLocaleString('es');
-  convFrom('cop');
-}
-document.getElementById('rate').value = getRate();
-setCop(50000);
+paint();
 
 /* ================= NAVEGACIÓN (con botón atrás del móvil) ================= */
 function go(v, id){
@@ -1220,11 +1619,11 @@ function render(v, id){
   window.scrollTo({top:0});
 }
 function route(){
-  const hsh = location.hash || '#itinerario';
+  const hsh = location.hash || '#cambio';
   if(hsh.startsWith('#ciudad-')){ buildCity(hsh.slice(8)); render('ciudad'); }
   else{
     const v = hsh.slice(1);
-    render(['itinerario','ciudades','tareas','practico'].includes(v) ? v : 'itinerario');
+    render(['cambio','itinerario','ciudades','tareas','practico'].includes(v) ? v : 'cambio');
   }
 }
 window.addEventListener('hashchange', route);

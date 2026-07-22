@@ -13,3 +13,16 @@ v7 (LA GRANDE):
 - Historias: contadores animados (11 km murallas, 186 barcos, 60 m palma, 1M viajes metro, 180.000 km² Seaflower, 2.640 m...) + botones "✨ Dato curioso" desplegables (15 añadidos).
 - NUEVO: sección "🗺️ Mapa" en cada ciudad (Leaflet + OpenStreetMap): 50 pins con coordenadas verificadas vía Google Places (⭐ ver / 🍽️ comer / 🏨 hotel), popup con consejo + link "Cómo llegar". Mapa se inicializa al abrir la pestaña.
 - sw v7 cachea también OSM tiles, cdnjs y fuentes.
+v8: Historias rediseñadas como RELATO CONTINUO (patrón The Pudding: nunca anular el scroll natural, adiós snap):
+- Scroll libre e ininterrumpido con columna vertebral de línea temporal a la izquierda (puntos que se encienden al pasar)
+- Año actual FIJO arriba que va cambiando con crossfade + barra de progreso dorada
+- Años grandes con efecto "trazado→relleno" (stroke a dorado al entrar), títulos y párrafos con revelado escalonado
+- Fotos de Wikipedia como TARJETAS integradas en el flujo (esqueleto brillante mientras cargan, se autoeliminan si fallan: el relato nunca se rompe), carga perezosa solo al acercarse
+- Stats animados y datos curiosos ahora en tarjetas doradas dentro del flujo
+- Fondo "aurora" animado con los colores de cada ciudad, emoji de época como marca de agua
+- Tarjeta final "Y la historia continúa con vosotros" con botón de vuelta
+- Botón renombrado a "▶ Leer el relato" 📜. sw v8.
+v9: 
+- CALCULADORA como pantalla de inicio (nueva pestaña 💱 Cambio, primera y por defecto): display gigante COP + EUR, 8 botones de ajuste (−1K −5K −20K −50K / +5K +10K +50K +100K), 15 atajos rápidos (5K…1M), botón € → COP, tasa editable persistente, y tabla de precios de referencia colombianos.
+- LECTURAS LARGAS: nueva sección "📖 Lectura larga" en cada ciudad, ~9.800 palabras en total (2.000+ por ciudad, ~20 min de lectura cada una). Contenido: historia profunda, barrios uno a uno en tarjetas, gastronomía explicada, cultura viva, consejos de comportamiento y notas prácticas específicas del viaje (buceo, altitud, efectivo, aeropuertos).
+- Orden de secciones por ciudad: Historia (con relato) → Lectura larga → Mapa → Qué ver → Comida → Vuestro plan. sw v9.
