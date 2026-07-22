@@ -23,7 +23,7 @@
   --ink:#17302E; --ink-soft:#4A615E; --paper:#FBFAF4; --card:#FFFFFF;
   --line:#E4E0D2; --deep:#10393B;
   --ctg:#E2574C; --sal:#3E8E5A; --med:#C94F7C; --adz:#1699A3; --bog:#C99527;
-  --radius:16px; --nav-h:64px;
+  --radius:16px; --nav-h:58px;
   --stripe:linear-gradient(90deg,#0E7C86 0%,#12A5A0 18%,#35C4B5 36%,#7FD8C9 52%,#B8E8DB 66%,#E2574C 82%,#C99527 100%);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -56,17 +56,22 @@ main{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-ove
 
 /* ---------- Bottom nav ---------- */
 nav.tabs{
-  flex:none;z-index:50;height:calc(var(--nav-h) + env(safe-area-inset-bottom));
-  padding-bottom:env(safe-area-inset-bottom);
-  background:rgba(251,250,244,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-top:1px solid var(--line);display:flex;
+  flex:none;z-index:50;
+  height:calc(var(--nav-h) + max(env(safe-area-inset-bottom) - 6px, 0px));
+  padding-bottom:max(calc(env(safe-area-inset-bottom) - 6px), 0px);
+  background:var(--deep);
+  box-shadow:0 -1px 0 rgba(0,0,0,.08), 0 -8px 22px rgba(16,57,59,.10);
+  display:flex;
 }
 nav.tabs button{
-  flex:1;background:none;border:none;font-family:'Karla',sans-serif;font-size:11px;font-weight:700;
-  color:var(--ink-soft);display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:9px;cursor:pointer;
+  flex:1;background:none;border:none;font-family:'Karla',sans-serif;font-size:10.5px;font-weight:700;
+  color:rgba(242,239,228,.62);display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding-top:9px;cursor:pointer;position:relative;transition:color .2s ease;
 }
-nav.tabs button .ico{font-size:20px;line-height:1}
-nav.tabs button.on{color:var(--deep)}
+nav.tabs button .ico{font-size:19px;line-height:1;transition:transform .2s ease}
+nav.tabs button.on{color:#7FD8C9}
+nav.tabs button.on::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:26px;height:3px;border-radius:0 0 3px 3px;background:#7FD8C9}
 nav.tabs button.on .ico{transform:scale(1.12)}
 
 /* ---------- Cards & chips ---------- */
@@ -1173,6 +1178,7 @@ document.getElementById('view-practico').innerHTML = `
       <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
     </ul>
   </div></details>
+  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v11 · actualizada</p>
   <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
     <ul>
       <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
@@ -1617,7 +1623,13 @@ window.addEventListener('hashchange', route);
 route();
 
 /* Offline */
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+if('serviceWorker' in navigator){
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', ()=>{
+    if(refreshing) return; refreshing = true; location.reload();
+  });
+  navigator.serviceWorker.register('sw.js').then(reg=>{ reg.update(); }).catch(()=>{});
+}
 </script>
 </body>
 </html>
