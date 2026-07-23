@@ -32,7 +32,7 @@ html{background:var(--paper)}
 body{
   font-family:'Karla',system-ui,sans-serif;background:var(--paper);color:var(--ink);
   font-size:16px;line-height:1.55;
-  padding-bottom:calc(var(--nav-h) + min(env(safe-area-inset-bottom), 14px));
+  padding-bottom:calc(50px + min(env(safe-area-inset-bottom), 8px) + 6px);
 }
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
 .stripe{height:5px;background:var(--stripe);border-radius:3px}
@@ -55,23 +55,20 @@ main{max-width:640px;margin:0 auto;padding:16px 16px 32px}
 
 /* ---------- Bottom nav ---------- */
 nav.tabs{
-  position:fixed;bottom:0;left:0;right:0;z-index:50;
-  height:calc(var(--nav-h) + min(env(safe-area-inset-bottom), 14px));
-  padding-bottom:min(env(safe-area-inset-bottom), 14px);
-  background:var(--deep);display:flex;align-items:flex-start;
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:flex;
+  background:var(--deep);
+  height:calc(50px + min(env(safe-area-inset-bottom), 8px));
 }
 nav.tabs button{
   flex:1;background:none;border:none;cursor:pointer;
   font-family:'Karla',sans-serif;font-size:10.5px;font-weight:700;
-  color:rgba(242,239,228,.62);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  height:var(--nav-h);position:relative;transition:color .2s ease;
+  color:rgba(242,239,228,.6);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;
+  padding-bottom:calc(min(env(safe-area-inset-bottom), 8px) + 6px);transition:color .2s ease;
 }
-nav.tabs button .ico{font-size:19px;line-height:1;transition:transform .2s ease}
+nav.tabs button .ico{font-size:20px;line-height:1}
 nav.tabs button.on{color:#7FD8C9}
-nav.tabs button.on .ico{transform:scale(1.08)}
-nav.tabs button.on::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:28px;height:3px;border-radius:0 0 3px 3px;background:#7FD8C9}
 
 /* ---------- Cards & chips ---------- */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
@@ -1291,7 +1288,7 @@ document.getElementById('view-practico').innerHTML = `
       <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
     </ul>
   </div></details>
-  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v22 · actualizada</p>
+  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v23 · actualizada</p>
   <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
     <ul>
       <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
