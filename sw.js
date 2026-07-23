@@ -1,4 +1,4 @@
-const CACHE = 'colombia-v19';
+const CACHE = 'colombia-v20';
 const FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 const REMOTE_OK = h => ['wikipedia.org','wikimedia.org','openstreetmap.org','cdnjs.cloudflare.com','fonts.googleapis.com','fonts.gstatic.com'].some(d => h.endsWith(d));
 self.addEventListener('install', e => {
