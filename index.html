@@ -23,7 +23,7 @@
   --ink:#17302E; --ink-soft:#4A615E; --paper:#FBFAF4; --card:#FFFFFF;
   --line:#E4E0D2; --deep:#10393B;
   --ctg:#E2574C; --sal:#3E8E5A; --med:#C94F7C; --adz:#1699A3; --bog:#C99527;
-  --radius:16px; --nav-h:54px; --app-h:100dvh; --safe-b:0px;
+  --radius:16px; --nav-h:56px;
   --stripe:linear-gradient(90deg,#0E7C86 0%,#12A5A0 18%,#35C4B5 36%,#7FD8C9 52%,#B8E8DB 66%,#E2574C 82%,#C99527 100%);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -33,7 +33,6 @@ body{
   font-family:'Karla',system-ui,sans-serif;background:var(--deep);color:var(--ink);
   font-size:16px;line-height:1.55;
   position:fixed;top:0;right:0;bottom:0;left:0;
-  height:var(--app-h);min-height:-webkit-fill-available;
   display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;
 }
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
@@ -58,15 +57,15 @@ main{flex:1;min-height:0;background:var(--paper);overflow-y:auto;overscroll-beha
 /* ---------- Bottom nav ---------- */
 nav.tabs{
   flex:none;z-index:50;position:relative;
-  height:calc(var(--nav-h) + var(--safe-b));
-  padding-bottom:var(--safe-b);
-  background:var(--deep);display:flex;align-items:stretch;
+  height:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  padding-bottom:env(safe-area-inset-bottom);
+  background:var(--deep);display:flex;align-items:flex-start;
 }
-nav.tabs::after{content:"";position:absolute;top:100%;left:0;right:0;height:120px;background:var(--deep)}
+nav.tabs::after{content:"";position:absolute;top:100%;left:0;right:0;height:200px;background:var(--deep)}
 nav.tabs button{
   flex:1;background:none;border:none;font-family:'Karla',sans-serif;font-size:10.5px;font-weight:700;
   color:rgba(242,239,228,.62);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  padding:0 2px;cursor:pointer;position:relative;transition:color .2s ease;
+  height:var(--nav-h);padding:0 2px;cursor:pointer;position:relative;transition:color .2s ease;
 }
 nav.tabs button .ico{font-size:19px;line-height:1;transition:transform .2s ease}
 nav.tabs button.on{color:#7FD8C9}
@@ -195,33 +194,47 @@ a.gm{text-decoration:none;font-size:13px;margin-left:6px;vertical-align:1px}
 .calc .disp{background:linear-gradient(155deg,#10393B,#0A2426);border-radius:18px;padding:13px 16px 12px;color:#F2EFE4;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
 .calc .lab{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.62}
-.calc .cop{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(34px,10.5vw,52px);line-height:1.04;
-  letter-spacing:-.025em;word-break:break-all}
-.calc .cop .cur2{font-size:.36em;opacity:.55;margin-left:7px;font-weight:700;letter-spacing:0}
-.calc .sep{height:1px;background:rgba(255,255,255,.14);margin:11px 0}
-.calc .eur{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(28px,8.4vw,42px);color:#7FD8C9;line-height:1.04;letter-spacing:-.02em}
-.calc .eur .cur2{font-size:.38em;opacity:.7;margin-left:7px}
+.calc .big{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(32px,10vw,50px);line-height:1.08;
+  letter-spacing:-.025em;background:none;border:none;color:#F2EFE4;width:100%;padding:2px 0;
+  caret-color:#7FD8C9;min-width:0}
+.calc .big::placeholder{color:rgba(242,239,228,.3)}
+.calc .big.eur{color:#7FD8C9}
+.calc .big:focus{outline:none}
+.calc .field{display:flex;align-items:baseline;gap:9px}
+.calc .field .cur2{font-size:16px;opacity:.6;font-weight:700;flex:none}
+.calc .field.e .cur2{color:#7FD8C9;opacity:.75}
+.calc .sep{height:1px;background:rgba(255,255,255,.14);margin:10px 0}
+.calc .edith{font-size:11px;opacity:.5;margin-top:9px;text-align:center;line-height:1.4}
 
-.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}
-.qgrid button{border:1.5px solid #DCD7C6;background:linear-gradient(180deg,#FFFFFF,#F7F4E9);color:var(--deep);
-  font-family:'Fraunces',serif;font-weight:700;font-size:18px;padding:12px 4px;border-radius:15px;cursor:pointer;
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.qgrid button{border:1.5px solid #CFE4D6;background:linear-gradient(180deg,#F1F9F3,#E4F1E8);color:#1E6B48;
+  font-family:'Fraunces',serif;font-weight:700;font-size:18px;padding:14px 4px;border-radius:15px;cursor:pointer;
   box-shadow:0 1px 2px rgba(0,0,0,.05);transition:transform .08s ease}
-.qgrid button:active{transform:scale(.95);background:#EFEADC}
+.qgrid button:active{transform:scale(.95);background:#D6EADD}
+.qgrid button .p{font-size:13px;opacity:.6;font-weight:700;margin-right:1px}
 
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
-.steps button{border:none;font-family:'Karla',sans-serif;font-weight:700;font-size:15px;padding:12px 2px;
-  border-radius:15px;cursor:pointer;letter-spacing:-.01em;transition:transform .08s ease}
-.steps button:active{transform:scale(.94)}
-.steps .minus{background:linear-gradient(180deg,#FCEFEC,#F7E2DD);color:#A2453A;box-shadow:inset 0 0 0 1.5px #EFCFC7}
-.steps .plus{background:linear-gradient(180deg,#E9F6EE,#DBEEE3);color:#1E6B48;box-shadow:inset 0 0 0 1.5px #BFE0CD}
-
-.calcbar{display:flex;gap:8px;margin-top:10px;align-items:center}
-.calcbar button{border:none;background:var(--deep);color:#fff;font-family:inherit;font-weight:700;
-  font-size:14px;padding:12px 16px;border-radius:14px;cursor:pointer;flex:none}
-.calcbar button.ghost{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink-soft)}
+.calcbar{display:flex;gap:9px;margin-top:11px;align-items:center}
+.calcbar button{border:none;font-family:inherit;font-weight:700;font-size:14.5px;padding:13px 18px;
+  border-radius:14px;cursor:pointer;transition:transform .08s ease}
+.calcbar button:active{transform:scale(.96)}
+.calcbar .reset{background:linear-gradient(180deg,#FCEFEC,#F6E1DC);color:#A2453A;box-shadow:inset 0 0 0 1.5px #EFCFC7;flex:none}
 .calcbar .rt{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft);font-weight:700}
-.calcbar .rt input{width:66px;border:1.5px solid var(--line);border-radius:11px;padding:8px 6px;
+.calcbar .rt input{width:70px;border:1.5px solid var(--line);border-radius:11px;padding:9px 6px;
   font:inherit;font-size:14.5px;font-weight:700;text-align:center;background:var(--paper);color:var(--ink)}
+
+/* ---------- Fun facts ---------- */
+.facts .grp{margin:18px 0 4px}
+.facts .grp:first-child{margin-top:6px}
+.facts .gh{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.facts .gh .pin2{width:30px;height:30px;border-radius:9px;background:var(--c,#333);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+.facts .gh h3{font-size:16px;font-family:'Fraunces',serif;font-weight:700}
+.facts .fact{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,#333);
+  border-radius:14px;padding:13px 15px;margin-bottom:10px}
+.facts .fact .ft{font-family:'Fraunces',serif;font-weight:700;font-size:15.5px;margin-bottom:4px;display:flex;gap:8px;align-items:baseline}
+.facts .fact .ft .e{font-size:17px;flex:none}
+.facts .fact p{font-size:14.5px;line-height:1.6;margin:0;color:var(--ink)}
+.facts .intro{font-size:14px;color:var(--ink-soft);margin-bottom:6px}
 
 /* ---------- Lectura larga ---------- */
 .longread{font-size:16.5px;line-height:1.72}
@@ -378,8 +391,6 @@ button:focus-visible,summary:focus-visible{outline:3px solid #35C4B5;outline-off
   <section id="view-tareas" class="view"></section>
   <section id="view-practico" class="view pract"></section>
 </main>
-
-<div id="safeprobe" style="position:fixed;left:0;bottom:0;width:0;visibility:hidden;pointer-events:none;height:env(safe-area-inset-bottom)"></div>
 
 <div id="story" role="dialog" aria-label="Historia visual">
   <div class="pbar"></div>
@@ -679,6 +690,89 @@ const CIUDADES = [
 ];
 
 
+
+
+/* ================= FUN FACTS ================= */
+const FACTS = {
+ctg:[
+ {lugar:"Ciudad Amurallada", emoji:"🏰", items:[
+  {e:"⏰", t:"La Torre del Reloj tuvo puertas de madera", x:"La icónica Torre del Reloj era la puerta principal de la ciudad, y hasta el siglo XVIII sus tres arcos se cerraban de noche con puentes levadizos porque un canal de agua separaba la ciudad amurallada del barrio de Getsemaní. El reloj que le da nombre es suizo, de 1937, y sustituyó a uno anterior que funcionaba con un sistema de pesas que había que subir a mano cada día."},
+  {e:"⛪", t:"El campanario de la catedral fue derribado por un pirata", x:"La catedral de Cartagena empezó a construirse en 1577, pero en 1586 Francis Drake la cañoneó cuando aún estaba a medio hacer y tumbó parte de la obra. Tardó casi un siglo en terminarse. Si os fijáis en su torre, la cúpula que la remata se añadió en el siglo XX y no encaja del todo con el estilo original: es un parche de cuatro siglos después."},
+  {e:"💎", t:"Los balcones delataban la riqueza de cada familia", x:"En la ciudad colonial no se pagaban impuestos por la superficie de la casa sino por la fachada, así que las familias competían con balcones de madera cada vez más largos y trabajados que sobresalían a la calle. Cuanto más balcón, más estatus. Por eso hoy la ciudad amurallada tiene esos balcones corridos cargados de flores: eran, literalmente, un alarde de dinero."},
+ ]},
+ {lugar:"Getsemaní", emoji:"🎨", items:[
+  {e:"🔦", t:"Fue el barrio 'peligroso' que se salvó a sí mismo", x:"Hasta hace unos quince años, a los turistas se les advertía que no pusieran un pie en Getsemaní. Era un barrio pobre, de trabajadores del puerto, con fama de inseguro. Fueron sus propios vecinos quienes lo transformaron pintando fachadas, colgando los famosos paraguas y banderines de colores sobre las calles y convirtiendo la Plaza de la Trinidad en punto de encuentro. Hoy es el barrio más deseado y sus casas valen fortunas, lo que ha traído el problema contrario: muchos vecinos de toda la vida ya no pueden pagar vivir ahí."},
+  {e:"⛪", t:"En su iglesia se gritó la independencia", x:"La Plaza de la Trinidad está presidida por una iglesia del siglo XVII desde cuyos alrededores, el 11 de noviembre de 1811, los artesanos y trabajadores negros y mulatos de Getsemaní —los llamados lanceros— presionaron con sus armas para forzar la declaración de independencia de Cartagena. Fueron ellos, la gente humilde del barrio, y no las élites del centro, quienes empujaron la ruptura con España."},
+ ]},
+ {lugar:"La Boquilla y Cielo Mar", emoji:"🛶", items:[
+  {e:"🎣", t:"Vuestro barrio es un pueblo de pescadores afro", x:"Justo al lado de vuestro hotel, La Boquilla es una comunidad afrocolombiana de pescadores que lleva siglos viviendo del mar y de la ciénaga de manglares que tiene detrás. Mientras las torres de hoteles crecían alrededor, el pueblo conservó su forma de vida. Se puede salir de madrugada en canoa con pescadores locales a remar entre los túneles de mangle, y es una de las experiencias más auténticas de toda Cartagena, a cinco minutos de donde dormís."},
+ ]},
+ {lugar:"Curiosidades de toda la ciudad", emoji:"🌎", items:[
+  {e:"🐀", t:"Un almirante manco derrotó al mayor ejército de su siglo", x:"Blas de Lezo defendió Cartagena en 1741 con seis barcos y 3.000 hombres frente a los casi 200 navíos y 25.000 soldados del británico Vernon. Ganó. La flota inglesa era la mayor operación anfibia de la historia hasta el desembarco de Normandía dos siglos después. Vernon estaba tan seguro de vencer que mandó acuñar en Londres medallas de la victoria con Blas de Lezo arrodillado entregando su espada. Existen todavía, y muestran una humillación que jamás ocurrió."},
+  {e:"📖", t:"Un premio Nobel aprendió aquí a ser periodista", x:"Gabriel García Márquez llegó a Cartagena en 1948, con veinte años, huyendo del Bogotazo, y empezó a escribir en el diario El Universal por unos pocos pesos. La ciudad lo marcó tanto que años después ambientó aquí buena parte de 'El amor en los tiempos del cólera' y 'Del amor y otros demonios'. Sus cenizas reposan hoy en el claustro de La Merced, en pleno centro histórico."},
+  {e:"🥭", t:"Las vendedoras de fruta son un símbolo con siglos de historia", x:"Las palenqueras, esas mujeres con vestidos de colores y palanganas de fruta en la cabeza, descienden de los esclavizados que se liberaron y fundaron San Basilio de Palenque, el primer pueblo libre de América (1691). Llevar el peso en la cabeza es una técnica africana heredada. Hoy venden fruta y posan para fotos —conviene acordar un precio antes, unos 10.000 pesos—, pero cada una es la punta visible de una historia de resistencia de más de cuatro siglos."},
+ ]},
+],
+
+sal:[
+ {lugar:"La plaza y el pueblo", emoji:"🏘️", items:[
+  {e:"🎨", t:"Los colores de las casas empezaron por pura economía", x:"Las fachadas de Salento están pintadas con combinaciones de colores intensísimos —puertas de un color, marcos de otro, zócalos de un tercero— y hoy es su seña de identidad. Pero el origen era práctico: los colonos pintaban con lo que sobraba de otras obras y mezclaban restos de pintura, así que cada casa acababa con una paleta distinta. Lo que nació de la escasez terminó convertido en el pueblo más fotografiado del Eje Cafetero."},
+  {e:"🎯", t:"El deporte nacional consiste en hacer explotar pólvora", x:"En Salento podéis jugar al tejo, el deporte más colombiano que existe: se lanza un disco de metal de casi un kilo contra una diana de arcilla donde hay pequeños sobres de pólvora llamados mechas. Si aciertas, explota. Se juega con cerveza en la mano, se grita mucho y es gratis mientras consumas. Tiene origen indígena muisca, tiene más de 500 años, y en 2000 fue declarado deporte nacional de Colombia por ley."},
+ ]},
+ {lugar:"Valle de Cocora", emoji:"🌴", items:[
+  {e:"📏", t:"Aquí crece la palmera más alta del planeta", x:"La palma de cera del Quindío alcanza los 60 metros —un edificio de 20 pisos— y es la palmera más alta del mundo. Lo asombroso es que crece a 2.500 metros de altitud, en un clima frío y de niebla donde ninguna palmera debería sobrevivir. Crece tan despacio, apenas unos centímetros al año, que muchas de las que veréis llevan ahí más de un siglo y medio: estaban vivas antes de que Colombia existiera como la conocemos."},
+  {e:"🕯️", t:"Estuvieron a punto de desaparecer por el Domingo de Ramos", x:"Durante generaciones se cortaban las hojas jóvenes de la palma de cera para las procesiones del Domingo de Ramos, y su tronco se raspaba para extraer cera con la que se hacían velas y jabón. La combinación casi las extingue. En 1985 fueron declaradas árbol nacional de Colombia y protegidas por ley. Hoy tienen un enemigo más silencioso: el ganado se come los brotes jóvenes, así que casi todas las palmas que se ven son ancianas y apenas hay reemplazo."},
+ ]},
+ {lugar:"El café", emoji:"☕", items:[
+  {e:"🚙", t:"El jeep de la guerra se convirtió en unidad de medida", x:"Tras la Segunda Guerra Mundial, EE.UU. vendió a Colombia miles de jeeps Willys sobrantes. En estas montañas sin carreteras fueron una revolución cargando café, plátanos y familias enteras. Nació el 'yipao': lo que cabe en un Willys, hasta una tonelada. En las ferias hacen concursos donde gana quien más carga lleve o quien logre conducirlo con las ruedas delanteras en el aire. Todavía salen cargados de la plaza de Salento cada mañana."},
+  {e:"🤠", t:"El cafetero más famoso del mundo es un personaje inventado", x:"Juan Valdez, el campesino de poncho, sombrero y mula que representa al café colombiano, no existe: lo inventó una agencia de publicidad de Nueva York en 1958 para diferenciar el café de Colombia del resto. Funcionó tan bien que hoy es una de las marcas de origen más reconocidas del planeta y da nombre a una cadena de cafeterías. El paisaje que inspira esa imagen es exactamente el que vais a recorrer."},
+ ]},
+],
+
+med:[
+ {lugar:"El Centro", emoji:"🎨", items:[
+  {e:"🐦", t:"Un pájaro con una bomba dentro sigue en la plaza", x:"En 1995 estalló una bomba escondida en una escultura de un pájaro de Fernando Botero durante un concierto en el Parque San Antonio, matando a treinta personas. Botero, en vez de retirar los restos, pidió que se dejara el 'Pájaro' destrozado en su sitio y donó uno nuevo idéntico para colocarlo justo al lado. Hoy los dos pájaros conviven: uno reventado y otro intacto, como monumento a la vez a la barbarie y a la resistencia de la ciudad. Es uno de los lugares más conmovedores de Medellín."},
+  {e:"⚖️", t:"Botero regaló su ciudad una colección millonaria", x:"Fernando Botero, nacido en Medellín en 1932, donó a su ciudad las 23 esculturas monumentales que hoy llenan la Plaza Botero, además de decenas de cuadros —suyos y de su colección personal, con obras de Picasso o Dalí— que están en el Museo de Antioquia, justo al lado. Es la mayor concentración de obra de Botero del mundo y se puede ver casi todo gratis o por muy poco. Sus figuras 'gordas' no representan obesidad: para él, el volumen exagerado es una forma de exaltar la sensualidad y la presencia."},
+ ]},
+ {lugar:"Comuna 13", emoji:"🎤", items:[
+  {e:"🪜", t:"Unas escaleras mecánicas al aire libre cambiaron un barrio entero", x:"La Comuna 13 fue el barrio más violento de la ciudad más violenta del mundo. En 2011 se instalaron 384 metros de escaleras mecánicas al aire libre —las primeras del mundo en un barrio informal— que reducen a cinco minutos una subida que antes eran 350 escalones y media hora. Costaron menos que un tramo de autopista. Junto con los murales, el hip-hop y los guías locales que cuentan su propia historia, convirtieron el barrio en símbolo mundial de transformación urbana."},
+  {e:"🚁", t:"Los murales cuentan una operación militar real", x:"Muchos de los grafitis de la Comuna 13 no son decorativos: narran la Operación Orión de 2002, cuando el Estado entró con helicópteros artillados en un barrio densamente poblado para expulsar a las milicias, dejando muertos y desaparecidos que aún se investigan. Los elefantes que se repiten en las paredes simbolizan la memoria (el elefante no olvida); los pañuelos blancos, a las víctimas. Cuando un guía local os lo explica, el paseo deja de ser turístico y se vuelve un testimonio."},
+ ]},
+ {lugar:"El metro y las laderas", emoji:"🚇", items:[
+  {e:"✨", t:"Existe una 'cultura Metro' casi religiosa", x:"El metro de Medellín, inaugurado en 1995, es el único de Colombia y los paisas lo tratan como un templo: no se come, no se ensucia, no se raya. Décadas después sigue impecable, sin un grafiti. La explicación es emocional: se construyó en los peores años de la violencia y se convirtió en la prueba de que la ciudad podía ser otra cosa. Cuidarlo es una forma de orgullo colectivo. Subid en el metrocable hacia las comunas: el trayecto sobre los tejados de ladrillo es la mejor lección de la ciudad."},
+ ]},
+],
+
+adz:[
+ {lugar:"El mar y los cayos", emoji:"🌊", items:[
+  {e:"🎨", t:"Los siete colores del mar son física, no marketing", x:"El apodo 'mar de los siete colores' tiene una explicación real: el tono del agua depende de lo que hay en el fondo y de la profundidad. La arena blanca de coral triturado da turquesa; las praderas de pasto marino, verde oliva; los corales, dorados y marrones; los canales hondos, azul cobalto. Como el archipiélago está sobre una plataforma poco profunda salpicada de todos esos fondos, se ven franjas de color perfectamente distinguibles. La mejor vista es desde el avión al aterrizar: pedid ventanilla izquierda."},
+  {e:"🐠", t:"Estáis sobre la tercera barrera de coral más grande del mundo", x:"Todo el archipiélago es la Reserva de Biosfera Seaflower, declarada por la UNESCO en el año 2000, con unos 180.000 km² de mar protegido —un tercio de la superficie de España— y la tercera barrera coralina más larga del planeta, solo por detrás de la australiana y la mesoamericana. Por eso insisten tanto con el protector solar biodegradable y con no pisar el coral: buena parte de estos arrecifes está amenazada por el blanqueamiento y el turismo."},
+ ]},
+ {lugar:"La Loma y la cultura raizal", emoji:"⛪", items:[
+  {e:"🗣️", t:"Aquí se habla una lengua que casi nadie más entiende", x:"Los raizales, la población originaria de las islas, hablan creole sanandresano, un idioma criollo de base inglesa emparentado con el jamaicano. La mayoría son trilingües: creole en casa, inglés en la iglesia y español con el continente. Es herencia de los colonos puritanos ingleses y jamaicanos que poblaron las islas desde 1629. Si escucháis con atención en un colectivo o en un puesto de comida, reconoceréis palabras inglesas dentro de una música totalmente distinta."},
+  {e:"🎶", t:"La iglesia más antigua es de madera y se oye cantar desde la calle", x:"La Primera Iglesia Bautista, en lo alto de La Loma, es de 1847, de madera blanca, y es el edificio más antiguo y más querido de San Andrés. Los raizales son mayoritariamente protestantes —bautistas y adventistas—, algo insólito en un país tan católico como Colombia, y es otra herencia de la colonización inglesa. Los domingos por la mañana los coros llenan la loma de góspel caribeño: asomarse es una de las cosas más bonitas y menos turísticas que se pueden hacer en la isla."},
+ ]},
+ {lugar:"Historia y leyendas", emoji:"🏴‍☠️", items:[
+  {e:"💰", t:"El tesoro de un pirata podría seguir enterrado aquí", x:"El pirata galés Henry Morgan usó estas islas como base a finales del siglo XVII para asaltar Panamá, y la leyenda dice que escondió parte de su botín en una cueva de la costa oeste que hoy se visita con su nombre. El tesoro nunca apareció y los historiadores dudan de casi todo el relato, pero la historia real supera a la leyenda: Morgan acabó nombrado teniente gobernador de Jamaica por la propia corona inglesa, murió rico y respetable, y hoy da nombre a una marca de ron."},
+  {e:"⚖️", t:"Colombia perdió aquí un pleito de mar contra Nicaragua", x:"El archipiélago está a 720 km de Colombia pero a solo 190 de Nicaragua, que siempre reclamó estas aguas. El pleito llegó a la Corte Internacional de Justicia de La Haya, que en 2012 confirmó que las islas son colombianas pero le entregó a Nicaragua unos 75.000 km² de mar. Fue un shock nacional y golpeó a los pescadores locales, que perdieron caladeros históricos. Si un isleño saca el tema, notaréis que la herida sigue abierta."},
+ ]},
+],
+
+bog:[
+ {lugar:"La Candelaria y el centro", emoji:"🏛️", items:[
+  {e:"🏺", t:"La independencia empezó por un jarrón prestado", x:"El 20 de julio de 1810, unos criollos entraron en la tienda del comerciante español Llorente a pedirle prestado un florero, sabiendo que se negaría. La negativa provocó una trifulca planeada, que derivó en un tumulto, que acabó en una junta de gobierno. Es la fecha nacional de Colombia y arrancó, literalmente, por un jarrón. Los restos del famoso florero se conservan hoy en el Museo de la Independencia, en la misma Plaza de Bolívar."},
+  {e:"🔥", t:"Un magnicidio incendió la ciudad y cambió el país", x:"El 9 de abril de 1948 asesinaron a tiros en pleno centro al líder popular Jorge Eliécer Gaitán, favorito para ser presidente. La furia desató el 'Bogotazo': tres días de incendios y saqueos que arrasaron buena parte del centro histórico y dejaron miles de muertos. Fue el inicio de 'La Violencia', la guerra civil que marcó el resto del siglo colombiano. Por eso el centro es una mezcla extraña de casonas coloniales supervivientes y edificios levantados sobre lo quemado."},
+ ]},
+ {lugar:"El Museo del Oro y los muiscas", emoji:"✨", items:[
+  {e:"🛶", t:"El Dorado no era una ciudad: era un hombre cubierto de oro", x:"La leyenda que enloqueció a los conquistadores durante dos siglos nació en la laguna de Guatavita, cerca de Bogotá. El cacique muisca se cubría el cuerpo de polvo de oro y navegaba en una balsa hasta el centro de la laguna para sumergirse mientras se arrojaban ofrendas de oro y esmeraldas al agua. Los europeos buscaron una ciudad dorada por toda Sudamérica; lo que había era un ritual. La pieza que lo representa, la Balsa Muisca, es la joya del Museo del Oro y mide apenas 20 centímetros."},
+  {e:"💧", t:"Intentaron vaciar una laguna sagrada para robar su oro", x:"Durante siglos, buscadores de tesoros intentaron drenar la laguna de Guatavita para recuperar el oro que los muiscas arrojaron en sus rituales. Llegaron a abrir un tajo en el borde y a bajar el nivel varios metros, y aparecieron algunas piezas, pero nunca el gran tesoro imaginado. Muchos de esos objetos rescatados están hoy en el Museo del Oro, que guarda 34.000 piezas de orfebrería prehispánica: la mejor colección de su tipo del mundo, y cuesta poco más de un euro entrar."},
+ ]},
+ {lugar:"Vivir a 2.640 metros", emoji:"⛰️", items:[
+  {e:"🚴", t:"Cada domingo la ciudad cierra 120 km de calles a los coches", x:"La Ciclovía de Bogotá, nacida en 1974, cierra al tráfico más de 120 kilómetros de vías principales todos los domingos y festivos de 7 a 14 h, y la ciudad entera sale a pedalear, correr y pasear al perro. Es una de las iniciativas urbanas más copiadas del mundo: hay versiones en decenas de ciudades de todo el planeta. Vuestro único domingo caerá en San Andrés, pero merece saber que existe."},
+  {e:"🥔", t:"La sopa típica lleva una hierba que casi solo crece aquí", x:"El ajiaco santafereño, el plato emblema de Bogotá, es una sopa espesa de pollo con tres tipos de papa distintos —una de ellas se deshace y da cuerpo— y lleva guascas, una hierba que apenas se usa fuera de esta zona y que le da todo su sabor. Se sirve con alcaparras, crema de leche y mazorca. Con el frío constante de la ciudad, a 2.640 metros y entre 7 y 19 grados todo el año, es exactamente lo que el cuerpo pide."},
+ ]},
+],
+};
 
 /* ================= LECTURAS LARGAS ================= */
 const LECTURA = {
@@ -1077,11 +1171,28 @@ document.getElementById('view-ciudades').innerHTML = `
   </button>`).join("")}
 `;
 
+function factsHTML(id){
+  const c = CIUDADES.find(x=>x.id===id);
+  const total = FACTS[id].reduce((a,g)=>a+g.items.length,0);
+  return `<div class="facts" style="--c:${c.color}">
+    <p class="intro">${total} curiosidades de ${c.nombre.split('&')[0].trim()}, agrupadas por lugar.</p>
+    ${FACTS[id].map(g=>`
+      <div class="grp">
+        <div class="gh"><span class="pin2">${g.emoji}</span><h3>${g.lugar}</h3></div>
+        ${g.items.map(it=>`<div class="fact">
+          <div class="ft"><span class="e">${it.e}</span><span>${it.t}</span></div>
+          <p>${it.x}</p>
+        </div>`).join('')}
+      </div>`).join('')}
+  </div>`;
+}
+
 function buildCity(id){
   const c = CIUDADES.find(x=>x.id===id);
   const secs = {...c.secs};
   const entries = Object.entries(secs);
   if(LECTURA[id]) entries.splice(1, 0, ["📖 Lectura larga", `<div class="longread" style="--c:${c.color}">${LECTURA[id]}</div>`]);
+  if(FACTS[id]) entries.splice(2, 0, ["💡 Curiosidades", factsHTML(id)]);
   entries.splice(3, 0, ["🗺️ Mapa", `<div class="map-wrap" id="lmap-${id}"></div>
     <div class="map-legend"><span>⭐ Qué ver</span><span>🍽️ Comer</span><span>🏨 Hotel</span></div>
     <p class="muted small" style="margin-top:8px">Toca un pin para ver el consejo y abrir la ruta en Google Maps.</p>`]);
@@ -1180,7 +1291,7 @@ document.getElementById('view-practico').innerHTML = `
       <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
     </ul>
   </div></details>
-  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v15 · actualizada</p>
+  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v17 · actualizada</p>
   <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
     <ul>
       <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
@@ -1541,64 +1652,54 @@ document.addEventListener('keydown', e=>{
 
 /* ================= CALCULADORA (pantalla de inicio) ================= */
 let CV = 50000;
-function getRate(){ return store.get('co-rate') || 4500; }
+function getRate(){ return store.get('co-rate') || 3700; }
 const fmt = n => Math.round(n).toLocaleString('es');
+const parseNum = s => { const n = parseFloat(String(s).replace(/\./g,'').replace(',','.')); return isFinite(n)?n:0; };
 
 document.getElementById('view-cambio').innerHTML = `
   <div class="calc">
     <div class="disp">
       <div class="lab">Pesos colombianos</div>
-      <div class="cop" id="d-cop">50.000<span class="cur2">COP</span></div>
+      <div class="field">
+        <input class="big" id="i-cop" inputmode="numeric" placeholder="0" oninput="fromCop(this.value)">
+        <span class="cur2">COP</span>
+      </div>
       <div class="sep"></div>
-      <div class="lab">Equivale a</div>
-      <div class="eur" id="d-eur">11,11<span class="cur2">EUR</span></div>
+      <div class="lab">Euros</div>
+      <div class="field e">
+        <input class="big eur" id="i-eur" inputmode="decimal" placeholder="0" oninput="fromEur(this.value)">
+        <span class="cur2">EUR</span>
+      </div>
+      <div class="edith">✏️ Escribe en cualquiera de los dos · o toca un billete para sumar</div>
     </div>
     <div class="qgrid">
-      ${[5000,10000,20000,50000,100000,200000].map(v=>`<button onclick="setCop(${v})">${v/1000}K</button>`).join('')}
-    </div>
-    <div class="steps">
-      <button class="minus" onclick="bump(-50000)">−50K</button>
-      <button class="minus" onclick="bump(-10000)">−10K</button>
-      <button class="plus" onclick="bump(10000)">+10K</button>
-      <button class="plus" onclick="bump(50000)">+50K</button>
-    </div>
-    <div class="steps">
-      <button class="minus" onclick="bump(-5000)">−5K</button>
-      <button class="minus" onclick="bump(-1000)">−1K</button>
-      <button class="plus" onclick="bump(1000)">+1K</button>
-      <button class="plus" onclick="bump(5000)">+5K</button>
+      ${[5000,10000,20000,50000,100000,200000].map(v=>`<button onclick="addCop(${v})"><span class="p">+</span>${v/1000}K</button>`).join('')}
     </div>
     <div class="calcbar">
-      <button class="ghost" onclick="setCop(0)">Borrar</button>
-      <button onclick="flipCalc()">€ → COP</button>
+      <button class="reset" onclick="resetCalc()">↺ Reset</button>
       <span class="rt">1 € =<input id="rate" inputmode="numeric" onchange="setRate()"></span>
     </div>
   </div>
 `;
 
-function paint(){
+function paintCalc(focus){
   const r = getRate();
-  document.getElementById('d-cop').innerHTML = fmt(CV) + '<span class="cur2">COP</span>';
-  const e = CV/r;
-  document.getElementById('d-eur').innerHTML =
-    e.toLocaleString('es',{minimumFractionDigits:2, maximumFractionDigits:2}) + '<span class="cur2">EUR</span>';
-  const ri = document.getElementById('rate'); if(ri) ri.value = r;
+  const cop = document.getElementById('i-cop');
+  const eur = document.getElementById('i-eur');
+  if(focus!=='cop') cop.value = CV ? fmt(CV) : '';
+  if(focus!=='eur') eur.value = CV ? (CV/r).toLocaleString('es',{minimumFractionDigits:2,maximumFractionDigits:2}) : '';
+  const ri = document.getElementById('rate'); if(ri && document.activeElement!==ri) ri.value = r;
 }
-function setCop(v){ CV = Math.max(0, v); if(navigator.vibrate) navigator.vibrate(5); paint(); }
-function bump(d){ CV = Math.max(0, CV + d); if(navigator.vibrate) navigator.vibrate(5); paint(); }
+function fromCop(v){ CV = parseNum(v); paintCalc('cop'); }
+function fromEur(v){ CV = Math.round(parseNum(v)*getRate()); paintCalc('eur'); }
+function addCop(v){ CV += v; if(navigator.vibrate) navigator.vibrate(6); paintCalc(); }
+function resetCalc(){ CV = 0; if(navigator.vibrate) navigator.vibrate(10); paintCalc(); }
 function setRate(){
-  const v = parseFloat(String(document.getElementById('rate').value).replace(/\./g,'').replace(',','.'));
+  const v = parseNum(document.getElementById('rate').value);
   if(v>0) store.set('co-rate', v);
-  paint();
+  paintCalc();
 }
-function flipCalc(){
-  const cur = CV/getRate();
-  const v = prompt('¿Cuántos EUROS quieres convertir a pesos?', cur.toFixed(2));
-  if(v===null) return;
-  const n = parseFloat(String(v).replace(',','.'));
-  if(isFinite(n)) setCop(Math.round(n*getRate()));
-}
-paint();
+paintCalc();
 
 /* ================= NAVEGACIÓN (con botón atrás del móvil) ================= */
 function go(v, id){
@@ -1623,29 +1724,6 @@ function route(){
 }
 window.addEventListener('hashchange', route);
 route();
-
-/* ====== AJUSTE DINÁMICO A LA PANTALLA ====== */
-function fitScreen(){
-  const r = document.documentElement;
-  /* alto real visible (cambia con barras del navegador, orientación, etc.) */
-  const vv = window.visualViewport;
-  const hgt = Math.round(vv ? vv.height : window.innerHeight);
-  if(hgt > 200) r.style.setProperty('--app-h', hgt + 'px');
-  /* margen inferior REAL del dispositivo, medido con la sonda */
-  const probe = document.getElementById('safeprobe');
-  const inset = probe ? Math.round(probe.getBoundingClientRect().height) : 0;
-  /* solo reservamos lo justo para no pisar la barra de gestos */
-  r.style.setProperty('--safe-b', (inset > 0 ? Math.min(Math.round(inset*0.35), 12) : 0) + 'px');
-}
-fitScreen();
-window.addEventListener('resize', fitScreen);
-window.addEventListener('orientationchange', ()=>setTimeout(fitScreen,180));
-if(window.visualViewport){
-  window.visualViewport.addEventListener('resize', fitScreen);
-  window.visualViewport.addEventListener('scroll', fitScreen);
-}
-document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) fitScreen(); });
-window.addEventListener('load', ()=>setTimeout(fitScreen,120));
 
 /* Offline */
 if('serviceWorker' in navigator){
