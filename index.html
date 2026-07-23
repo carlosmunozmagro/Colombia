@@ -23,17 +23,16 @@
   --ink:#17302E; --ink-soft:#4A615E; --paper:#FBFAF4; --card:#FFFFFF;
   --line:#E4E0D2; --deep:#10393B;
   --ctg:#E2574C; --sal:#3E8E5A; --med:#C94F7C; --adz:#1699A3; --bog:#C99527;
-  --radius:16px; --nav-h:56px;
+  --radius:16px; --nav-h:64px;
   --stripe:linear-gradient(90deg,#0E7C86 0%,#12A5A0 18%,#35C4B5 36%,#7FD8C9 52%,#B8E8DB 66%,#E2574C 82%,#C99527 100%);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-html{height:100%;background:var(--deep)}
+html{background:var(--paper)}
 body{
-  font-family:'Karla',system-ui,sans-serif;background:var(--deep);color:var(--ink);
+  font-family:'Karla',system-ui,sans-serif;background:var(--paper);color:var(--ink);
   font-size:16px;line-height:1.55;
-  position:fixed;top:0;right:0;bottom:0;left:0;
-  display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;
+  padding-bottom:calc(var(--nav-h) + min(env(safe-area-inset-bottom), 14px));
 }
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
 .stripe{height:5px;background:var(--stripe);border-radius:3px}
@@ -41,7 +40,7 @@ h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
 /* ---------- Header ---------- */
 header.app{
   background:var(--deep);color:#F2EFE4;padding:calc(12px + env(safe-area-inset-top)) 18px 13px;
-  flex:none;z-index:40;
+  position:sticky;top:0;z-index:40;
 }
 header.app .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.75;font-weight:700}
 header.app h1{font-size:23px;font-weight:900;margin:2px 0 7px}
@@ -49,24 +48,24 @@ header.app h1 em{font-style:italic;color:#7FD8C9}
 header.app .stripe{opacity:.95}
 
 /* ---------- Layout ---------- */
-main{flex:1;min-height:0;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:16px 16px 24px;width:100%;max-width:640px;margin:0 auto}
+main{max-width:640px;margin:0 auto;padding:16px 16px 32px}
 .view{display:none;animation:fade .25s ease}
 .view.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ---------- Bottom nav ---------- */
 nav.tabs{
-  flex:none;z-index:50;position:relative;
-  display:flex;
-  background:var(--deep);
-  padding-bottom:min(env(safe-area-inset-bottom), 18px);
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  height:calc(var(--nav-h) + min(env(safe-area-inset-bottom), 14px));
+  padding-bottom:min(env(safe-area-inset-bottom), 14px);
+  background:var(--deep);display:flex;align-items:flex-start;
 }
 nav.tabs button{
   flex:1;background:none;border:none;cursor:pointer;
   font-family:'Karla',sans-serif;font-size:10.5px;font-weight:700;
   color:rgba(242,239,228,.62);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  padding:8px 2px 10px;position:relative;transition:color .2s ease;
+  height:var(--nav-h);position:relative;transition:color .2s ease;
 }
 nav.tabs button .ico{font-size:19px;line-height:1;transition:transform .2s ease}
 nav.tabs button.on{color:#7FD8C9}
@@ -1292,7 +1291,7 @@ document.getElementById('view-practico').innerHTML = `
       <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
     </ul>
   </div></details>
-  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v21 · actualizada</p>
+  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v22 · actualizada</p>
   <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
     <ul>
       <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
