@@ -28,11 +28,12 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-html{background:var(--paper)}
+html{background:var(--deep)}
 body{
   font-family:'Karla',system-ui,sans-serif;background:var(--paper);color:var(--ink);
   font-size:16px;line-height:1.55;
-  padding-bottom:calc(50px + min(env(safe-area-inset-bottom), 8px) + 6px);
+  padding-bottom:calc(50px + min(env(safe-area-inset-bottom), 8px));
+  min-height:100dvh;
 }
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15}
 .stripe{height:5px;background:var(--stripe);border-radius:3px}
@@ -48,7 +49,9 @@ header.app h1 em{font-style:italic;color:#7FD8C9}
 header.app .stripe{opacity:.95}
 
 /* ---------- Layout ---------- */
-main{max-width:640px;margin:0 auto;padding:16px 16px 32px}
+main{max-width:640px;margin:0 auto;padding:16px 16px 32px;
+  min-height:calc(100dvh - 50px - min(env(safe-area-inset-bottom), 8px));
+  box-sizing:border-box}
 .view{display:none;animation:fade .25s ease}
 .view.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -1288,7 +1291,7 @@ document.getElementById('view-practico').innerHTML = `
       <li>Ya no existe el trámite online oficial — ignorad webs que lo ofrezcan.</li>
     </ul>
   </div></details>
-  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v23 · actualizada</p>
+  <p class="muted small" style="text-align:center;margin:16px 0 4px">Guía v24 · actualizada</p>
   <details><summary><span class="em">🗣️</span>Mini-diccionario colombiano</summary><div class="bd">
     <ul>
       <li><b>¿Qué más? / ¿Bien o qué?</b> — hola, ¿qué tal?</li>
